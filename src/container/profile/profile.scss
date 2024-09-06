@@ -1,0 +1,291 @@
+@import '../../mixins';
+
+@media screen and (max-width: 450px) {
+    .profile_container {
+    @include flex-container(column, space-between, center);
+    height: 100vh;
+
+    .profile_head {
+        @include flex-container(column, center, center);
+        border-radius: 0 0 10px 10px;
+        background-color: var(--light-gray-color);
+        width: 100%;
+        padding: 4rem 1rem 2.5rem 1rem;
+        box-sizing: border-box;
+        text-align: center;
+        position: relative;
+
+        .profile_picture {
+            @include flex-container(row, center, baseline);
+            height: 6rem;
+            width: 6rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+          
+            img {
+              @include rounded-border(var(--primary-gray-color), 50%);
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              @include shadow();
+            }
+          
+            input {
+              display: none; 
+            }
+          
+            label {
+              @include background-cover('../../assets/icons/Camera.png');
+              height: 25px;
+              width: 27px;
+              background-color: var(--light-gray-color);
+              border: none;
+              @include shadow();
+              border-radius: 50%;
+              position: absolute;
+              bottom: 0;
+              right: 0;
+              cursor: pointer;
+            }
+          }
+          
+
+          .profile_name {
+            font-size: 1.5rem;
+            margin: 0;
+            font-weight: 500;
+            border: none;
+            text-align: center;
+            background-color: var(--light-gray-color);
+            outline: none; 
+          
+            &:focus {
+              border: 1px solid var(--secondary-color);
+              border-radius: 0.25rem;
+              outline: none;
+            }
+          }
+          
+
+        .profile_address{
+            font-size: 1rem;
+            color: var(--primary-gray-color);
+            margin: 0;
+            border: none;
+            text-align: center;
+            background-color: var(--light-gray-color);
+            outline: none; 
+
+            &:focus {
+                border: 1px solid var(--secondary-color);
+                border-radius: 0.25rem;
+                outline: none;
+              }
+        }
+
+        .edit_button {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background-color: var(--primary-color);
+        @include rounded-border(var(--green-color), 0.25rem);
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        color: var(--green-color);
+        font-size: 0.875rem;
+        }
+
+        .back-button{
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background-color: var(--primary-color);
+            @include rounded-border(var(--primary-gray-color), 0.25rem);
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            color: var(--primary-gray-color);
+            font-size: 0.875rem;
+            @include flex-container(column, center)
+        }
+    }
+
+    .profile_body {
+        padding: 0.5rem;
+        background-color: var(--background-color);
+        @include flex-container(column, space-between);
+        gap: 1.2rem;
+      
+        .profile_info {
+          padding: 1rem 1.5rem;
+          @include shadow();
+          box-sizing: border-box;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          @include rounded-border(var(--light-gray-color), 0.5rem);
+      
+          .info_item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+      
+            i {
+              margin-right: 0.75rem;
+              color: var(--primary-gray-color); /* Updated icon color to blue */
+              font-size: 1.25rem;
+              transition: color 0.3s ease;
+            }
+            .profile_email{
+              font-size: 1rem;
+              color: var(--primary-gray-color);
+              margin: 0;
+              border: none;
+              text-align: center;
+              outline: none; 
+  
+              &:focus {
+                  border: 1px solid var(--secondary-color);
+                  border-radius: 0.25rem;
+                  outline: none;
+                  
+                }
+          }
+      
+            span {
+              font-size: 1.125rem;
+              color: var(--primary-gray-color); /* Updated span color to secondary color */
+              font-weight: 500;
+              transition: color 0.3s ease;
+            }
+
+            .profile_dob{
+                font-size: 1.125rem;
+                color: var(--primary-gray-color); 
+                font-weight: 500;
+                transition: color 0.3s ease;
+                border: none;
+
+                &:focus {
+                    color: var(--secondary-color);
+                    border-radius: 0.25rem;
+                    outline: none;
+                  }
+            }
+      
+            &:hover i {
+              color: rgb(75, 75, 242);
+            }
+      
+            &:hover span {
+              color: var(--secondary-color);
+            }
+          }
+        }
+        .profile_orders {
+            @include flex-container(column, flex-start, flex-start);
+            background-color: var(--light-gray-color);
+            border-radius: 0.5rem;
+            height: 35vh;
+
+            h2 {
+              font-size: 1.5rem;
+              margin: 0.5rem 1rem;
+              font-weight: bold;
+              color: var(--primary-gray-color);
+            }
+          
+            .orders-list {
+              overflow-y: auto;
+              padding: 0.5rem 1rem;
+              background-color: var(--background-color);
+              box-sizing: border-box;
+              @include flex-container(column);
+              gap: 0.5rem;
+          
+              .order-item {
+                @include flex-container(row, flex-start);
+                background-color: var(--primary-color);
+                padding: 0.5rem 1rem;
+                border-radius: 0.5rem;
+                transition: background-color 0.3s ease, transform 0.3s ease;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          
+                &:hover {
+                  background-color: var(--primary-color);
+                  transform: translateY(-2px);
+                  @include shadow();
+                  @include rounded-border(var(--secondary-color), 0.5rem);
+                }
+          
+                img {
+                  width: 70px;
+                  height: 60px;
+                  object-fit: cover;
+                  border-radius: 0.5rem;
+                  margin-right: 1rem;
+                }
+          
+                .order-details {
+          
+                  .order-name {
+                    font-weight: bold;
+                    color: var(--primary-gray-color);
+                    margin: 0;
+                    width: 100%;
+                    span{
+                        font-size: 10px;
+                        margin: 0;
+                        font-weight: 700;
+                    }
+                  }
+          
+                  .order-addons {
+                    font-size: 10px;
+                    color: var(--primary-gray-color);
+          
+                    span {
+                      color: var(--primary-gray-color);
+                      border-radius: 0.25rem;
+                      font-weight: bold;
+                      margin-right: 0.4rem;
+                    }
+                  }
+
+                  .order-price {
+                    font-size: 0.8rem;
+                    font-weight: bold;
+                    color: var(--green-color);
+                  }
+
+                }
+          
+                
+              }
+            }
+          }
+          
+      }
+      
+      
+
+    .profile_footer {
+        @include flex-container(row, space-around);
+        width: 100%;
+        padding: 0 1rem 0.5rem;
+        box-sizing: border-box;
+
+        .logout_button{
+            @include hollowButton(red, 100%);
+            background-color: white;
+            font-size: 1.1rem;
+        }
+        // .dashboard_button {
+        //     background-color: var(--primary-color);
+        //     color: #fff;
+        //     border: none;
+        //     padding: 0.5rem 1rem;
+        //     border-radius: 0.25rem;
+        //     cursor: pointer;
+        //     font-size: 0.875rem;
+        // }
+    }
+    }
+}

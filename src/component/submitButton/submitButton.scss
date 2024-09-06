@@ -1,0 +1,12 @@
+@import '../../mixins';
+
+.submitButton-container{
+    height: 5rem;
+    width: 100%;
+    font-weight: 500;
+    font-size: 20px;
+    @include rounded-border(transparent, 10px);
+    border: none;
+    @include gradient-div(var(--secondary-color), var(--light-secondary-color));
+    color: var(--black-color);
+}
