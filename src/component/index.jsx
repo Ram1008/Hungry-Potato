@@ -13,3 +13,6 @@ export { default as DesktopNavTab } from './desktopNavTab/DesktopNavTab';
 export { default as DesktopProfile } from './desktopProfile/DesktopProfile';
 export { default as OrderCard } from './orderCard/OrderCard';
 export { default as DesktopSearch } from './desktopSearch/DesktopSearch';
+export { default as UsersTable } from './usersTable/UsersTable';
+export { default as DishesTable } from './dishesTable/DishesTable';
+export { default as CurrentStatus } from './currentStatus/CurrentStatus';
