@@ -1,0 +1,1 @@
+export const host = "https://restaurentmanagement-backend.onrender.com/api";

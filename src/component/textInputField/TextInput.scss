@@ -1,0 +1,11 @@
+@import '../../mixins';
+
+.textInput-container{
+    height: 4rem;
+    width: 100%;
+    @include rounded-border(var(--secondary-color), 10px);
+    padding: 0.5rem;
+    color: var(--secondary-color);
+    font-size: 25px;
+    box-sizing: border-box;
+}

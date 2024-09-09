@@ -1,0 +1,17 @@
+@import '../../mixins';
+
+.profileButton-container {
+  @include rounded-border(var(--primary-gray-color), 50%);
+  background-color: var(--primary-gray-color);
+  height: 45px;
+  width: 45px;
+  @include flex-container(row, center, center);
+  
+  button{
+    @include rounded-border(transparent, 50%);
+    cursor: pointer;
+    height: 45px;
+    width: 45px;
+    @include shadow();
+  }
+}

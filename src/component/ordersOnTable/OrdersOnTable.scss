@@ -1,0 +1,60 @@
+@import '../../mixins';
+
+
+  .orders-content-wrapper {
+    
+
+    .orders-content {
+      padding: 1rem;
+    }
+
+    .cart-item {
+      margin-bottom: 0.5rem;
+      @include rounded-border(var(--green-color), 10px);
+      padding: 0.5rem 1rem;
+
+      .item-detail {
+        display: flex;
+        flex-direction: column;
+
+        .item-header {
+          display: flex;
+          align-items: center;
+          font-size: 16px;
+          font-weight: bold;
+
+          .item-name {
+            margin-right: 1rem;
+          }
+
+          .item-quantity {
+            color: #3A3A3A;
+          }
+        }
+
+        .item-serving-size {
+          font-size: 12px;
+          color: var(--secondary-color);
+        }
+
+        .item-addons {
+          display: flex;
+          gap: 0.5rem;
+
+          .addon-name {
+            background-color: var(--light-gray-color);
+            padding: 0.2rem 0.5rem;
+            border-radius: 5px;
+            font-size: 12px;
+            color: var(--primary-gray-color);
+          }
+        }
+      }
+    }
+
+    .table-id {
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+  }
+

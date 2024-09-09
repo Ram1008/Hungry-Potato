@@ -1,0 +1,136 @@
+@import '../../mixins';
+
+.layout_container {
+  @include flex-container(row, flex-start, center);
+  padding: 0.5rem;
+  box-sizing: border-box;
+  gap: 1rem;
+  height: 100vh;
+
+  header {
+    @include flex-container(column, flex-start, center);
+    width: 15%;
+    height: 100%;
+    background-color: var(--tertiary-color);
+    @include shadow();
+    padding: 2rem 0;
+    box-sizing: border-box;
+
+    .logo {
+      height: 70px;
+      width: 70px;
+      @include rounded-border(white, 50%);
+      @include background-cover('../../assets/images/LogoHungryPotato.png');
+    }
+
+    nav {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
+      padding: 1rem 0.2rem;
+      box-sizing: border-box;
+      background-color: var(--background-color);
+
+      .nav-button {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin: 0;
+        padding: 0.75rem 1rem;
+        box-sizing: border-box;
+        font-size: 14px;
+        color: var(--primary-gray-color);
+        background: none;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+        position: relative;
+        
+        &:hover {
+          background-color: white;
+          color: var(--secondary-color);
+          border-radius: 0.5rem;
+          transform: translateX(0.5rem);
+
+          
+        }
+
+        &.active {
+          background-color: white;
+          color: var(--secondary-color);
+          border-radius: 0.5rem;
+
+          &::after {
+            content: '';
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            width: 3px;
+            height: 50%;
+            background-color: var(--secondary-color);
+            transform: translateY(-50%);
+          }
+        }
+      }
+    }
+  }
+
+  .layout_body {
+    @include flex-container(column, flex-start);
+    height: 100%;
+    width: 85%;
+    padding: 0.5rem 1rem;
+    box-sizing: border-box;
+
+    .body-header {
+      @include flex-container(row, space-between, center);
+      width: 100%;
+
+      h1 {
+        margin: 0;
+        font-size: 24px;
+        color: var(--secondary-color);
+      }
+
+      img {
+        height: 40px;
+        width: 40px;
+        cursor: pointer;
+      }
+    }
+
+    .body-tab {
+      width: 100%;
+      margin: 0.5rem 0;
+    }
+
+    .body-nav {
+      @include flex-container(row, space-between, center);
+      width: 100%;
+      margin: 0.5rem 0.5rem 0.3rem 0;
+
+      .nav-search {
+        width: 35%;
+      }
+
+      .add-button {
+        height: 40px;
+        padding: 0 2rem;
+        box-sizing: border-box;
+        @include rounded-border(var(--primary-blue-color), 0.5rem);
+        background-color: white;
+        color: var(--primary-blue-color);
+        font-size: 12px;
+        font-weight: bold;
+      }
+    }
+
+    hr {
+      background-color: var(--tertiary-color);
+      height: 1px;
+      width: 100%;
+    }
+  }
+}
