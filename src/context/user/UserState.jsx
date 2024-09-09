@@ -36,6 +36,7 @@ const UserState = (props) => {
   const getUser = async () => {
     const response = await fetchApi(`${host}/users/profile`, 'GET', null, true);
     if (response.status) {
+      console.log(response);
       setUser(response.data);
       return response.status;
     }

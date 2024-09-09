@@ -7,13 +7,13 @@
     background-color: white;
     header {
       position: relative;
-      height: 50vh;
+      height: 45vh;
 
       .head-background {
         @include background-cover('../../assets/images/Rectangle11.svg');
         @include rounded-border(black, 10px);
         z-index: 0;
-        height: 35vh;
+        height: 30vh;
       }
 
       .head-logo {
@@ -51,13 +51,15 @@
     }
   
     .login_body {
-      @include flex-container(column, space-between);
+      @include flex-container(column);
       background-color: var(--primary-color);
-      height: 44vh;
+
       .login_form {
-        @include flex-container(column, space-between);
+        @include flex-container(column);
         padding: 1rem 1rem;
         height: 100%;
+        gap: 1rem;
+
         .form-field{
 
           margin-bottom: 0.5rem;
@@ -77,10 +79,13 @@
           }
         
           .otp-button{
-            width: 28%;
+            @include rounded-border(var(--secondary-color), 0.5rem);
+            padding: 0.65rem 1rem;
+            box-sizing: border-box;
             button{
-              @include hollowButton(var(--secondary-color), 5.5rem);
-              padding: 1.3rem 1rem;
+              // @include hollowButton(var(--secondary-color), 5rem);
+              border: none;
+              margin: 0;
               background-color: white;
               font-size: 16px;
             }
@@ -96,9 +101,24 @@
         }
 
         .login_submit {
+          @include flex-container(row, center, center);
+          @include rounded-border(var(--secondary-color), 0.5rem);
+          width: auto;
+          padding: 1rem;
+          margin: 0 5rem;
+          box-sizing: border-box;
+          text-align: center; 
+          
+          @include gradient-div(var(--secondary-color), var(--light-secondary-color));
+
 
           button{
-            @include filledButton(var(--secondary-color), 100%, 16px);
+            border: none;
+            margin: 0;
+            background-color: transparent;
+            font-size: 20px;
+            font-weight: 500;
+            // color: var(--primary-gray-color);
           }
         }
       }
