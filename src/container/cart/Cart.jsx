@@ -1,4 +1,4 @@
-import './Cart.scss';
+import './cart.scss';
 import { useContext, useState } from 'react';
 import { orderContext, dishContext } from '../../context';
 import MobileLayout from '../../wrapper/mobileLayout/MobileLayout';
