@@ -1,14 +1,13 @@
 import './search.scss';
 import { CiSearch } from "react-icons/ci";
 
-const SearchBar = ({setSearchTerm}) => {
-
+const SearchBar = ({ setSearchTerm }) => {
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
 
   return (
-    <div className='search-bar'>
+    <div className='searchBar_container'>
       <CiSearch className='search-icon' />
       <input 
         className='search-input' 

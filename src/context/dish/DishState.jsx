@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import DishContext from './dishContext';
 import { host } from '../../constants/appConstants';
-import { Dish as ExampleDish } from '../../constants/dishConstants';
+import { Dish  } from '../../constants/dishConstants';
 
 const DishState = ({ children }) => {
   const [menu, setMenu] = useState([]);
@@ -44,9 +44,9 @@ const DishState = ({ children }) => {
       setChefSpecial(data.data.filter(dish => dish.tags.includes("chef's special")));
     }
     else{
-      setDishes(ExampleDish); 
-      setMenu(ExampleDish);
-      setChefSpecial(ExampleDish.filter(dish => dish.tags.includes("chef's special")));
+      setDishes(Dish); 
+      setMenu(Dish);
+      setChefSpecial(Dish.filter(dish => dish.tags.includes("chef's special")));
     } 
   };
 

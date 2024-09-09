@@ -33,7 +33,6 @@ const OrderState = (props) => {
   const getCurrentOrders = async (tableId)=>{
     const response = await fetchApi(`${host}/orders/${tableId}`, 'GET');
     if (response.status) {
-      console.log(response.data);
       setTableOrders(response.data);
 
     }
@@ -59,7 +58,13 @@ const OrderState = (props) => {
 
   const addToCart = (order) => {
     setCart([...cart, order]);
-  }
+  };
+
+  const removeFromCart = (id) => {
+    const updatedCart = cart.filter(item => item.dishId !== id);
+    setCart(updatedCart);
+  };
+
 
   const contextValue = {
     placeOrder,
@@ -69,7 +74,8 @@ const OrderState = (props) => {
     addToCart,
     tableId,
     tableOrders,
-    getCurrentOrders
+    getCurrentOrders,
+    removeFromCart
   };
 
   useEffect(()=>{

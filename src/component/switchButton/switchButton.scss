@@ -1,6 +1,6 @@
 .switch-container {
-  width: 50px;  /* Reduced size */
-  height: 22px; /* Adjusted height for proper ratio */
+  width: 50px;  
+  height: 22px; 
   position: relative;
 
   .switch-checkbox {
@@ -15,15 +15,15 @@
     height: 100%;
     display: block;
     background-color: #e9e9eb;
-    border-radius: 11px; /* Adjusted border-radius for new size */
+    border-radius: 11px; 
     cursor: pointer;
     transition: all 0.2s ease-out;
     position: relative;
   }
 
   .switch-slider {
-    width: 20px;  /* Reduced size */
-    height: 20px; /* Adjusted for proper ratio */
+    width: 20px; 
+    height: 20px; 
     position: absolute;
     left: 1px;
     top: 1px;
@@ -35,7 +35,7 @@
   }
 
   .switch-checkbox:checked + .switch-switch .switch-slider {
-    left: calc(100% - 21px); /* Adjusted for new size */
+    left: calc(100% - 21px); 
     background-color: #34c759;
   }
 }

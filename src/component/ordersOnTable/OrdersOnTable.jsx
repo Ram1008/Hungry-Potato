@@ -1,17 +1,22 @@
 import './ordersOnTable.scss';
 
 const OrdersOnTable = ({ tableOrders }) => {
+  const Dishes = [];
+  tableOrders.map((item) => {
+    item.order.map((dish) => {
+      Dishes.push(dish);
+    })
+  })
+  
   return (
-    <div className="tableOrder-container">
-      <input type="checkbox" id="faq-1" className="toggle" />
-      <h1>
-        <label htmlFor="faq-1" className="toggle-label">Orders</label>
-      </h1>
-      <div className="orders-content-wrapper">
+       <div className="orders-content-wrapper">
+        <div className="table-id">
+          Table ID: {tableOrders[0].tableId}
+        </div>
         <div className="orders-content">
-          {tableOrders.map((tableOrder) =>
-            tableOrder.order.map((item) => (
-              <div key={item.dishId} className="cart-item">
+          {
+            Dishes.map((item) => (
+              <div key={item._id} className="cart-item">
                 <div className="item-detail">
                   <div className="item-header">
                     <span className="item-name">Chicken Burger</span>
@@ -26,14 +31,11 @@ const OrdersOnTable = ({ tableOrders }) => {
                 </div>
               </div>
             ))
-          )}
+          } 
         </div>
-        <div className="table-id">
-          Table ID: {tableOrders.tableId}
-        </div>
+        
       </div>
-    </div>
-  );
+    );
 };
 
 export default OrdersOnTable;

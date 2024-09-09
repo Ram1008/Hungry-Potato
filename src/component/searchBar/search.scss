@@ -1,6 +1,6 @@
 @import '../../mixins';
 
-.search-bar {
+.searchBar_container {
   @include flex-container(row, start, center);
   padding: 0.5rem;
   box-sizing: border-box;
@@ -10,23 +10,25 @@
   margin: 0 0.5rem;
   width: 100%;
   position: relative;
-}
 
-.search-icon {
-  font-size: 1.5rem;
-  color: var(--secondary-color);
-  margin-right: 0.5rem;
-}
-
-.search-input {
-  width: 100%;
-  border: none;
-  background: none;
-  outline: none;
-  font-size: 1rem;
-  color: var(--text-color);
+  .search-icon {
+    font-size: 1.5rem;
+    color: var(--secondary-color);
+    margin-right: 0.5rem;
+  }
   
-  &::placeholder {
-    color: var(--primary-gray-color);
+  .search-input {
+    width: 100%;
+    border: none;
+    background: none;
+    outline: none;
+    font-size: 1rem;
+    color: var(--text-color);
+    
+    &::placeholder {
+      color: var(--primary-gray-color);
+    }
   }
 }
+
+

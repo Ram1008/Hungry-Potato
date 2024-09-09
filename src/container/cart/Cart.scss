@@ -1,151 +1,114 @@
 @import '../../mixins';
 
-@media screen and (max-width: 450px) {
-  .cart-container{
-    @include flex-container(column, space-between);
-    height: 100vh;
-    .cart-head {
-      @include flex-container(row, space-between, center);
-      @include background-cover('../../assets/images/Rectangle11.svg');
-      border-radius: 0 0 0.5rem 0.5rem;
-      padding: 1rem;
-      box-sizing: border-box;
-      width: 100%;
-      
-      .cart-logo {
-        background: rgba(255, 255, 255);
-        @include background-cover('../../assets/images/LogoHungryPotato.png');
-        @include rounded-border(transparent, 10px);
-        z-index: 1;
-        height: 6em;
-        width: 33%;
-      }
-      
-      .cart-menu {
-        background: rgba(255, 255, 255);
-        @include rounded-border(transparent, 10px);
-        z-index: 1;
-        margin: 0 1rem;
-        padding: 0.5rem;
-        box-sizing: border-box;
-        text-align: center;
-        
-        button {
-          background-color: transparent;
-          border: none;
-          font-size: 14px;
-          font-weight: bold;
-        }
-      }
-}
-
-.cart-body {
-  @include flex-container(column, flex-start, center);
-  @include rounded-border(none, 10px);
+.cart-container {
+  position: relative;
   background-color: var(--light-gray-color);
+  padding: 0.4rem;
   height: 100%;
-  
+
   .cart-body-heading {
     font-size: 24px;
-    color: var(--secondary-color);
     font-weight: bold;
-    padding-top: 0.5rem;
-    box-sizing: border-box;
-    width:100%;
-    // @include rounded-border(var(--secondary-color), 10px);
-    margin: 0;
-    border-radius: 0 0 10px 10px;
     text-align: center;
-    background-color: white;
+    color: var(--primary-gray-color);
   }
-  
+
   .cart-summary {
-    height: 70vh;
-    width: 100%;
-    @include flex-container(column, flex-start, center);
-    padding: 0.5rem;
-    box-sizing: border-box;
-    
-    .cart-items {
-      @include flex-container(row, space-between);
-      width: 100%;
-      margin: 0.5rem 1rem ;
-      background-color: var(--primary-color);
-      @include rounded-border(transparent, 10px);
-      gap:1rem;
-      img {
-        max-width: 100px; 
-        height: auto;
-        @include rounded-border(transparent, 10px);
-      }
-      .item-detail{
-        padding: 0.5rem 0 0.5rem 1rem;
-        box-sizing: border-box;
-      }
-      .addon-name{
-        font-size: 10px;
-        color: var(--primary-gray-color);
-        margin: 0 0.2rem;
-      }
-      .item-price{
-        text-align: right;
-        font-size: 20px;
-        font-weight: bold;
-        padding: 0.5rem 1rem 0.5rem 0;
-        box-sizing: border-box;
-      }
-    }
-    .cart-total{
-      background-color: white;
-      @include rounded-border(transparent, 10px);
-      padding: 0.5rem 1rem;
+    margin-top: 1rem;
+
+    .cart-item {
+      @include flex-container(column);
+      gap: 10px;
+      padding: 0.7rem 1rem;
       box-sizing: border-box;
-      @include flex-container(row, space-between);
-      width: 100%;
-      font-size: 20px;
+      background-color: #fff;
+      margin-bottom: 0.5rem;
+      border-radius: 0.5rem;
+      @include shadow();
+
+      .item-details {
+        @include flex-container(row);
+        gap: 1rem;
+
+        .dish-image {
+          width: 80px;
+          height: 80px;
+          border-radius: 10px;
+          object-fit: cover;
+        }
+
+        .personal-details{
+          @include flex-container(column);
+          width: 100%;
+          .item-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary-gray-color);
+  
+            span {
+              color: var(--primary-gray-color);
+              margin-left: 0.5rem;
+            }
+          }
+  
+          .serving-size {
+            font-size: 14px;
+            color: #999;
+          }
+  
+        }
+        .action-details{
+          @include flex-container(column, space-between, center);
+
+          .item-price {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--green-color);
+            width: auto;
+          }
+
+          button{
+            border: none;
+            background-color: white;
+            color: var(--red-color);
+
+            i{
+              font-size: 20px;
+            }
+          }
+
+        }
+      }
+
+      .addons {
+        display: flex;
+        flex-flow: row wrap;
+        font-size: 12px;
+        color: #999;
+
+        .addon-name {
+          background-color: var(--light-gray-color);
+          padding: 0.2rem 0.5rem;
+          border-radius: 5px;
+          margin-right: 0.3rem;
+        }
+      }
+      
+    }
+
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 1rem;
+      background-color: #fff;
+      border-radius: 10px;
+      font-size: 22px;
       font-weight: bold;
-      span{
+      color: #333;
+
+      span {
         color: var(--green-color);
       }
     }
   }
-  
-  .cart-actions {
-    @include flex-container(row, space-between, center);
-    width: 100%;
-    
-    .cart-paymentMethod {
-      height: 5rem;
-      width: 35%;
-
-      button{
-        @include flex-container(row, space-between, center);
-        width: 100%;
-        height: 100%;
-        @include rounded-border(var(--light-gray-color), 10px);
-        font-size: 16px;
-        background-color: var(--light-gray-color);
-      }
-      
-    }
-    
-    .cart-payLater {
-      height: 5rem;
-      width: 60%;
-      @include rounded-border(transparent, 10px);
-      
-      button{
-        width: 100%;
-        background-color: var(--secondary-color);
-        height: 100%;
-        @include rounded-border(transparent, 10px);
-        font-size: 18px;
-        color: white;
-      }
-    }
-  }
-}
-
-}
-
 }

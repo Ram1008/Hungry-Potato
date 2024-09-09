@@ -1,39 +1,55 @@
 @import '../../mixins';
 
-@media screen and (max-width: 450px) {
-  .app__home-head {
-    @include gradient-div(var(--secondary-color), var(--light-secondary-color));
-    @include flex-container(column, flex-start, center);
+  .home_body {
     position: relative;
-    z-index: 0;
-    border-radius:0 0 10px 10px ;
-    @include shadow();
-  }
-
-  .app__home-body {
     @include flex-container(column, flex-start);
     background-color: var(--light-gray-color);
-  }
 
-  .app__home-menu {
-    @include flex-container(row, center, flex-start);
-    width: 100%;
-    margin: 0.3rem 0;
-
-    .app__home-menu-line {
-      color: var(--primary-gray-color);
-      margin: 0 10px;
+    .home_menu {
+      @include flex-container(row, center, flex-start);
+      width: 100%;
+      margin-top: 0.3rem;
+  
+      .menu-line {
+        color: var(--primary-gray-color);
+        margin: 0 10px;
+      }
+  
+      .menu-text {
+        color: var(--black-color);
+        font-weight: 300;
+        font-size: 20px;
+        margin: 0 0.5rem;
+      }
     }
 
-    .app__home-menu-text {
-      color: var(--black-color);
-      font-weight: 300;
-      font-size: 20px;
-      margin: 0 0.5rem;
+    .home_tableOrder{
+      position: absolute;
+      top: 1px;
+      left: 0;
+      @include rounded-border(var(--light-green-color), 0.5rem);
+      width: auto;
+      padding: 2px;
+      margin: 0.1rem 0.5rem 0.3rem;
+      @include shadow();
+      background-color: var(--green-color);
+      z-index: 100;
+      button{
+        border: none;
+        color: white;
+        background-color: transparent;
+        font-weight: 700;
+        @include shadow();
+  
+  
+      }
     }
   }
 
-  .app__home-navigation {
+  
+
+  .home_navigation {
+    
     @include flex-container(row, space-between, center);
     @include rounded-border(var(--secondary-color), 10px);
     @include shadow();
@@ -45,6 +61,9 @@
     box-sizing: border-box;
     color: var(--primary-gray-color);
     background-color: var(--primary-color);
+    
+    
+
     div{
       cursor: pointer;
       font-weight: 700;
@@ -52,128 +71,10 @@
     }
   }
 
-  .app__home-dishes {
+  .home_dishes {
     @include flex-container(column, flex-start);
     flex-basis: 32%;
     margin: 0.8rem;
     gap: 0.5rem;
   }
 
-  .app__home-header {
-    @include flex-container(row, space-around, center);
-    height: 80px;
-    gap: 0.5rem;
-    width: 100%;
-
-    .head-searchbar {
-      width: 80%;
-      margin: 0 0.5rem;
-    }
-
-    .user-profile {
-      margin: 0 0.5rem;
-    }
-  }
-
-  .app__home-subheader {
-    height: 155px;
-    background-color: var(--primary-color);
-    width: 100%;
-  }
-
-  .app__home-mode {
-    height: 30px;
-    width: 100%;
-    margin: 2px;
-    font-weight: 500;
-    @include flex-container(row, space-evenly, center);
-  }
-
-  .chef-special {
-    @include flex-container(row, center, flex-start);
-    width: 100%;
-    margin: 0.4rem 0;
-
-    .app__home-menu-line {
-      color: var(--primary-gray-color);
-      margin: 0 10px;
-    }
-
-    .app__home-menu-text {
-      color: var(--black-color);
-      font-weight: 300;
-      font-size: 20px;
-      margin: 0 0.5rem;
-    }
-  }
-
-  .chef-list {
-    @include flex-container(row);
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    gap: 1rem;
-    padding: 0;
-    margin: 0 1.7rem;
-    -ms-overflow-style: none;
-    scrollbar-width: none; 
-  
-    &::-webkit-scrollbar {
-      display: none; 
-    }
-  }
-  
-  
-
-
-
-.app__footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 65px;
-  @include flex-container(row, space-between, center);
-  @include gradient-div(var(--secondary-color), var(--light-secondary-color));
-  border-radius: 10px 10px 0 0;
-  padding: 8px 16px;
-  box-sizing: border-box;
-  @include shadow();
-  // z-index: -1;
-
-  .app__footer-icon  {
-    @include background-cover('../../assets/icons/CartIcon.png');
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background-color: transparent; 
-  }
-  
-
-  .app__footer-item  {
-    font-size: 16px;
-    font-weight: 500;
-    color: var(--primary-gray-color);
-  }
-  .app__footer-btn  {
-    padding: 8px 16px; 
-    border: none;
-    border-radius: 4px;
-    @include rounded-border(transparent, 10px);
-    color: var(--primary-gray-color);
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.4s, box-shadow 0.3s;
-    @include shadow();
-  
-    &:active {
-      background: var(--secondary-color);
-      color: var(--primary-color);
-      transform: scale(0.95);
-      @include shadow();
-    }
-  }
-  
-  
-}
-
-}

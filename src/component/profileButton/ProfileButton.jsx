@@ -5,26 +5,21 @@ import { useNavigate } from 'react-router-dom';
 import { userContext } from '../../context';
 
 const ProfileButton = () => {
-  const { user, getUser } = useContext(userContext);
+  const { user } = useContext(userContext);
   const navigate = useNavigate();
-
+  console.log(user);
   const handleProfileClick = async () => {
     if (user) { 
       navigate('profile');
     } else {
-      const fetchedUser = await getUser();
-      if(fetchedUser){
-        navigate('profile');
-      } else {
-        navigate('login');
-      }
+      navigate('login');
     }
   };
 
   return (
     <div className='profileButton-container'>
       <button onClick={handleProfileClick}>
-        <FaUser size={25} color='#3A3A3A' />
+        {user && user.profilePicture? <img src= {user.profilePicture}/> :<FaUser size={25} color='#3A3A3A' />}
       </button>
     </div>
   );

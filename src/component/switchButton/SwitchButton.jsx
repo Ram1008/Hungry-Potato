@@ -1,6 +1,7 @@
-import './switch.scss';
+import './switchButton.scss';
 
 const SwitchButton = ({ onToggle }) => {
+
   const handleChange = (e) => {
     onToggle(e.target.onToggle);
   };

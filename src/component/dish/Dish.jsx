@@ -1,29 +1,27 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
+import React from 'react';
 import './dish.scss';
-import { Customize } from '../../container';
 
-const Dish = ({ dish }) => {
-  const [customization, setCustomization] = useState(false);
-  const [orderDish, setOrderDish] = useState({
-    dishId: dish._id,
-    quantity: 0,
-    servingSize: dish.servingSize[0]._id,
-    addons: [],
-  });
+const Dish = ({ dish, onCustomize }) => {
+  const [selectedDish, setSelectedDish] = useState({ id: dish._id, quantity: 0 });
 
-  const handleQuantityChange = (change) => {
-    setOrderDish(prev => ({
+  const increaseQuantity = () => {
+    setSelectedDish((prev) => ({
       ...prev,
-      quantity: prev.quantity + change
+      quantity: prev.quantity + 1
     }));
   };
 
-  const addTag = (tagId) => {
-    setOrderDish(prev => ({
+  const decreaseQuantity = () => {
+    setSelectedDish((prev) => ({
       ...prev,
-      addons: [...prev.tags, tagId]
+      quantity: prev.quantity > 0 ? prev.quantity - 1 : 0
     }));
-  };
+  }
+
+  const handleSelectDish = useCallback(() => {
+    onCustomize(dish, selectedDish);
+  }, [dish, selectedDish, onCustomize]);
 
   return (
     <div className='dish-container'>
@@ -35,17 +33,17 @@ const Dish = ({ dish }) => {
       </div>
       <div className='dish-details'>
         <div className='dish-tools'>
-          <button 
-            className='dish-button' 
-            onClick={() => handleQuantityChange(-1)}
-            disabled={orderDish.quantity <= 0}
+          <button
+            className='dish-button'
+            onClick={decreaseQuantity}
+            disabled={selectedDish.quantity <= 0}
           >
             -
           </button>
-          <div className='dish-quantity'>{orderDish.quantity}</div>
-          <button 
-            className='dish-button' 
-            onClick={() => handleQuantityChange(1)}
+          <div className='dish-quantity'>{selectedDish.quantity}</div>
+          <button
+            className='dish-button'
+            onClick={increaseQuantity}
           >
             +
           </button>
@@ -53,22 +51,13 @@ const Dish = ({ dish }) => {
         <div className='dish-price'>
           ₹ {dish.servingSize?.[0]?.price || null}
         </div>
-        <button className='dish-add' onClick={() => setCustomization(true)}>
+        <button className='dish-add' onClick={handleSelectDish}>
           <span className='dish-add-icon'>+</span> ADD
         </button>
       </div>
-      {customization && (
-        <Customize
-          dish={dish}
-          setCustomization={setCustomization}
-          handleQuantityChange={handleQuantityChange}
-          orderDish={orderDish}
-          setOrderDish={setOrderDish}
-          addTag={addTag}
-        />
-      )}
     </div>
   );
 };
 
-export default Dish;
+
+export default React.memo(Dish);

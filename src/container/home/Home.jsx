@@ -1,91 +1,71 @@
 import './home.scss';
-import { Dish, ChefSpecial, SwitchButton, SearchBar, ProfileButton, NavigationTab } from '../../component';
-import { useContext } from 'react';
-import {dishContext, orderContext} from '../../context';
-import { useNavigate } from 'react-router-dom';
+import { Dish, NavigationTab } from '../../component';
+import { useContext, useState } from 'react';
+import { dishContext, orderContext } from '../../context';
 import { NavigationOptions } from '../../constants/dishConstants';
-import OrdersOnTable from '../../component/ordersOnTable/OrdersOnTable';
-
+import MobileLayout from '../../wrapper/mobileLayout/MobileLayout';
+import Customize from '../customize/Customize';
 
 const Home = () => {
-  const { dishes, chefSpecial, vegOnly, setVegMode, vegMode, setSearchTerm } = useContext(dishContext);
-  
-  const {cart, tableOrders} = useContext(orderContext);
-  const navigate = useNavigate(); 
+  const { dishes } = useContext(dishContext);
+  const [customization, setCustomization] = useState(false);
+  const [customizationData, setCustomizationData] = useState(null); // Stores the dish and selectedDish
+  const { tableOrders } = useContext(orderContext);
 
-  const handleViewCart = () => {
-    navigate('/cart');
+  const handleCustomize = (dish=null, selectedDish=null, tableOrders=null) => {
+    if(dish && selectedDish){
+      setCustomizationData({ dish, selectedDish });
+      setCustomization(true);
+
+    }
+    if(tableOrders){
+      setCustomizationData({ tableOrders });
+      setCustomization(true);
+    }
   };
-  const handleVegMode = () => {
-    if(vegMode){
-      vegOnly(false);
-      setVegMode(false);
-    }
-    else {
-      vegOnly(true, dishes);
-      setVegMode(true);
-    }
+  const handleCloseCustomization = () => {
+    setCustomization(false);
+    setCustomizationData(null); 
   }
-
   return (
     <>
-      <div className="app__mobileContainer">
-        <header className="app__home-head">
-          <div className="app__home-header">
-            <div className="head-searchbar">
-              <SearchBar setSearchTerm={setSearchTerm}/>
-            </div>
-            <div className="user-profile">
-              <ProfileButton />
-            </div>
+      <MobileLayout onCustomize={handleCustomize}>
+        <div className="home_body">
+          <div className="home_menu">
+            <div className="menu-line">━━━━━━━━</div>
+            <div className="menu-text">MENU</div>
+            <div className="menu-line">━━━━━━━━</div>
+            
           </div>
-          <div className="app__home-subheader">
-            <div className="chef-special">
-              <div className="app__home-menu-line">━━━━━</div>
-              <div className="app__home-menu-text">Chef's Special</div>
-              <div className="app__home-menu-line">━━━━━</div>
-            </div>
-            <div className="chef-list">
-            {chefSpecial.map((dish=>
-              <ChefSpecial dish={dish} key={dish._id}/>
+          <div className="home_tableOrder">
+            <button onClick={() => handleCustomize(null, null, tableOrders)}>&#x25BC; Present orders </button>
+          </div>
+          <div className="home_navigation">
+            {NavigationOptions.map((tab) => (
+              <NavigationTab tab={tab} key={tab.tag} />
             ))}
-            </div>
+            
+
           </div>
-          <div className="app__home-mode">
-            <div style={{color:'white'}}>NAHHHH!</div>
-            <SwitchButton onToggle={handleVegMode}/>
-            <div style={{color:'white'}}>Veg Mode</div>
-          </div>
-        </header>
-        <div className="app__home-body">
-          <div className="app__home-menu">
-            <div className="app__home-menu-line">━━━━━━━━</div>
-            <div className="app__home-menu-text">MENU</div>
-            <div className="app__home-menu-line">━━━━━━━━</div>
-          </div>
-          <div className="app__home-navigation">
-          {NavigationOptions.map(tab =>
-            <NavigationTab tab={tab} key = {tab.tag} />
-          )}
-          </div>
-          {tableOrders && <OrdersOnTable tableOrders= {tableOrders}/>}
-          <div className="app__home-dishes">
+          <div className="home_dishes">
             {dishes.map((dish) => (
               <Dish
                 dish={dish}
                 key={dish._id}
+                onCustomize={handleCustomize}
               />
             ))}
           </div>
         </div>
-          {cart && cart.length>0?<footer className="app__footer">
-            <div className="app__footer-icon" />
-            <div className='app__footer-item'>{cart ? cart.length: 0} Items in the cart</div>
-            <button className="app__footer-btn" onClick={handleViewCart}>
-              View Cart
-            </button>
-          </footer>:null}
-      </div>
+      </MobileLayout>
+      {customization && customizationData && (
+        <Customize
+          dish={customizationData.dish}
+          selectedDish={customizationData.selectedDish}
+          tableOrders = {customizationData.tableOrders}
+          handleCloseCustomization = {handleCloseCustomization}
+        />
+      )}
     </>
   );
 };
