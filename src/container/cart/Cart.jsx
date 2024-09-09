@@ -1,4 +1,4 @@
-import './cart.scss';
+import './Cart.scss';
 import { useContext, useState } from 'react';
 import { orderContext, dishContext } from '../../context';
 import MobileLayout from '../../wrapper/mobileLayout/MobileLayout';
@@ -22,7 +22,7 @@ const Cart = () => {
 
   const handleDeleteItem = (id) =>{
     removeFromCart(id);
-  }
+  };
 
   return (
     <MobileLayout showCart={true} setShowPaymentMethods= {setShowPaymentMethods} showPaymentMethods={showPaymentMethods}>

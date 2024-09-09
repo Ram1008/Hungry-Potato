@@ -1,4 +1,4 @@
-import './desktopNavTab.scss';
+import './DesktopNavTab.scss';
 import { useState } from 'react';
 
 const DesktopNavTab = () => {

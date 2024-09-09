@@ -1,4 +1,4 @@
-import './paymentMethods.scss';
+import './PaymentMethods.scss';
 
 const PaymentMethods = ({ onClose }) => {
   return (

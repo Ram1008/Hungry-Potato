@@ -1,4 +1,4 @@
-import './profile.scss';
+import './Profile.scss';
 import { useContext, useState } from 'react';
 import { userContext } from '../../context';
 import { useNavigate } from 'react-router-dom';

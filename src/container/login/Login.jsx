@@ -2,7 +2,7 @@ import { useState, useContext } from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import {authContext} from '../../context';
-import './login.scss';
+import './Login.scss';
 import { TextInputField } from '../../component';
 import { useNavigate } from 'react-router-dom'; 
 

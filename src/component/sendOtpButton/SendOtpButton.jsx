@@ -1,4 +1,4 @@
-import './sendOtpButton.scss';
+import './SendOtpButton.scss';
 
 const SendOtpButton = ({ onClick }) => {
   return (

@@ -1,4 +1,4 @@
-import './submitButton.scss';
+import './SubmitButton.scss';
 
 const SubmitButton = ({disabled}) => {
   return (

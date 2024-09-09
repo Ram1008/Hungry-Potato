@@ -1,4 +1,4 @@
-import './customize.scss';
+import './Customize.scss';
 import { HorizontalLine, OrdersOnTable, ServingSize } from '../../component';
 import React, { useContext, useState, useCallback } from 'react';
 import { orderContext } from '../../context';

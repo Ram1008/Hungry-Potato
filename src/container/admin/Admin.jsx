@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './admin.scss';
+import './Admin.scss';
 import Layout from '../../wrapper/desktopLayout/Layout';
 import { admin } from '../../constants/adminConstants'; 
 

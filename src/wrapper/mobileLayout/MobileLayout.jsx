@@ -1,5 +1,5 @@
 import { useContext, useEffect, useMemo } from 'react';
-import './mobileLayout.scss';
+import './MobileLayout.scss';
 import { ChefSpecial, SwitchButton, SearchBar } from '../../component';
 import { dishContext, orderContext, userContext } from '../../context';
 import { useNavigate } from 'react-router-dom';

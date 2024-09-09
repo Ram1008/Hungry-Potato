@@ -1,4 +1,4 @@
-import './orderCard.scss';
+import './OrderCard.scss';
 
 const OrderCard = ({ order }) => {
 

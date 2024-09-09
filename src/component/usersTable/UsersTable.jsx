@@ -1,5 +1,5 @@
 import React from 'react';
-import './usersTable.scss';
+import './UsersTable.scss';
 import UserProfile from '../../assets/images/UserProfilePhoto.svg';
 
 const UsersTable = ({admin}) => {

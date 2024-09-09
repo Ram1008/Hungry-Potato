@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import './profile.scss';
+import './Profile.scss';
 import { FaUser } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
 import { userContext } from '../../context';

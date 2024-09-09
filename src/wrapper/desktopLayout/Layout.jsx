@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './layout.scss';
+import './Layout.scss';
 import UserIcon from '../../assets/icons/users.svg';
 import CurrentStatusIcon from '../../assets/icons/currentStatus.svg';
 import DishesIcon from '../../assets/icons/dishes.svg';

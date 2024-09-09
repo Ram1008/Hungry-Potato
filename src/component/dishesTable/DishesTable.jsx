@@ -1,4 +1,4 @@
-import './dishesTable.scss';
+import './DishesTable.scss';
 import { Dish } from '../../constants/dishConstants';
 import React from 'react';
 

@@ -1,4 +1,4 @@
-import './ordersOnTable.scss';
+import './OrdersOnTable.scss';
 
 const OrdersOnTable = ({ tableOrders }) => {
   const Dishes = [];

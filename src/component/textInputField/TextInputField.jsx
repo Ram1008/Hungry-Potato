@@ -1,4 +1,4 @@
-import './textInput.scss';
+import './TextInput.scss';
 
 const TextInputField = ({field}) => {
   return (

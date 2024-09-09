@@ -1,4 +1,4 @@
-import './horizontalLine.scss';
+import './HorizontalLine.scss';
 
 const HorizontalLine = () => {
   return <div className="horizontal-line" />;

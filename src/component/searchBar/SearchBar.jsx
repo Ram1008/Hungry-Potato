@@ -1,4 +1,4 @@
-import './search.scss';
+import './Search.scss';
 import { CiSearch } from "react-icons/ci";
 
 const SearchBar = ({ setSearchTerm }) => {

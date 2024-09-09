@@ -1,4 +1,4 @@
-import './desktopSearch.scss';
+import './DesktopSearch.scss';
 import { CiSearch } from "react-icons/ci";
 
 const DesktopSearch = ({setSearchTerm}) => {

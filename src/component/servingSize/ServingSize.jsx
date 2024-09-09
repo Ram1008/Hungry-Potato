@@ -1,4 +1,4 @@
-import './servingSize.scss';
+import './ServingSize.scss';
 
 const ServingSize = ({ dish, servingSize, setServingSize }) => {
   const handleChange = (e) => {

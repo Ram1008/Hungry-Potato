@@ -1,5 +1,5 @@
 import React from 'react';
-import './chefSpecial.scss';
+import './ChefSpecial.scss';
 
 const ChefSpecial = ({ dish, onCustomize }) => {
 

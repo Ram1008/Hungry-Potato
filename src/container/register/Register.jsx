@@ -1,4 +1,4 @@
-import './register.scss';
+import './Register.scss';
 import { useState, useContext } from 'react';
 import {
   Formik,

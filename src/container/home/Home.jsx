@@ -1,4 +1,4 @@
-import './home.scss';
+import './Home.scss';
 import { Dish, NavigationTab } from '../../component';
 import { useContext, useState } from 'react';
 import { dishContext, orderContext } from '../../context';

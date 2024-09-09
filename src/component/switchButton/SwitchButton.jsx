@@ -1,4 +1,4 @@
-import './switchButton.scss';
+import './SwitchButton.scss';
 
 const SwitchButton = ({ onToggle }) => {
 

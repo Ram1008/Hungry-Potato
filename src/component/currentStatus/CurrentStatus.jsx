@@ -1,4 +1,4 @@
-import './currentStatus.scss';
+import './CurrentStatus.scss';
 
 import React from 'react'
 

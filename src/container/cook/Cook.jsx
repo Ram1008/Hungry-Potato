@@ -1,6 +1,6 @@
 // import React from 'react';
 import Layout from '../../wrapper/desktopLayout/Layout';
-import './cook.scss';
+import './Cook.scss';
 import {orders} from '../../constants/orderContants';
 import { OrderCard, DesktopProfile } from '../../component';
 import { useState } from 'react';

@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import React from 'react';
-import './dish.scss';
+import './Dish.scss';
 
 const Dish = ({ dish, onCustomize }) => {
   const [selectedDish, setSelectedDish] = useState({ id: dish._id, quantity: 0 });
