@@ -16,8 +16,8 @@ const PaymentMethods = ({ onClose }) => {
         <h3>Card Payment</h3>
         <div className='card'>
           <div className='input-grp'>
-            <label htmlFor="cardNumber">Name on card</label>
-            <input type="text" id="cardNumber" placeholder="Name" />
+            <label htmlFor="cardName">Name on card</label>
+            <input type="text" id="cardName" placeholder="Name" />
           </div>
           <div className='input-grp'>
             <label htmlFor="cardNumber">Card number&nbsp;</label>
