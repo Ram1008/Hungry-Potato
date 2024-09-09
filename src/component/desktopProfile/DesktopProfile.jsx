@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './DesktopProfile.scss';
 import { cook, avatars } from '../../constants/profileConstants';
-import './desktopProfile.scss';
 import ProfilePhoto from '../../assets/images/desktopProfileImage.svg';
 
 
