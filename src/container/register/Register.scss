@@ -93,11 +93,13 @@
             }
 
             .otp-button{
-              width: 28%;
-
+              @include rounded-border(var(--secondary-color), 0.5rem);
+              padding: 0.65rem 1rem;
+              box-sizing: border-box;
               button{
-                @include hollowButton(var(--secondary-color), 5.5rem);
-                padding: 1.3rem 1rem;
+               
+                border: none;
+                margin: 0;
                 background-color: white;
                 font-size: 16px;
               }
@@ -112,8 +114,25 @@
         }
     
         .register_submit {
+          @include flex-container(row, center, center);
+          @include rounded-border(var(--secondary-color), 0.5rem);
+          width: auto;
+          padding: 1rem;
+          margin: 0 5rem;
+          box-sizing: border-box;
+          text-align: center; 
+          background-color: var(--secondary-color);
+          @include shadow();
+
+
+
           button{
-            @include filledButton(var(--secondary-color), 100%, 16px);
+            border: none;
+            margin: 0;
+            background-color: transparent;
+            font-size: 20px;
+            font-weight: 500;
+            color: white;
           }
         }
       }

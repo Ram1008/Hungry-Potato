@@ -83,7 +83,7 @@
             padding: 0.65rem 1rem;
             box-sizing: border-box;
             button{
-              // @include hollowButton(var(--secondary-color), 5rem);
+             
               border: none;
               margin: 0;
               background-color: white;
@@ -108,8 +108,8 @@
           margin: 0 5rem;
           box-sizing: border-box;
           text-align: center; 
-          
-          @include gradient-div(var(--secondary-color), var(--light-secondary-color));
+          background-color: var(--secondary-color);
+          @include shadow();
 
 
           button{
@@ -118,7 +118,7 @@
             background-color: transparent;
             font-size: 20px;
             font-weight: 500;
-            // color: var(--primary-gray-color);
+            color: white;
           }
         }
       }
