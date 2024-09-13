@@ -1,7 +1,8 @@
 @import '../../mixins';
 
 .order-card {
-  border: 1px solid var(--tertiary-color);
+  @include flex-container(column);
+  border: 1px solid var(--secondary-color);
   padding: 0.5rem 1rem;
   box-sizing: border-box;
   border-radius: 0.5rem;
@@ -13,54 +14,20 @@
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    gap: 1rem;
-
-    h2 {
-      font-size: 14px;
-      color: var(--primary-gray-color);
-      margin: 0;
-      margin-top: 0.5rem;
-    }
 
     .table-no {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: bold;
       color: var(--primary-gray-color);
     }
+    
+    
+
   }
-
-  .order-details {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    .serving-size {
-      font-size: 12px;
-      font-weight: bold;
-      color: var(--secondary-color);
-      margin: 0;
-    }
-
-    .quantity {
-      font-size: 13px;
-      font-weight: bold;
-      color: var(--secondary-color); /* Use the secondary color for quantity */
-    }
-  }
-
-  .addons {
-
-    p {
-      margin: 0;
-      font-size: 12px;
-      color: var(--primary-gray-color);
-    }
-  }
-
   .complete-btn {
     position: absolute;
-    top: 50%;
-    right: -50px;
+    bottom: -14%;
+    left: 40%;
     transform: translateY(-50%);
     background-color: white;
     border: 1px solid green;
@@ -69,7 +36,7 @@
     border-radius: 0.5rem;
     cursor: pointer;
     transition: background-color 0.3s;
-    font-size: 12px;
+    font-size: 10px;
 
     &:hover {
       background-color: green;
@@ -77,15 +44,68 @@
     }
   }
 
-  textarea {
-    height: 40px;
-    margin-top: 1rem;
-    padding: 0.5rem;
-    border: 1px solid var(--tertiary-color);
-    border-radius: 5px;
-    resize: none;
-    font-size: 12px;
-    color: var(--primary-gray-color);
+  .order-details {
+    @include flex-container(row);
+    gap: 1.5rem;
+    
+    
+    .order-dish{
+      @include flex-container(column, space-between);
+      border: 1px solid var(--tertiary-color);
+      padding: 0.5rem;
+      box-sizing: border-box;
+      border-radius: 0.5rem;
+
+      .dish-detail{
+        @include flex-container(row, space-between);
+  
+        
+        h2 {
+          font-size: 12px;
+          color: var(--primary-gray-color);
+          margin: 0;
+        }
+        .serving-size {
+          font-size: 10px;
+          color: var(--secondary-color);
+          margin: 0;
+          font-weight: 600;
+        }
+    
+        .quantity {
+          font-size: 12px;
+          font-weight: bold;
+          color: var(--secondary-color); 
+        }
+  
+  
+      }
+      .addons {
+        @include flex-container(row);
+        gap: 0.7rem;
+  
+        p {
+          margin: 0;
+          font-size: 10px;
+          color: var(--primary-gray-color);
+          font-weight: 600;
+        }
+      }
+  
+      textarea {
+        height: 20px;
+        margin-top: 0.5rem;
+        padding: 0.5rem;
+        border: 1px solid var(--tertiary-color);
+        border-radius: 5px;
+        resize: none;
+        font-size: 10px;
+        color: var(--primary-gray-color);
+        
+      }
+
+    }
+
     
   }
 }

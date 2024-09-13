@@ -9,7 +9,7 @@ import Customize from '../customize/Customize';
 const Home = () => {
   const { dishes } = useContext(dishContext);
   const [customization, setCustomization] = useState(false);
-  const [customizationData, setCustomizationData] = useState(null); // Stores the dish and selectedDish
+  const [customizationData, setCustomizationData] = useState(null);
   const { tableOrders } = useContext(orderContext);
 
   const handleCustomize = (dish=null, selectedDish=null, tableOrders=null) => {

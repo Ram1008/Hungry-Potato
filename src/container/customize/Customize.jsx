@@ -1,10 +1,10 @@
 import './Customize.scss';
-import { HorizontalLine, OrdersOnTable, ServingSize } from '../../component';
+import { HorizontalLine, OrdersOnTable, PaymentMethods, ServingSize } from '../../component';
 import React, { useContext, useState, useCallback } from 'react';
 import { orderContext } from '../../context';
 
-const Customize = ({ dish = null, selectedDish = null, handleCloseCustomization, tableOrders = null }) => {
-  const { addToCart } = useContext(orderContext);
+const Customize = ({ dish = null, selectedDish = null, handleCloseCustomization, tableOrders = null, payment = null }) => {
+  const { addToCart, cart, tableId, placeOrder } = useContext(orderContext);
 
   const initialOrder = useCallback(() => ({
     dishId: dish?._id,
@@ -84,9 +84,9 @@ const Customize = ({ dish = null, selectedDish = null, handleCloseCustomization,
               </button>
             </footer>
           </>
-        ) : (
+        ) : tableOrders ? (
           <OrdersOnTable tableOrders = {tableOrders}/>
-        )}
+        ) : payment && <PaymentMethods />}
       </div>
     </div>
   );

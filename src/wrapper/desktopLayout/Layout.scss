@@ -8,7 +8,7 @@
   height: 100vh;
 
   header {
-    @include flex-container(column, flex-start, center);
+    @include flex-container(column, space-between, center);
     width: 15%;
     height: 100%;
     background-color: var(--tertiary-color);
@@ -39,7 +39,7 @@
         margin: 0;
         padding: 0.75rem 1rem;
         box-sizing: border-box;
-        font-size: 14px;
+        font-size: 12px;
         color: var(--primary-gray-color);
         background: none;
         border: none;
@@ -47,6 +47,7 @@
         width: 100%;
         transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
         position: relative;
+        font-weight: 500;
         
         &:hover {
           background-color: white;
@@ -73,6 +74,26 @@
             transform: translateY(-50%);
           }
         }
+      }
+    }
+    .btn-container{
+      @include flex-container(column, flex-start, center);
+      gap: 0.5rem;
+      // padding: 1rem 0.5rem;
+
+      .button-primary{
+        width: 100%;
+        padding: 0.5rem 2rem;
+        @include rounded-border(var(--primary-blue-color), 0.5rem);
+        color: var(--primary-blue-color);
+
+      }
+
+      .button-danger{
+        width: 100%;
+        padding: 0.5rem 2rem;
+        @include rounded-border(var(--red-color), 0.5rem);
+        color: var(--red-color);
       }
     }
   }
@@ -109,21 +130,21 @@
     .body-nav {
       @include flex-container(row, space-between, center);
       width: 100%;
-      margin: 0.5rem 0.5rem 0.3rem 0;
+      margin: 1rem 0 0 ;
 
       .nav-search {
         width: 35%;
       }
 
       .add-button {
-        height: 40px;
-        padding: 0 2rem;
+        padding: 0.8rem 2rem;
         box-sizing: border-box;
         @include rounded-border(var(--primary-blue-color), 0.5rem);
         background-color: white;
         color: var(--primary-blue-color);
-        font-size: 12px;
+        font-size: 10px;
         font-weight: bold;
+        @include shadow();
       }
     }
 

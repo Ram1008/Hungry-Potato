@@ -1,6 +1,7 @@
 import './OrdersOnTable.scss';
 
 const OrdersOnTable = ({ tableOrders }) => {
+  console.log(tableOrders);
   const Dishes = [];
   tableOrders.map((item) => {
     item.order.map((dish) => {

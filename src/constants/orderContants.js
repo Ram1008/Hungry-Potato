@@ -1,92 +1,98 @@
 export const orders = [
     {
-        name: "Chicken Burger",
+        seating: "A",
         tableNo: "Table 1",
-        servingSize: "Small",
-        addons: ["Cheese Dip", "Coke", "Saus", "Brownie"],
+        dishes: [
+            {
+                _id: 876789,
+                name: "Chicken Burger",
+                quantity: 2,
+                servingSize: "Small",
+                addons: ["Cheese Dip", "Coke", "Saus", "Brownie"],
+                message: "",
+            },
+            {
+                _id: 876790,
+                name: "Beef Burger",
+                quantity: 1,
+                servingSize: "Medium",
+                addons: ["BBQ Sauce", "Fries", "Sprite"],
+                message: "No pickles",
+            }
+        ],
         isPending: true,
-        message: "",
-        date: new Date().toLocaleDateString('en-CA'), // 'en-CA' provides the YYYY-MM-DD format
-        quantity: 2
-    },  
+        date: new Date().toLocaleDateString('en-CA'), 
+    },
     {
-        name: "Chicken Burger",
-        tableNo: "Table 1",
-        servingSize: "Small",
-        addons: ["Cheese Dip", "Coke", "Saus", "Brownie"],
+        seating: "B",
+        tableNo: "Table 2",
+        dishes: [
+            {
+                _id: 876791,
+                name: "Veggie Pizza",
+                quantity: 1,
+                servingSize: "Large",
+                addons: ["Extra Cheese", "Olives", "Chili Flakes"],
+                message: "Less salt",
+            },
+            {
+                _id: 876792,
+                name: "Pasta Alfredo",
+                quantity: 2,
+                servingSize: "Small",
+                addons: ["Garlic Bread", "Lemonade"],
+                message: "No onions",
+            }
+        ],
+        isPending: false,
+        date: new Date().toLocaleDateString('en-CA'), 
+    },
+    {
+        seating: "C",
+        tableNo: "Table 3",
+        dishes: [
+            {
+                _id: 876793,
+                name: "Grilled Chicken",
+                quantity: 3,
+                servingSize: "Large",
+                addons: ["Mashed Potatoes", "Gravy", "Coleslaw"],
+                message: "",
+            },
+            {
+                _id: 876794,
+                name: "Caesar Salad",
+                quantity: 1,
+                servingSize: "Medium",
+                addons: ["Croutons", "Parmesan"],
+                message: "Extra dressing",
+            }
+        ],
         isPending: true,
-        message: "",
-        date: new Date().toLocaleDateString('en-CA'),
-        quantity: 2
+        date: new Date().toLocaleDateString('en-CA'), 
     },
     {
-        name: "Chicken Burger",
-        tableNo: "Table 1",
-        servingSize: "Small",
-        addons: ["Cheese Dip", "Coke", "Saus", "Brownie"],
-        isPending: true,
-        message: "",
-        date: new Date().toLocaleDateString('en-CA'),
-        quantity: 2
-    },
-    {
-        name: "Chicken Burger",
-        tableNo: "Table 1",
-        servingSize: "Small",
-        addons: ["Cheese Dip", "Coke", "Saus", "Brownie"],
+        seating: "D",
+        tableNo: "Table 4",
+        dishes: [
+            {
+                _id: 876795,
+                name: "BBQ Ribs",
+                quantity: 2,
+                servingSize: "Large",
+                addons: ["Baked Beans", "Cornbread", "Coleslaw"],
+                message: "Extra sauce",
+            },
+            {
+                _id: 876796,
+                name: "French Fries",
+                quantity: 2,
+                servingSize: "Small",
+                addons: ["Ketchup", "Mayonnaise"],
+                message: "Crispy",
+            }
+        ],
         isPending: false,
-        message: "",
-        date: new Date().toLocaleDateString('en-CA'),
-        quantity: 2
-    },
-    {
-        name: "Chicken Burger",
-        tableNo: "Table 1",
-        servingSize: "Small",
-        addons: ["Cheese Dip", "Coke", "Saus", "Brownie"],
-        isPending: false,
-        message: "",
-        date: new Date().toLocaleDateString('en-CA'),
-        quantity: 2
-    },
-    {
-        name: "Chicken Burger",
-        tableNo: "Table 1",
-        servingSize: "Small",
-        addons: ["Cheese Dip", "Coke", "Saus", "Brownie"],
-        isPending: false,
-        message: "",
-        date: new Date().toLocaleDateString('en-CA'),
-        quantity: 2
-    },
-    {
-        name: "Chicken Burger",
-        tableNo: "Table 1",
-        servingSize: "Small",
-        addons: ["Cheese Dip", "Coke", "Saus", "Brownie"],
-        isPending: false,
-        message: "",
-        date: new Date().toLocaleDateString('en-CA'),
-        quantity: 2
-    },
-    {
-        name: "Chicken Burger",
-        tableNo: "Table 1",
-        servingSize: "Small",
-        addons: ["Cheese Dip", "Coke", "Saus", "Brownie"],
-        isPending: false,
-        message: "",
-        date: new Date().toLocaleDateString('en-CA'),
-        quantity: 2
-    },
-    {
-        name: "Chicken Burger",
-        tableNo: "Table 1",
-        servingSize: "Small",
-        addons: ["Cheese Dip", "Coke", "Saus", "Brownie"],
-        isPending: false,
-        message: "",
-        date: new Date().toLocaleDateString('en-CA'),
-        quantity: 2
-    },
+        date: new Date().toLocaleDateString('en-CA'), 
+    }
 ];

@@ -6,6 +6,10 @@ const OrderState = (props) => {
   const [cart, setCart] = useState([]);
   const [tableId, setTableId] = useState("66b627e026fb8f6ef791f95b");
   const [tableOrders, setTableOrders] = useState(null);
+  const [pendingOrders, setPendingOrders] = useState();
+  const [pastOrders, setPastOrders] = useState();
+
+
   const fetchApi = async (url, method, body = null, requireToken = true) => {
     const headers = {
       'Content-Type': 'application/json',
@@ -30,6 +34,15 @@ const OrderState = (props) => {
     }
   };
 
+  const addToCart = (order) => {
+    setCart([...cart, order]);
+  };
+
+  const removeFromCart = (id) => {
+    const updatedCart = cart.filter(item => item.dishId !== id);
+    setCart(updatedCart);
+  };
+
   const getCurrentOrders = async (tableId)=>{
     const response = await fetchApi(`${host}/orders/${tableId}`, 'GET');
     if (response.status) {
@@ -37,6 +50,23 @@ const OrderState = (props) => {
 
     }
   }
+
+
+  const getPendingOrders = async ()=>{
+    const response = await fetchApi(`${host}/orders/pending`, 'GET', null, true);
+    if (response.status) {
+      setPendingOrders(response.data);
+
+    }
+  }
+
+  const getPastOrders = async () =>{
+    const response = await fetchApi(`${host}/orders`, 'GET', null, true);
+    if (response.status) {
+      setPastOrders(response.data);
+    }
+  }
+
 
   const placeOrder = async (tableId, order) => {
     let newBody = {};
@@ -52,30 +82,29 @@ const OrderState = (props) => {
     }
   };
 
-  const deleteOrder = (index) => {
-    // setOrder((prevOrders) => prevOrders.filter((_, i) => i !== index));
-  };
+  // const deleteOrder = (id) => {
+  //   const response = await fetchApi(`${host}/orders`, 'DELETE', null, true);
+  //   if (response.status) {
+  //     setPastOrders(response.data);
+  //   }
+  // };
 
-  const addToCart = (order) => {
-    setCart([...cart, order]);
-  };
-
-  const removeFromCart = (id) => {
-    const updatedCart = cart.filter(item => item.dishId !== id);
-    setCart(updatedCart);
-  };
+  
 
 
   const contextValue = {
     placeOrder,
     cart, 
     setCart,
-    deleteOrder,
     addToCart,
     tableId,
     tableOrders,
     getCurrentOrders,
-    removeFromCart
+    removeFromCart,
+    pastOrders,
+    pendingOrders,
+    getPendingOrders,
+    getPastOrders
   };
 
   useEffect(()=>{

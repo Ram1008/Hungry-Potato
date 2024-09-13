@@ -1,6 +1,6 @@
 import './PaymentMethods.scss';
 
-const PaymentMethods = ({ onClose }) => {
+const PaymentMethods = () => {
   return (
     <div className="payment-methods">
       <div className="payment-backdrop" onClick={() => onClose()} />

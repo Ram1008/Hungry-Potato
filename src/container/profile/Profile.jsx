@@ -2,33 +2,32 @@ import './Profile.scss';
 import { useContext, useState } from 'react';
 import { userContext } from '../../context';
 import { useNavigate } from 'react-router-dom';
-import { host } from '../../constants/appConstants';
+import { IMAGEURL } from '../../constants/appConstants';
 import UserProfilePhoto from '../../assets/images/UserProfilePhoto.svg';
 
 const Profile = () => {
-  const imageURL = `${host}/uploads/users/`;
+  const imageURL = `${IMAGEURL}user/`;
   const { editUser, user } = useContext(userContext);
-  const [profilePhoto, setProfilePhoto] = useState(user.user.profilePicture ? imageURL + user.user.profilePicture : UserProfilePhoto);
-  const [profilePhotoFile, setProfilePhotoFile] = useState(null); // Store the file object
+  const [profilePicture, setProfilePicture] = useState(user && user.user.profilePicture ? imageURL+user.user.profilePicture.filename : UserProfilePhoto);
   const [profileName, setProfileName] = useState(user.user.name);
   const [profileDOB, setProfileDOB] = useState(user.user.dateOfBirth || "");
   const [profileAddress, setProfileAddress] = useState(user.user.address || "");
   const [profileEmail, setProfileEmail] = useState(user.user.email || "");
+ const [photoFile, setPhototFile] = useState(null);
 
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setProfilePhotoFile(file); // Store the file object
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfilePhoto(reader.result); // Display the image preview
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+ 
+const handleImageChange = (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    setProfilePicture(URL.createObjectURL(file)); 
+    setPhototFile(file);
+  }
+};
+  
 
   const handleUpdateChanges = () => {
-    editUser(profileName, profileAddress, profileDOB, profilePhotoFile, profileEmail);
+    
+    editUser(profileName, profileAddress, profileDOB, photoFile, profileEmail);
   };
 
   const navigate = useNavigate();
@@ -42,12 +41,13 @@ const Profile = () => {
     <div className="profile_container">
       <div className="profile_head">
         <div className="profile_picture">
-          <img src={profilePhoto} alt="Profile" />
+          <img src={profilePicture} name = "profilePicture" alt="Profile" value={profilePicture} />
           <input
             type="file"
             accept="image/*"
             onChange={handleImageChange}
             id="profileImageInput"
+            name="profilePicture"
           />
           <label htmlFor="profileImageInput"></label>
         </div>
@@ -58,6 +58,7 @@ const Profile = () => {
           onChange={(e) => setProfileName(e.target.value)}
           id="profileNameInput"
           className="profile_name"
+          name='profileName'
         />
         <input
           type="text"
@@ -66,6 +67,7 @@ const Profile = () => {
           onChange={(e) => setProfileAddress(e.target.value)}
           id="profileAddressInput"
           className="profile_address"
+          name='profileAddress'
         />
         <button className="edit_button" onClick={handleUpdateChanges}>
           Update Changes
@@ -85,6 +87,7 @@ const Profile = () => {
               onChange={(e) => setProfileEmail(e.target.value)}
               id="profileEmailInput"
               className="profile_email"
+              name='profileEmail'
             />
           </div>
           <div className="info_item">
@@ -99,6 +102,7 @@ const Profile = () => {
               onChange={(e) => setProfileDOB(e.target.value)}
               id="profileDOBInput"
               className="profile_dob"
+              name='profileDOB'
             />
           </div>
         </div>

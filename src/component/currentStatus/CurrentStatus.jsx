@@ -1,16 +1,35 @@
+import { useState } from "react";
 import './CurrentStatus.scss';
+import  DeleteModal  from "../deleteModal/DeleteModal";
+import EditTable from "../editTables/EditTable";
 
-import React from 'react'
+const CurrentStatus = ({tables}) => {
 
-const CurrentStatus = ({admin}) => {
-    const handleEditClick = () =>{
-    
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editData, setEditData] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+    const handleEditClick = (table) =>{
+      setEditData(table);
+      setShowEditModal(true);
     }
+
     const handleDeleteClick = () =>{
-  
+      setShowDeleteModal(true);
     }
+
+    const handleDeleteItem = () =>{
+
+      setShowDeleteModal(false);
+    }
+    const handleEditItem = () =>{
+
+      setShowEditModal(false);
+    }
+
   return (
-    <table className="users_table">
+    <>
+      <table className="table_container">
           <thead>
             <tr>
               <th>Seating</th>
@@ -21,17 +40,17 @@ const CurrentStatus = ({admin}) => {
             </tr>
           </thead>
           <tbody>
-            {admin.tables.map((status, index) => (
+            {tables.map((table, index) => (
               <tr key={index}>
-                <td>{status.seating}</td>
-                <td>{status.tableNumber}</td>
+                <td>{table.seating}</td>
+                <td>{table.tableNumber}</td>
                 <td>
-                 {status.booked? 'Booked': 'Vacant'}
+                 {table.booked? 'Booked': 'Vacant'}
                 </td>
-                <td>{status.chairs}</td>
+                <td>{table.chairs}</td>
 
                 <td className="action_column">
-                  <button className="action_btn edit_btn" onClick={handleEditClick}>
+                  <button className="action_btn edit_btn" onClick={() => handleEditClick(table)}>
                     <i className="fas fa-pencil-alt"></i>
                   </button>
                   <button className="action_btn delete_btn" onClick={handleDeleteClick}>
@@ -41,7 +60,10 @@ const CurrentStatus = ({admin}) => {
               </tr>
             ))}
           </tbody>
-        </table>
+      </table>
+      {showDeleteModal && <DeleteModal onConfirm={handleDeleteItem} label={"table"} onCancel={() => setShowDeleteModal(false)}/>}
+      {showEditModal && <EditTable onConfirm={handleEditItem} editData={editData} onCancel={() => setShowEditModal(false)} />}
+      </>
   )
 }
 

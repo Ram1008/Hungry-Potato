@@ -1,24 +1,38 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './DesktopProfile.scss';
-import { cook, avatars } from '../../constants/profileConstants';
+import { avatars } from '../../constants/profileConstants';
 import ProfilePhoto from '../../assets/images/desktopProfileImage.svg';
+import { IMAGEURL } from '../../constants/appConstants';
 
 
-const DesktopProfile = ({setShowProfile}) => {
-  const [profileImage, setProfileImage] = useState(ProfilePhoto|| avatars[0]);
-  const [name, setName] = useState(cook.name || '');
-  const [email, setEmail] = useState(cook.email || '');
-  const [dob, setDob] = useState(cook.email || '');
-  const [address, setAddress] = useState(cook.address||'');
+const DesktopProfile = ({setShowProfile, editUser, user}) => {
+
+  const imageURL = `${IMAGEURL}user/`;
+
+  const [profileImage, setProfileImage] = useState(user && user.profilePicture ? imageURL+user.profilePicture.filename : ProfilePhoto|| avatars[0]);
+  const [name, setName] = useState(user && user.name || '');
+  const [email, setEmail] = useState(user && user.email || '');
+  const [dob, setDob] = useState(user && user.dateOfBirth || '');
+  const [address, setAddress] = useState(user && user.address ||'');
+  const [photoFile, setPhototFile] = useState(null);
 
   const handleAvatarChange = (avatar) => {
     setProfileImage(avatar);
   };
 
-  const handleImageChange = () =>{
-    
+  const handleImageChange = (event) =>{
+    const file = event.target.files[0];
+    if (file) {
+        setProfileImage(URL.createObjectURL(file)); 
+        setPhototFile(file);
+    }
 
   }
+
+  const handleUpdateChanges = () => {
+    
+    editUser(name, address, dob, photoFile, email);
+  };
   
 
   return (
@@ -78,7 +92,7 @@ const DesktopProfile = ({setShowProfile}) => {
                 <input
                     id="phone"
                     type="text"
-                    value={cook.phoneNumber}
+                    value={user?user.phone:''}
                     readOnly
                 />
             </div>
@@ -105,7 +119,7 @@ const DesktopProfile = ({setShowProfile}) => {
 
         </div>
         <div className="update-profile"> 
-         <button className='update-btn'>Update profile</button>
+         <button className='update-btn' onClick={handleUpdateChanges}>Update profile</button>
          <button className='back-btn' onClick={() => setShowProfile(false)}>Back to orders</button>
         </div>
     </div>

@@ -1,7 +1,8 @@
-import { Dish } from '../../constants/dishConstants';
-import React from 'react';
+// import './CurrentStatus.scss';
 
-const DishesTable = () => {
+import React from 'react'
+
+const OrdersTable = ({pendingOrders, pastOrders}) => {
     const handleEditClick = () =>{
     
     }
@@ -9,35 +10,28 @@ const DishesTable = () => {
   
     }
   return (
-
     <table className="admin_table">
           <thead>
             <tr>
-              <th>Name</th>
-              {Dish[0].servingSize.map((item, idx) =>(
-                <th key={idx}>{item.size}</th>
-              ))
-                }
-              <th>Tags</th>
-              <th>Availability</th>
-              <th>Veg/Non-Veg</th>
+              <th>Date</th>
+              <th>Seating</th>
+              <th>Table Number</th>
+              <th>Ordered dishes</th>
+              <th>Addons</th>
+              <th>Serving</th>
+              <th>Price</th>
               <th className="action_column">Action</th>
             </tr>
           </thead>
           <tbody>
-            {Dish.map((item, index) => (
+            {pendingOrders.map((status, index) => (
               <tr key={index}>
-                <td>{item.name}</td>
-                {item.servingSize.map((item, idx) =>(
-                    <td key={idx}>{item.price}</td>
-                ))}
+                <td>{status.seating}</td>
+                <td>{status.tableNumber}</td>
                 <td>
-                {item.tags.map((item, idx) =>(
-                    <td key={idx}>{item}</td>
-                ))}
+                 {status.booked? 'Booked': 'Vacant'}
                 </td>
-                <td>{item.available}</td>
-                <td>{item.foodType}</td>
+                <td>{status.chairs}</td>
 
                 <td className="action_column">
                   <button className="action_btn edit_btn" onClick={handleEditClick}>
@@ -54,4 +48,4 @@ const DishesTable = () => {
   )
 }
 
-export default DishesTable;
+export default OrdersTable ;

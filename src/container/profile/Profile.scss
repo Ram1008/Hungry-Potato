@@ -87,11 +87,11 @@
         position: absolute;
         top: 1rem;
         right: 1rem;
-        background-color: var(--primary-color);
+        background-color: var(--green-color);
         @include rounded-border(var(--green-color), 0.25rem);
-        padding: 0.5rem 1rem;
+        padding: 0.5rem 0.8rem;
         cursor: pointer;
-        color: var(--green-color);
+        color: white;
         font-size: 0.875rem;
         }
 
@@ -267,25 +267,21 @@
       
 
     .profile_footer {
-        @include flex-container(row, space-around);
-        width: 100%;
-        padding: 0 1rem 0.5rem;
+      @include flex-container(row, center, center);
+      
+      button{
+        text-align: center; 
+        @include shadow();
+        @include rounded-border(var(--red-color), 0.5rem);
+        background-color: var(--red-color);
+        padding: 1rem 2rem;
         box-sizing: border-box;
-
-        .logout_button{
-            @include hollowButton(red, 100%);
-            background-color: white;
-            font-size: 1.1rem;
-        }
-        // .dashboard_button {
-        //     background-color: var(--primary-color);
-        //     color: #fff;
-        //     border: none;
-        //     padding: 0.5rem 1rem;
-        //     border-radius: 0.25rem;
-        //     cursor: pointer;
-        //     font-size: 0.875rem;
-        // }
-    }
+        border: none;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+      }
     }
 }

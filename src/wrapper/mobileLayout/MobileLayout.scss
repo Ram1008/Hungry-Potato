@@ -44,16 +44,20 @@
                   cursor: pointer;
                   @include shadow();
                   padding: 0;
-              
                   width: 3rem;
                   height: 3rem;
-              
+                  display: flex;
+                  justify-content: center;
+                  align-items: center; 
+                
                   img {
                     object-fit: cover;
-                    width: 80%;
-                    height: 80%;
+                    @include rounded-border(transparent, 50%);
+                    width: 100%; 
+                    height: 100%;
                   }
                 }
+                
               }
 
               

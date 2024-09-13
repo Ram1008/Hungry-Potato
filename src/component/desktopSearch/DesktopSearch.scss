@@ -2,19 +2,19 @@
 
 .search-bar {
   @include flex-container(row, start, center);
-//   padding: 0.3rem;
+  padding: 0.5rem;
   box-sizing: border-box;
-  height: 38px;
   @include rounded-border(var(--secondary-color), 0.5rem);
+  @include shadow();
   background-color: var(--primary-color);
   width: 100%;
-  position: relative;
+  gap: 0.5rem;
 }
 
 .search-icon {
   font-size: 1.2rem;
   color: var(--secondary-color);
-  margin-right: 0.5rem;
+  font-weight: 900;
 }
 
 .search-input {
@@ -23,7 +23,7 @@
   background: none;
   outline: none;
   font-size: 12px;
-  color: var(--text-color);
+  color: var(--primary-gray-color);
   
   &::placeholder {
     color: var(--primary-gray-color);

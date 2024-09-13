@@ -8,16 +8,23 @@ const UserState = (props) => {
   const [user, setUser] = useState(null);
 
   const fetchApi = async (url, method, body = null, requireToken = false) => {
-    const headers = {
-      'Content-Type': 'application/json'
-    };
+    const headers = {};
     
     if (requireToken) {
       headers['Authorization'] = `Bearer ${localStorage.getItem('hungry&Potato-token')}`;
     }
+
+    if (body) {
+      if (body instanceof FormData) {
+        // headers['Content-Type'] = 'application/json';
+      } else {
+        headers['Content-Type'] = 'application/json';
+        body = JSON.stringify(body);
+      }
+    }
   
     try {
-      const response = await fetch(url, { method, headers, body: body ? JSON.stringify(body) : null});
+      const response = await fetch(url, { method, headers, body: body ? body : null});
       const json = await response.json();
 
       return {
@@ -35,31 +42,26 @@ const UserState = (props) => {
 
   const getUser = async () => {
     const response = await fetchApi(`${host}/users/profile`, 'GET', null, true);
+    console.log(response);
     if (response.status) {
-      console.log(response);
       setUser(response.data);
       return response.status;
     }
   };
 
   const getUsers = async () => {
-    const data = await fetchApi(`your-api-url/users`, 'GET');
-    if (data) setUsers(data);
+    const {status, data} = await fetchApi(`${host}/users`, 'GET', null, true);
+    if (status) setUsers(data);
   };
 
-  const getUsersByRole = async (role) => {
-    const data = await fetchApi(`your-api-url/users/role`, 'POST', { role });
-    if (data) setUsers(data);
-  };
-
-  const addUser = async (name, email, dob, mobileNumber) => {
-    const data = await fetchApi(`your-api-url/users`, 'POST', { name, email, dob, mobileNumber });
-    if (data) setUsers([...users, data]);
+  const addUser = async (name, email, dob, mobileNumber, profilePicture) => {
+    const {status, data} = await fetchApi(`${host}/users`, 'POST', { name, email, dob, mobileNumber, profilePicture });
+    if (status) setUsers([...users, data]);
   };
 
   const deleteUser = async (id) => {
-    const data = await fetchApi(`your-api-url/users/${id}`, 'DELETE');
-    if (data) {
+    const {status} = await fetchApi(`${host}/users/${id}`, 'DELETE');
+    if (status) {
       setUsers(users.filter(user => user._id !== id));
     //   props.showAlert(data.msg, "success");
     } else {
@@ -67,19 +69,28 @@ const UserState = (props) => {
     }
   };
 
-  const editUser = async (name, address, dateOfBirth, profilePhoto, email) => {
+  const editUser = async (name, address, dateOfBirth, profilePicture, email) => {
     const formData = new FormData();
     if (name) formData.append('name', name);
     if (address) formData.append('address', address);
     if (dateOfBirth) formData.append('dateOfBirth', dateOfBirth);
-    if (profilePhoto) formData.append('profilePicture', profilePhoto); // Append the file object directly
+    if (profilePicture) formData.append('profilePicture', profilePicture); 
     if (email) formData.append('email', email);
-  
-    const response = await fetchApi(`${host}/users/profile`, 'PUT', formData, true);
+    
+
+    const response = await fetchApi(`${host}/users/profile`, 'PUT',formData, true);
     if (response.status) {
       console.log("Successfully edited", response.data);
     }
   };
+  
+  const getUsersByRole = async (role) => {
+    const data = await fetchApi(`your-api-url/users/role`, 'POST', { role });
+    if (data) setUsers(data);
+  };
+
+
+
 
   return (
     <userContext.Provider value={{ user, getUser, getUsers, getUsersByRole, addUser, deleteUser, editUser }}>

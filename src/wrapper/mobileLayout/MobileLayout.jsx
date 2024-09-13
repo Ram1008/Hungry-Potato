@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import './MobileLayout.scss';
 import { ChefSpecial, SwitchButton, SearchBar } from '../../component';
 import { dishContext, orderContext, userContext } from '../../context';
@@ -6,16 +6,21 @@ import { useNavigate } from 'react-router-dom';
 import UserIcon from '../../assets/icons/UserIcon.png';
 import { host } from '../../constants/appConstants';
 
-const MobileLayout = ({ onCustomize = null, showCart = false, setShowPaymentMethods = null, showPaymentMethods= null , children }) => {
+const MobileLayout = ({ onCustomize = null, showCart = false, setShowPaymentMethods = null, showPaymentMethods = null, children }) => {
 
   const navigate = useNavigate();
 
   const { user, getUser } = useContext(userContext);
   const { cart, placeOrder, tableId } = useContext(orderContext);
   const { dishes, vegOnly, setVegMode, vegMode, chefSpecial, setSearchTerm } = useContext(dishContext);
+  console.log(showPaymentMethods);
 
-  const userProfilePicture = user && user.profilePicture 
-  ? `${host}/uploads/users/${user.profilePicture}` 
+  // const [payment, setPayment] = useState(showPaymentMethods || false);
+  console.log(user);
+  // const userProfilePicture =  `${host}/images/user/${user.profilePicture.filename}` ;
+ 
+  const userProfilePicture = user && user.user.profilePicture 
+  ? `${host}/images/user/${user.user.profilePicture.filename}` 
   : UserIcon;
   
   
@@ -108,16 +113,16 @@ const MobileLayout = ({ onCustomize = null, showCart = false, setShowPaymentMeth
     ) : (
       <footer className="mobileLayout_footer">
         <div className='cart-actions'>
-            {!showPaymentMethods && <div className='cart-paymentMethod'>
+            {showPaymentMethods ? null: (<div className='cart-paymentMethod'>
               <button onClick={handlePayment}>
                 <div>Payment methods</div>
                 <div>→</div>
               </button>
-            </div>}
+            </div>)}
             <div className='cart-payLater'>
               <button onClick={handlePlaceOrder}>
                 <div >Place Order</div>
-                {!showPaymentMethods && <div >Pay at desk</div>}
+                {showPaymentMethods ? null :( <div >Pay at desk</div>)}
               </button>
             </div>
           </div>
@@ -130,6 +135,12 @@ const MobileLayout = ({ onCustomize = null, showCart = false, setShowPaymentMeth
     getUser();
 
   }, [])
+  
+  useEffect(()=>{
+
+    // getUser();
+
+  }, [showPaymentMethods])
   return (
     <div className="mobileLayout_container">
       {headerLayout}

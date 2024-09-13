@@ -9,25 +9,32 @@ const OrderCard = ({ order }) => {
   return (
     <div className="order-card">
       <div className="order-header">
-        <h2>{order.name}</h2>
         <span className="table-no">{order.tableNo}</span>
-      </div>
-      <div className="order-details">
-        <p className="serving-size">{order.servingSize}</p>
-        <span className="quantity">{order.quantity.toString().padStart(2, '0')}</span>
-      </div>
-      <div className="addons">
-        {order.addons.map((addon, index) => (
-          <p key={index}>{addon}</p>
-        ))}
-      </div>
-      <textarea
-        value={order.message || 'Message for cook'}
-        readOnly
-      />
-      {order.isPending && (
+        {order.isPending && (
         <button onClick={handleMarkComplete} className="complete-btn">Mark complete</button>
       )}
+      </div>
+          <div className="order-details" >
+            {order.dishes.map((dish)=>(
+              <div key={dish._id} className='order-dish'>
+                  <div className='dish-detail'>
+                    <h2>{dish.name}</h2>
+                    <div className='quantity'>X {dish.quantity}</div>
+                    <div className='serving-size'>{dish.servingSize}</div>
+                  </div>
+                  <div className="addons">
+                    {dish.addons.map((addon, index) => (
+                      <p key={index}>{addon}</p>
+                    ))}
+                  </div>
+                  <textarea
+                    value={order.message || 'Message for cook'}
+                    readOnly
+                  />
+                  </div>
+              ))
+            }
+            </div>
     </div>
   );
 };

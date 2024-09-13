@@ -5,8 +5,8 @@ const DesktopNavTab = () => {
   const [activeTab, setActiveTab] = useState('Customers');
 
   return (
-    <div className='desktopNav_container'>
-      <ul>
+    
+      <ul className='desktopNav_container'>
         {['Customers', 'Staff', 'Admins', 'Cooks'].map(tab => (
           <li
             key={tab}
@@ -17,7 +17,7 @@ const DesktopNavTab = () => {
           </li>
         ))}
       </ul>
-    </div>
+    
   );
 };
 
