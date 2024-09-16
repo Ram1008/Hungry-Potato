@@ -1,13 +1,15 @@
+import { useContext } from 'react';
 import './DesktopNavTab.scss';
-import { useState } from 'react';
+import { adminContext } from '../../context';
 
 const DesktopNavTab = () => {
-  const [activeTab, setActiveTab] = useState('Customers');
+  const {activeTab, setActiveTab, tabData} = useContext(adminContext);
 
   return (
     
       <ul className='desktopNav_container'>
-        {['Customers', 'Staff', 'Admins', 'Cooks'].map(tab => (
+        
+        {tabData.map(tab => (
           <li
             key={tab}
             className={activeTab === tab ? 'active' : ''}

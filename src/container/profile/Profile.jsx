@@ -8,7 +8,7 @@ import UserProfilePhoto from '../../assets/images/UserProfilePhoto.svg';
 const Profile = () => {
   const imageURL = `${IMAGEURL}user/`;
   const { editUser, user } = useContext(userContext);
-  const [profilePicture, setProfilePicture] = useState(user && user.user.profilePicture ? imageURL+user.user.profilePicture.filename : UserProfilePhoto);
+  const [profilePicture, setProfilePicture] = useState(user? user.user.profilePicture.url : UserProfilePhoto);
   const [profileName, setProfileName] = useState(user.user.name);
   const [profileDOB, setProfileDOB] = useState(user.user.dateOfBirth || "");
   const [profileAddress, setProfileAddress] = useState(user.user.address || "");
@@ -41,7 +41,7 @@ const handleImageChange = (event) => {
     <div className="profile_container">
       <div className="profile_head">
         <div className="profile_picture">
-          <img src={profilePicture} name = "profilePicture" alt="Profile" value={profilePicture} />
+          <img src={profilePicture} name = "profilePicture" alt="Profile" />
           <input
             type="file"
             accept="image/*"

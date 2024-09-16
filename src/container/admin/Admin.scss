@@ -1,4 +1,12 @@
 @import '../../mixins';
 
+.admin_container{
+    @include flex-container(column, flex-start, center);
+
+    .admin_tab {
+        margin: 0.5rem 0;
+      }
+}
+
 
   

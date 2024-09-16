@@ -1,6 +1,6 @@
 @import '../../mixins';
 
-.table_container {
+.currentStatus_container {
     width: 100%;
     border-collapse: collapse;
 
@@ -40,19 +40,6 @@
         @include shadow();
         @include rounded-border(var(--primary-gray-color));
         
-      }
-    }
-
-    .user_info {
-      display: flex;
-      align-items: center;
-
-      .avatar {
-        width: 30px;
-        height: 30px;
-        border-radius: 0.5rem;
-        margin-right: 0.8rem;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       }
     }
 

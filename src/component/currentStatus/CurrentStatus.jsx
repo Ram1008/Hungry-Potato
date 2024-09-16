@@ -1,70 +1,99 @@
-import { useState } from "react";
+import { useContext } from "react";
 import './CurrentStatus.scss';
-import  DeleteModal  from "../deleteModal/DeleteModal";
+import DeleteModal from "../deleteModal/DeleteModal";
 import EditTable from "../editTables/EditTable";
+import AddTable from "../editTables/EditTable";
+import { adminContext } from "../../context";
 
 const CurrentStatus = ({tables}) => {
+  const { setEditData, addATable, deleteData,showAddModal, setShowAddModal, setDeleteData, setShowEditModal, setShowDeleteModal, showDeleteModal, deleteTable, showEditModal, editData, editTable, activeTab, searchTerm } = useContext(adminContext);
 
-  const [showEditModal, setShowEditModal] = useState(false);
-  const [editData, setEditData] = useState(null);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  let viewTables = activeTab === 'All' ? tables : tables.filter(table => table.restroNumber === activeTab)
 
-    const handleEditClick = (table) =>{
-      setEditData(table);
-      setShowEditModal(true);
-    }
+  if (searchTerm) {
+    const lowercasedSearchTerm = searchTerm.toLowerCase();
+  
+    viewTables = viewTables.filter(table => {
+      const isSearchTermNumber = !isNaN(searchTerm);
+  
+      return (
+        table.tableNumber.toLowerCase().includes(lowercasedSearchTerm) ||
+        (isSearchTermNumber && table.seats === Number(searchTerm)) || // Compare seats only if searchTerm is a number
+        table.status.toLowerCase().includes(lowercasedSearchTerm)
+      );
+    });
+  }
+  
 
-    const handleDeleteClick = () =>{
-      setShowDeleteModal(true);
-    }
+  const handleEditClick = (table) => {
+    setEditData(table);
+    setShowEditModal(true);
+  };
 
-    const handleDeleteItem = () =>{
+  const handleDeleteClick = (tableId) => {
+    setDeleteData(tableId);
+    setShowDeleteModal(true);
+  };
 
-      setShowDeleteModal(false);
-    }
-    const handleEditItem = () =>{
+  const handleDeleteTable = (tableId) => {
+    deleteTable(tableId);
+    setShowDeleteModal(false);
+  };
 
-      setShowEditModal(false);
-    }
+  const handleEditTable = (id, seating, tableNumber, status, chairs) => {
+    editTable(id, seating, tableNumber, status, chairs)
+    setShowEditModal(false);
+  };
+
+  const handleAddTable = (id, seating, tableNumber, status, chairs) =>{
+    addATable(seating, tableNumber, status, chairs);
+  }
 
   return (
     <>
-      <table className="table_container">
-          <thead>
-            <tr>
-              <th>Seating</th>
-              <th>Table Number</th>
-              <th>Booking Status</th>
-              <th>Number of chairs</th>
-              <th className="action_column">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {tables.map((table, index) => (
-              <tr key={index}>
-                <td>{table.seating}</td>
-                <td>{table.tableNumber}</td>
-                <td>
-                 {table.booked? 'Booked': 'Vacant'}
-                </td>
-                <td>{table.chairs}</td>
+      <table className="currentStatus_container">
+        <thead>
+          <tr>
+            <th>Restaurent</th>
+            <th>Table Number</th>
+            <th>Booking Status</th>
+            <th>Number of chairs</th>
+            <th className="action_column">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {viewTables.map((table, index) => (
+            <tr key={index}>
+              <td>{table.restroNumber}</td>
+              <td>{table.tableNumber}</td>
+              <td>{table.status}</td>
+              <td>{table.seats}</td>
 
-                <td className="action_column">
-                  <button className="action_btn edit_btn" onClick={() => handleEditClick(table)}>
-                    <i className="fas fa-pencil-alt"></i>
-                  </button>
-                  <button className="action_btn delete_btn" onClick={handleDeleteClick}>
-                    <i className="fas fa-trash"></i>
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
+              <td className="action_column">
+                <button className="action_btn edit_btn" onClick={() => handleEditClick(table)}>
+                  <i className="fas fa-pencil-alt"></i>
+                </button>
+                <button className="action_btn delete_btn" onClick={() => handleDeleteClick(table._id)}>
+                  <i className="fas fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </table>
-      {showDeleteModal && <DeleteModal onConfirm={handleDeleteItem} label={"table"} onCancel={() => setShowDeleteModal(false)}/>}
-      {showEditModal && <EditTable onConfirm={handleEditItem} editData={editData} onCancel={() => setShowEditModal(false)} />}
-      </>
-  )
-}
+      {showDeleteModal && (
+        <DeleteModal onConfirm={() => handleDeleteTable(deleteData)} label={"table"} onCancel={() => setShowDeleteModal(false)} />
+      )}
+      {showEditModal && (
+        <EditTable onConfirm={handleEditTable} editData={editData} onCancel={() => setShowEditModal(false)} label = "Edit Table" />
+      )}
+      {showAddModal &&(
+        <AddTable onConfirm={handleAddTable} onCancel={() => setShowAddModal(false)} label = "Add Table"/>
+      )
+
+      }
+    </>
+  );
+};
 
 export default CurrentStatus;

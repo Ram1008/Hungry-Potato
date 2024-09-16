@@ -1,30 +1,35 @@
-  import React, { useState } from 'react';
   import './UsersTable.scss';
   import UserProfile from '../../assets/images/UserProfilePhoto.svg';
   import  DeleteModal  from "../deleteModal/DeleteModal";
 import DesktopProfile from '../desktopProfile/DesktopProfile';
+import { adminContext, userContext } from '../../context';
+import { useContext } from 'react';
 
   const UsersTable = ({users}) => {
+    const { setEditData, setShowProfile, showProfile, addATable, deleteData,showAddModal, setShowAddModal, setDeleteData, setShowEditModal, setShowDeleteModal, showDeleteModal, deleteTable, showEditModal, editData, editTable, activeTab, searchTerm } = useContext(adminContext);
+    const {deleteUser, editUserAdmin, addUser} = useContext(userContext);
 
-      const [showProfile, setShowProfile] = useState(false);
-      const [editData, setEditData] = useState(null);
-      const [showDeleteModal, setShowDeleteModal] = useState(false);
-    
       const handleEditClick = (user) =>{
         setEditData(user);
         setShowProfile(true);
       }
 
-      const handleDeleteClick = () =>{
+      const handleDeleteClick = (userId) =>{
+        setDeleteData(userId);
         setShowDeleteModal(true);
       }
 
-      const handleDeleteItem = () =>{
-
+      const handleDeleteUser = (userId) =>{
+        deleteUser(userId);
         setShowDeleteModal(false);
       }
-      const handleEditItem = () =>{
+      const handleEditUser = (id, name, address, dateOfBirth, profilePicture, email) =>{
+        editUserAdmin(id, name, address, dateOfBirth, profilePicture, email)
+        setShowEditModal(false);
+      }
 
+      const handleAddUser = (id, name, address, dateOfBirth, profilePicture, email, phone) =>{
+        addUser(name, address, dateOfBirth, profilePicture, email, phone)
         setShowEditModal(false);
       }
     return (
@@ -58,15 +63,18 @@ import DesktopProfile from '../desktopProfile/DesktopProfile';
                     <button className="action_btn edit_btn" onClick={() => handleEditClick(user)}>
                       <i className="fas fa-pencil-alt"></i>
                     </button>
-                    <button className="action_btn delete_btn" onClick={() => handleDeleteClick(user._id||"")}>
+                    <button className="action_btn delete_btn" onClick={() => handleDeleteClick(user._id)}>
                       <i className="fas fa-trash"></i>
                     </button>
                   </td>
                 </tr>
               ))}
             </tbody>
-          </table> : showProfile && <DesktopProfile editUser={handleEditItem} user={editData} setShowProfile={setShowProfile} />}
-          {showDeleteModal && <DeleteModal onConfirm={handleDeleteItem} label={"user"} onCancel={() => setShowDeleteModal(false)}/>}
+          </table> : showProfile && <DesktopProfile editUser={handleEditUser} user={editData} setShowProfile={setShowProfile} />}
+          {showDeleteModal && <DeleteModal onConfirm={handleDeleteUser} label={"user"} onCancel={() => setShowDeleteModal(false)}/>}
+          {showAddModal &&(
+            <DesktopProfile editUser={handleEditUser} user={editData} setShowProfile={setShowProfile}/>
+          )}
         </>
     )
   }

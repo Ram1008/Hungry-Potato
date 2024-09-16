@@ -1,43 +1,49 @@
 import Layout from '../../wrapper/desktopLayout/Layout';
 import './Cook.scss';
-import {orders} from '../../constants/orderContants';
 import { OrderCard, DesktopProfile } from '../../component';
-import { useContext, useEffect, useState } from 'react';
-import { userContext } from '../../context';
-import { orderContext } from '../../context';
+import { useContext, useEffect } from 'react';
+import { adminContext, userContext,orderContext } from '../../context';
 
 
 
 const Cook = () => {
-
-  const { pendingOrders, pastOrders, getPendingOrders, getPastOrders } = useContext(orderContext);
   
+  const { getAllOrders, orders, editOrder} = useContext(orderContext);
+  const { showProfile, setShowProfile } = useContext(adminContext);
   const { getUser, editUser, user } = useContext(userContext);
-  
-  const todayOrders = orders.filter(order => !order.isPending );
-  const yesterdayOrders = orders.filter(order => !order.isPending);
-  const [showProfile, setShowProfile] = useState(false);
+
+  const todaysDate = new Date();
+  const yesterdaysDate = new Date();
+  const pendingOrders =  orders ? orders.filter(item => ['pending', 'preparing'].includes(item.status)):null;
+  const todayOrders = orders ? orders.filter(order => {
+    const orderDate = new Date(order.updatedAt).getDate();
+    return order.status !== 'pending' && order.status !== 'preparing' && todaysDate === orderDate ;
+  }  ): null;
+  const yesterdayOrders = orders ?orders.filter(order => {
+    const orderDate = new Date(order.updatedAt).getDate();
+    return order.status !== 'pending' && order.status !== 'preparing' && yesterdaysDate === orderDate; 
+  }  ):null;
+  const pastOrders = orders ?orders.filter(order => {
+    const orderDate = new Date(order.updatedAt).getDate();
+    return order.status !== 'pending' && order.status !== 'preparing' && todaysDate !== orderDate &&  yesterdaysDate !== orderDate; 
+  }  ):null;
+
 
 
   useEffect( () =>{
     getUser();
-    getPendingOrders();
-    getPastOrders();
+    getAllOrders();
   }, [])
 
   return (
-    <Layout
-    heading="Bonjour Cuisinier"
-    showSearchBar = {false}
-    setShowProfile={setShowProfile}>
-
+    <Layout heading="Bonjour Cuisinier">
       {!showProfile ? <div className='cook_container'>
         <div className='active-orders'>
           <p className='status'>Pending</p>
           <div className='orders-list'>
-            {orders.map((order, index) => (
+            {pendingOrders.map((order, index) => (
 
-              <OrderCard key={index} order={order} />
+              <OrderCard key={index} order={order} markComplete={editOrder} />
             ))}
           </div>
         </div>
@@ -62,7 +68,7 @@ const Cook = () => {
         <div className='past-orders'>
           <p className='status'>Past orders</p>
           <div className='orders-list'>
-            {yesterdayOrders.map((order, index) => (
+            {pastOrders.map((order, index) => (
               <OrderCard key={index} order={order} />
             ))}
           </div>

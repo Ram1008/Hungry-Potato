@@ -1,14 +1,22 @@
-// import './CurrentStatus.scss';
 
-import React from 'react'
 
-const OrdersTable = ({pendingOrders, pastOrders}) => {
+const OrdersTable = ({orders}) => {
+
     const handleEditClick = () =>{
     
     }
     const handleDeleteClick = () =>{
   
+
     }
+
+    const dishes = [];
+    orders.forEach(element => {
+      element.order.forEach(dish =>{
+        dishes.push(dish.name)
+      })
+    });
+
   return (
     <table className="admin_table">
           <thead>
@@ -24,14 +32,14 @@ const OrdersTable = ({pendingOrders, pastOrders}) => {
             </tr>
           </thead>
           <tbody>
-            {pendingOrders.map((status, index) => (
+            {orders.map((order, index) => (
               <tr key={index}>
-                <td>{status.seating}</td>
-                <td>{status.tableNumber}</td>
+                {/* <td>{status.seating}</td> */}
+                <td>{order.tableNumber}</td>
                 <td>
-                 {status.booked? 'Booked': 'Vacant'}
+                 {dishes.map((dish) => {dish})}
                 </td>
-                <td>{status.chairs}</td>
+                <td>{order.chairs}</td>
 
                 <td className="action_column">
                   <button className="action_btn edit_btn" onClick={handleEditClick}>

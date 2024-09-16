@@ -16,12 +16,8 @@ const MobileLayout = ({ onCustomize = null, showCart = false, setShowPaymentMeth
   console.log(showPaymentMethods);
 
   // const [payment, setPayment] = useState(showPaymentMethods || false);
-  console.log(user);
-  // const userProfilePicture =  `${host}/images/user/${user.profilePicture.filename}` ;
  
-  const userProfilePicture = user && user.user.profilePicture 
-  ? `${host}/images/user/${user.user.profilePicture.filename}` 
-  : UserIcon;
+ 
   
   
   const handleViewCart = () => {
@@ -50,7 +46,6 @@ const MobileLayout = ({ onCustomize = null, showCart = false, setShowPaymentMeth
         navigate('/')
       }
     }else{
-      //handle payment here
       const response = await placeOrder(tableId, cart);
       if (response.status) {
         navigate('/')
@@ -74,7 +69,7 @@ const MobileLayout = ({ onCustomize = null, showCart = false, setShowPaymentMeth
         </div>}
         <div className="user-profile">
             <button onClick={handleProfileClick}>
-                <img src= {userProfilePicture} alt='profile'/> 
+                <img src= {user ? user.user.profilePicture.url: ''} alt='profile'/> 
             </button>
         </div>
       </div>

@@ -1,98 +1,95 @@
-// @import '../../mixins';
+@import '../../mixins';
 
-// .users_table {
-//     width: 100%;
-//     border-collapse: collapse;
-//     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+.dish_table {
+    width: 100%;
+    border-collapse: collapse;
 
-//     th, td {
-//       padding: 0.8rem 1.2rem;
-//       box-sizing: content-box;
-//       text-align: left;
+    th, td {
+      padding: 0.8rem 0.5rem;
+      box-sizing: content-box;
+      text-align: left;
+    }
+
+    th {
+      font-size: 14px;
+      color: var(--primary-gray-color);
+      background-color: var(--light-gray-color);
       
-//     }
+    }
 
-//     th {
-//       font-size: 14px;
-//       color: var(--primary-gray-color);
-//       background-color: var(--light-gray-color);
+    td {
+      font-size: 10px;
+      color: var(--primary-gray-color);
+      font-weight: 500;
+      border-radius: 0.5rem;
+    }
+
+    tbody tr {
       
-//     }
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
 
-//     td {
-//       font-size: 10px;
-//       color: var(--primary-gray-color);
-//       font-weight: 500;
-//       border-radius: 0.5rem;
-//     }
+      &:nth-child(odd) {
+        background-color: white;
+      }
 
-//     tbody tr {
-      
-//       transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      &:nth-child(even) {
+        background-color: var(--light-gray-color);
+      }
 
-//       &:nth-child(odd) {
-//         background-color: white;
-//       }
+      &:hover {
+      //   background-color: var(--light-hover-color);
+      @include rounded-border(var(--primary-blue-color), 0.5rem);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+    }
 
-//       &:nth-child(even) {
-//         background-color: var(--light-gray-color);
-//       }
+    .user_info {
+      display: flex;
+      align-items: center;
 
-//       &:hover {
-//       //   background-color: var(--light-hover-color);
-//       @include rounded-border(var(--primary-blue-color), 0.5rem);
-//         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-//       }
-//     }
+      .avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 0.5rem;
+        margin-right: 0.8rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+    }
 
-//     .user_info {
-//       display: flex;
-//       align-items: center;
+    .action_column {
+      text-align: right;
+      padding-right: 1.5rem;
+    }
 
-//       .avatar {
-//         width: 30px;
-//         height: 30px;
-//         border-radius: 0.5rem;
-//         margin-right: 0.8rem;
-//         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-//       }
-//     }
+    .action_btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      transition: color 0.3s ease, transform 0.2s ease;
 
-//     .action_column {
-//       text-align: right;
-//       padding-right: 1.5rem;
-//     }
+      &:hover {
+        transform: scale(1.1);
+      }
 
-//     .action_btn {
-//       background: none;
-//       border: none;
-//       cursor: pointer;
-//       font-size: 16px;
-//       margin-left: 0.5rem;
-//       transition: color 0.3s ease, transform 0.2s ease;
+      &.edit_btn {
+        color: var(--primary-blue-color);
 
-//       &:hover {
-//         transform: scale(1.1);
-//       }
+        &:hover {
+          color: #3498db;
+        }
+      }
 
-//       &.edit_btn {
-//         color: var(--primary-blue-color);
+      &.delete_btn {
+        color: #e74c3c;
 
-//         &:hover {
-//           color: #3498db;
-//         }
-//       }
+        &:hover {
+          color: #c0392b;
+        }
+      }
 
-//       &.delete_btn {
-//         color: #e74c3c;
-
-//         &:hover {
-//           color: #c0392b;
-//         }
-//       }
-
-//       i {
-//         font-size: 1rem;
-//       }
-//     }
-//   }
+      i {
+        font-size: 1rem;
+      }
+    }
+  }

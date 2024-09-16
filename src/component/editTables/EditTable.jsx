@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import './editTable.scss';
 
-const EditTable = ({ editData, onConfirm, onCancel }) => {
+const EditTable = ({ editData = null, onConfirm, onCancel, label  }) => {
     
-    const [seating, setSeating] = useState(editData.seating || '');
-    const [tableNumber, setTableNumber] = useState(editData.tableNumber || '');
-    const [booked, setBooked] = useState(editData.booked || false);
-    const [chairs, setChairs] = useState(editData.chairs || '');
+    const [seating, setSeating] = useState(editData ? editData.restroNumber : '');
+    const [tableNo, setTableNo] = useState(editData ? editData.tableNumber : '');
+    const [booked, setBooked] = useState(editData ? editData.status === 'vacant'  || editData.status === 'available'? false :true : false);
+    const [chairs, setChairs] = useState(editData ? editData.seats : '');
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -15,7 +15,7 @@ const EditTable = ({ editData, onConfirm, onCancel }) => {
                 setSeating(value);
                 break;
             case 'tableNumber':
-                setTableNumber(value);
+                setTableNo(value);
                 break;
             case 'booked':
                 setBooked(e.target.checked);
@@ -29,8 +29,8 @@ const EditTable = ({ editData, onConfirm, onCancel }) => {
     };
 
     const handleSubmit = () => {
-        const updatedTable = { seating, tableNumber, booked, chairs };
-        onConfirm(updatedTable);
+        const status = booked === false ? 'available': 'booked'
+        onConfirm(editData?editData._id: null, seating, tableNo, status, chairs);
         onCancel(); 
     };
 
@@ -38,7 +38,7 @@ const EditTable = ({ editData, onConfirm, onCancel }) => {
         <div className="editTable_backdrop" onClick={onCancel}>
             <div className="editTable_container" onClick={(e) => e.stopPropagation()}>
                 <div className="editTable_header">
-                    <h2>Edit Table</h2>
+                    <h2>{label}</h2>
                     <button className="close-btn" onClick={onCancel}>&times;</button>
                 </div>
                 <div className="editTable_body">
@@ -56,7 +56,7 @@ const EditTable = ({ editData, onConfirm, onCancel }) => {
                         <input
                             type="text"
                             name="tableNumber"
-                            value={tableNumber}
+                            value={tableNo}
                             onChange={handleInputChange}
                         />
                     </div>

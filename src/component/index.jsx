@@ -20,4 +20,4 @@ export { default as CurrentStatus } from './currentStatus/CurrentStatus';
 export { default as PaymentMethods } from './paymentMethods/PaymentMethods';
 export { default as OrdersTable } from './ordersTable/OrdersTable';
 export { default as DeleteModal } from './deleteModal/DeleteModal';
-export { default as EditModal } from './editModal/EditModal';
+export { default as EditModal } from './editDish/EditDish';

@@ -1,47 +1,43 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import './Admin.scss';
 import Layout from '../../wrapper/desktopLayout/Layout';
-import { admin } from '../../constants/adminConstants'; 
-
 import { UsersTable, DishesTable, CurrentStatus, DesktopProfile, OrdersTable } from '../../component';
-import { orderContext, userContext } from '../../context';
+import { adminContext, dishContext, orderContext, userContext } from '../../context';
 
 const Admin = () => {
-  // State to manage which table is shown
-  const [activeTable, setActiveTable] = useState('currentStatus');
-  const {users, user, editUser} = useContext(userContext);
-  const {pendingOrders, pastOrders} = useContext(orderContext);
-  const [showProfile, setShowProfile] = useState(false);
+  
+  const {users, user, editUser, getUser, getUsers} = useContext(userContext);
+  const {getDishes, dishes} = useContext(dishContext);
+  const {orders} = useContext(orderContext);
+  const {activeTable, showProfile, setShowSearch, setShowButton, setShowNav, setShowProfile, tables,getAllTables} = useContext(adminContext);
 
-  // const orders = [...pendingOrders, ...pastOrders];
-
+  console.log(users)
   const renderTable = () => {
     switch (activeTable) {
-      case 'users':
-        return <UsersTable users={admin.users} />;
-      case 'orders':
-        return <OrdersTable users={admin.users} orders={admin.orders} />;
-      case 'dishes':
-        return <DishesTable />;
       case 'currentStatus':
-        return <CurrentStatus tables={admin.tables}/>;
+        return <CurrentStatus tables={tables}/>;
+      case 'orders':
+        return <OrdersTable orders={orders} />;
+      case 'users':
+        return <UsersTable users={users} />;
+      case 'dishes':
+        console.log(dishes)
+        return <DishesTable dishes={dishes} />;
       default:
-        return <UsersTable admin={admin} />;
+        return <CurrentStatus tables={tables}/>;
     }
   };
-
+  useEffect(() =>{
+    getUser();
+    getUsers();
+    getDishes();
+    getAllTables();
+    setShowNav(true);
+    setShowSearch(true);
+    setShowButton(true);
+  }, [])
   return (
-    <Layout 
-      heading="Welcome Admin"
-      showTab={!showProfile ? true: false}
-      showButton={!showProfile ? true: false}
-      showNav={!showProfile ? true: false}
-      buttonLabel="Add new user"
-      setActiveTable={setActiveTable}
-      activeTable = {activeTable}
-      setShowProfile={setShowProfile}
-      showSearchBar = {true}    
-    >
+    <Layout heading='Welcome Admin'>
       {!showProfile ? <div className='admin_container'>
         {renderTable()} 
       </div>:

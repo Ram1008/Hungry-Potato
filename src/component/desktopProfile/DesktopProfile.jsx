@@ -9,7 +9,7 @@ const DesktopProfile = ({setShowProfile, editUser, user}) => {
 
   const imageURL = `${IMAGEURL}user/`;
 
-  const [profileImage, setProfileImage] = useState(user && user.profilePicture ? imageURL+user.profilePicture.filename : ProfilePhoto|| avatars[0]);
+  const [profilePicture, setProfilePicture] = useState(user ? imageURL+user.profilePicture.filename : ProfilePhoto|| avatars[0]);
   const [name, setName] = useState(user && user.name || '');
   const [email, setEmail] = useState(user && user.email || '');
   const [dob, setDob] = useState(user && user.dateOfBirth || '');
@@ -17,13 +17,13 @@ const DesktopProfile = ({setShowProfile, editUser, user}) => {
   const [photoFile, setPhototFile] = useState(null);
 
   const handleAvatarChange = (avatar) => {
-    setProfileImage(avatar);
+    setProfilePicture(avatar);
   };
 
   const handleImageChange = (event) =>{
     const file = event.target.files[0];
     if (file) {
-        setProfileImage(URL.createObjectURL(file)); 
+        setProfilePicture(URL.createObjectURL(file)); 
         setPhototFile(file);
     }
 
@@ -39,15 +39,20 @@ const DesktopProfile = ({setShowProfile, editUser, user}) => {
     <div className="desktop-profile">
       <div className="profile-image-section">
         <div className="profile-image" >
-            <img src={profileImage} alt="Profile" className="profile-image" />
+            <img src={profilePicture} alt="Profile" className="profile-image" />
         </div>
         <div className='image-tools'> 
             <div className='image-change'>
                 <p>
                     Change profile image
                 </p>
-                <button onClick={handleImageChange}></button>
-
+                <input
+                    type="file"
+                    onChange={handleImageChange}
+                    id="profilePicture"
+                    name="profilePicture"
+                />
+                <label htmlFor="profilePicture"></label>
             </div>
             <div className='choose-avatar'>
                 <p>Or choose an avatar</p>
@@ -57,7 +62,7 @@ const DesktopProfile = ({setShowProfile, editUser, user}) => {
                     key={index}
                     src={avatar}
                     alt={`Avatar ${index + 1}`}
-                    className={`avatar ${profileImage === avatar ? 'selected' : ''}`}
+                    className={`avatar ${profilePicture === avatar ? 'selected' : ''}`}
                     onClick={() => handleAvatarChange(avatar)}
                     />
                 ))}
@@ -100,13 +105,15 @@ const DesktopProfile = ({setShowProfile, editUser, user}) => {
             <div className="input-group">
                 <label htmlFor="dob">Date of Birth</label>
                 <input
-                    id="dob"
-                    type="date"
-                    value={dob}
-                    onChange={(e) => setDob(e.target.value)}
+                type="date"
+                value={dob !== "" ? new Date(dob).toISOString().substring(0, 10) : ""}
+                onChange={(e) => setDob(e.target.value)}
+                id="profileDOBInput"
+                className="profile_dob"
+                name='profileDOB'
                 />
-            </div>
 
+            </div>
             <div className="input-group">
                 <label htmlFor="address">Address</label>
                 <input

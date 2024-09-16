@@ -6,8 +6,7 @@ const OrderState = (props) => {
   const [cart, setCart] = useState([]);
   const [tableId, setTableId] = useState("66b627e026fb8f6ef791f95b");
   const [tableOrders, setTableOrders] = useState(null);
-  const [pendingOrders, setPendingOrders] = useState();
-  const [pastOrders, setPastOrders] = useState();
+  const [orders, setOrders] = useState([]);
 
 
   const fetchApi = async (url, method, body = null, requireToken = true) => {
@@ -51,19 +50,13 @@ const OrderState = (props) => {
     }
   }
 
+  
 
-  const getPendingOrders = async ()=>{
-    const response = await fetchApi(`${host}/orders/pending`, 'GET', null, true);
-    if (response.status) {
-      setPendingOrders(response.data);
-
-    }
-  }
-
-  const getPastOrders = async () =>{
+  const getAllOrders = async () =>{
     const response = await fetchApi(`${host}/orders`, 'GET', null, true);
     if (response.status) {
-      setPastOrders(response.data);
+      setOrders(response.data.orders);
+
     }
   }
 
@@ -81,6 +74,13 @@ const OrderState = (props) => {
       return response;
     }
   };
+
+  const editOrder = async (orderId) =>{
+    const response = await fetchApi(`${host}/orders/${orderId}`, 'PUT', {status: 'prepared'}, true);
+    if (response.status) {
+      getAllOrders();
+    }
+  }
 
   // const deleteOrder = (id) => {
   //   const response = await fetchApi(`${host}/orders`, 'DELETE', null, true);
@@ -101,10 +101,10 @@ const OrderState = (props) => {
     tableOrders,
     getCurrentOrders,
     removeFromCart,
-    pastOrders,
-    pendingOrders,
-    getPendingOrders,
-    getPastOrders
+    orders,
+    getAllOrders,
+    editOrder
+
   };
 
   useEffect(()=>{

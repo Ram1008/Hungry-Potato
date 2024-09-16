@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import userContext from './userContext';
 import { host } from '../../constants/appConstants';
+import adminContext from '../admin/adminContext';
 
 
 const UserState = (props) => {
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState(null);
+  // const {setTabData, setShowTab, setButtonLabel} = useContext(adminContext)
 
   const fetchApi = async (url, method, body = null, requireToken = false) => {
     const headers = {};
@@ -21,6 +23,7 @@ const UserState = (props) => {
         headers['Content-Type'] = 'application/json';
         body = JSON.stringify(body);
       }
+      
     }
   
     try {
@@ -33,7 +36,6 @@ const UserState = (props) => {
       };
     } catch (error) {
       return {
-
         status: false,
         data: error
       };
@@ -48,14 +50,17 @@ const UserState = (props) => {
       return response.status;
     }
   };
+  
 
   const getUsers = async () => {
-    const {status, data} = await fetchApi(`${host}/users`, 'GET', null, true);
-    if (status) setUsers(data);
+    const {status, data} = await fetchApi(`${host}/admin/users`, 'GET', null, true);
+    if (status) {
+      setUsers(data);
+    }
   };
 
-  const addUser = async (name, email, dob, mobileNumber, profilePicture) => {
-    const {status, data} = await fetchApi(`${host}/users`, 'POST', { name, email, dob, mobileNumber, profilePicture });
+  const addUser = async (name, address, dateOfBirth, profilePicture, email, phone) => {
+    const {status, data} = await fetchApi(`${host}/admin/users`, 'POST', { name, address, dateOfBirth, profilePicture, email, phone });
     if (status) setUsers([...users, data]);
   };
 
@@ -83,6 +88,21 @@ const UserState = (props) => {
       console.log("Successfully edited", response.data);
     }
   };
+
+  const editUserAdmin = async (id, name, address, dateOfBirth, profilePicture, email) => {
+    const formData = new FormData();
+    if (name) formData.append('name', name);
+    if (address) formData.append('address', address);
+    if (dateOfBirth) formData.append('dateOfBirth', dateOfBirth);
+    if (profilePicture) formData.append('profilePicture', profilePicture); 
+    if (email) formData.append('email', email);
+    
+
+    const response = await fetchApi(`${host}/users/${id}`, 'PUT', formData, true);
+    if (response.status) {
+      console.log("Successfully edited", response.data);
+    }
+  };
   
   const getUsersByRole = async (role) => {
     const data = await fetchApi(`your-api-url/users/role`, 'POST', { role });
@@ -93,7 +113,7 @@ const UserState = (props) => {
 
 
   return (
-    <userContext.Provider value={{ user, getUser, getUsers, getUsersByRole, addUser, deleteUser, editUser }}>
+    <userContext.Provider value={{ user, getUser, getUsers, getUsersByRole, addUser, deleteUser, editUser, editUserAdmin, users }}>
       {props.children}
     </userContext.Provider>
   );

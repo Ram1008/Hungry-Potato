@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import DishContext from './dishContext';
 import { host } from '../../constants/appConstants';
-import { Dish  } from '../../constants/dishConstants';
 
 const DishState = ({ children }) => {
   const [menu, setMenu] = useState([]);
@@ -12,17 +11,24 @@ const DishState = ({ children }) => {
   
   
 
-  const fetchApi = async (url, method, body = null, requireToken = true) => {
-    const headers = {
-      'Content-Type': 'application/json',
-    };
+  const fetchApi = async (url, method, body = null, requireToken = false) => {
+    const headers = {};
   
     if (requireToken) {
       headers['Authorization'] = `Bearer ${localStorage.getItem('hungry&Potato-token')}`;
     }
-  
+
+    if (body) {
+      if (body instanceof FormData) {
+        // headers['Content-Type'] = 'application/json';
+      } else {
+        headers['Content-Type'] = 'application/json';
+        body = JSON.stringify(body);
+      }
+    }
+    
     try {
-      const response = await fetch(url, { method, headers, body: body ? JSON.stringify(body) : null });
+      const response = await fetch(url, { method, headers,  body: body ? body : null});
       const json = await response.json();
       return {
         status: response.ok,
@@ -42,32 +48,49 @@ const DishState = ({ children }) => {
       setMenu(data.data);
       setDishes(data.data);
       setChefSpecial(data.data.filter(dish => dish.tags.includes("chef's special")));
-    }
-    else{
-      setDishes(Dish); 
-      setMenu(Dish);
-      setChefSpecial(Dish.filter(dish => dish.tags.includes("chef's special")));
     } 
   };
 
-  const addDish = async (name, description, price, category, tags) => {
-    const data = await fetchApi(`${host}/api/dishes`, 'POST', { name, description, price, category, tags });
-    if (data.status) setDishes(prevDishes => [...prevDishes, data.data]);
+  const addDish = async (name, description, addons, tags, servingSize, available, dishImage, foodType) => {
+    const formData = new FormData();
+    if (name) formData.append('name', name);
+    if (description) formData.append('description', description);
+    if (addons) formData.append('addons', JSON.stringify(addons));  // Convert addons to JSON
+    if (tags) formData.append('tags', JSON.stringify(tags.split(',').map(tag => tag.trim()))); // Convert tags to JSON
+    if (servingSize) formData.append('servingSize', JSON.stringify(servingSize));  // Convert servingSize to JSON
+    formData.append('available', available);
+    if (dishImage) formData.append('dishImage', dishImage);
+    if (foodType) formData.append('foodType', foodType);
+  
+    const response = await fetchApi(`${host}/dishes`, 'POST', formData, true);
+    if (response.status) setDishes(prevDishes => [...prevDishes, response.data]);
   };
+  
 
   const deleteDish = async (id) => {
-    const response = await fetchApi(`${host}/api/dishes/${id}`, 'DELETE');
+    const response = await fetchApi(`${host}/dishes/${id}`, 'DELETE', null, true);
     if (response.status) {
       setDishes(prevDishes => prevDishes.filter(dish => dish._id !== id));
     }
   };
 
-  const editDish = async (id, name, description, price, category, tags) => {
-    const data = await fetchApi(`${host}/api/dishes/${id}`, 'PUT', { name, description, price, category, tags });
-    if (data.status) {
-      setDishes(prevDishes => prevDishes.map(dish => dish._id === id ? data.data : dish));
+  const editDish = async (id, name, description, addons, tags, servingSize, available, dishImage, foodType) => {
+    const formData = new FormData();
+    if (name) formData.append('name', name);
+    if (description) formData.append('description', description);
+    if (addons) formData.append('addons', addons);  // Convert addons to JSON
+    if (tags) formData.append('tags', tags); // Convert tags to JSON
+    if (servingSize) formData.append('servingSize', servingSize);  // Convert servingSize to JSON
+    if (available)formData.append('available', available);
+    if (dishImage) formData.append('dishImage', dishImage);
+    if (foodType) formData.append('foodType', foodType);
+  
+    const response = await fetchApi(`${host}/dishes/${id}`, 'PUT', formData, true);
+    if (response.status) {
+      setDishes(prevDishes => prevDishes.map(dish => (dish._id === id ? response.data : dish)));
     }
   };
+  
 
   const filterDishesBySearchTerm = () => {
     setDishes(menu.filter(dish => 
