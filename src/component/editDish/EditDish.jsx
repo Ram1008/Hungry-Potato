@@ -2,17 +2,19 @@ import { useState } from 'react';
 import './EditDish.scss';
 import { host } from '../../constants/appConstants';
 
-const EditDish = ({ editData, onConfirm, onCancel }) => {
+const EditDish = ({ editData, onConfirm, onCancel, label }) => {
 
     const [name, setName] = useState(editData? editData.name : '');
     const [foodType, setFoodType] = useState(editData? editData.foodType : '');
     const [description, setDescription] = useState(editData? editData.description : '');
     const [servingSize, setServingSize] = useState(editData? editData.servingSize : []);
-    const [tags, setTags] = useState(editData? editData.tags.join(', ') : '');
+    const [tags, setTags] = useState(editData? editData.tags.join(','): '');
     const [available, setAvailable] = useState(editData? editData.available : false);
     const [image, setImage] = useState(null);
-    const [previewImage, setPreviewImage] = useState(editData? editData.image.url? editData.image.url : editData.image? editData.image:'': '');
+    const [previewImage, setPreviewImage] = useState(editData? editData.image && editData.image.url? editData.image.url : editData.image? editData.image:'': '');
     const [addons, setAddons] = useState(editData? editData.addons:[]);
+
+    
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -70,21 +72,28 @@ const EditDish = ({ editData, onConfirm, onCancel }) => {
             name, 
             description,
             addons,  // Pass the addons array of objects
-            tags.split(',').map(tag => tag.trim()),  // Split tags into an array
+            tags.split(','),
             servingSize,  // Pass the servingSize array of objects
             available,
             image,
             foodType
         );
         onCancel();
+    };  
+
+    const handleAddServingSize = () => {
+        setServingSize([...servingSize, { size: '', price: '' }]); // Add empty serving size
     };
-    
+
+    const handleAddAddon = () => {
+        setAddons([...addons, { name: '', price: '' }]); // Add empty addon
+    };
 
     return (
         <div className="editDish_backdrop" onClick={onCancel}>
             <div className="editDish_container" onClick={(e) => e.stopPropagation()}>
                 <div className="editDish_header">
-                    <h2>Edit Dish</h2>
+                    <h2>{label}</h2>
                     <button className="close-btn" onClick={onCancel}>&times;</button>
                 </div>
                 <div className="editDish_body">
@@ -167,6 +176,7 @@ const EditDish = ({ editData, onConfirm, onCancel }) => {
                                     }
                                 />
                                 </div>
+                                {index === servingSize.length -1 ? <button onClick={handleAddServingSize}>Add new serving size</button>: null}
                         </div>
                     ))}
                     {addons.map((addon, index) => (
@@ -195,6 +205,7 @@ const EditDish = ({ editData, onConfirm, onCancel }) => {
                                     }
                                 />
                                 </div>
+                                {index === addons.length -1 ? <button onClick={handleAddAddon}>Add new addon</button>: null}
                         </div>
                     ))}
                     <div>

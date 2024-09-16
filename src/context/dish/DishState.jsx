@@ -51,14 +51,14 @@ const DishState = ({ children }) => {
     } 
   };
 
-  const addDish = async (name, description, addons, tags, servingSize, available, dishImage, foodType) => {
+  const addDish = async ( name, description, addons, tags, servingSize, available, dishImage, foodType) => {
     const formData = new FormData();
     if (name) formData.append('name', name);
     if (description) formData.append('description', description);
     if (addons) formData.append('addons', JSON.stringify(addons));  // Convert addons to JSON
-    if (tags) formData.append('tags', JSON.stringify(tags.split(',').map(tag => tag.trim()))); // Convert tags to JSON
+    if (tags) formData.append('tags', JSON.stringify(tags));
     if (servingSize) formData.append('servingSize', JSON.stringify(servingSize));  // Convert servingSize to JSON
-    formData.append('available', available);
+    if (available)formData.append('available', available);
     if (dishImage) formData.append('dishImage', dishImage);
     if (foodType) formData.append('foodType', foodType);
   
@@ -66,21 +66,13 @@ const DishState = ({ children }) => {
     if (response.status) setDishes(prevDishes => [...prevDishes, response.data]);
   };
   
-
-  const deleteDish = async (id) => {
-    const response = await fetchApi(`${host}/dishes/${id}`, 'DELETE', null, true);
-    if (response.status) {
-      setDishes(prevDishes => prevDishes.filter(dish => dish._id !== id));
-    }
-  };
-
   const editDish = async (id, name, description, addons, tags, servingSize, available, dishImage, foodType) => {
     const formData = new FormData();
     if (name) formData.append('name', name);
     if (description) formData.append('description', description);
-    if (addons) formData.append('addons', addons);  // Convert addons to JSON
-    if (tags) formData.append('tags', tags); // Convert tags to JSON
-    if (servingSize) formData.append('servingSize', servingSize);  // Convert servingSize to JSON
+    if (addons) formData.append('addons', JSON.stringify(addons));  
+    if (tags) formData.append('tags', JSON.stringify(tags)); 
+    if (servingSize) formData.append('servingSize', JSON.stringify(servingSize));
     if (available)formData.append('available', available);
     if (dishImage) formData.append('dishImage', dishImage);
     if (foodType) formData.append('foodType', foodType);
@@ -90,6 +82,14 @@ const DishState = ({ children }) => {
       setDishes(prevDishes => prevDishes.map(dish => (dish._id === id ? response.data : dish)));
     }
   };
+
+  const deleteDish = async (id) => {
+    const response = await fetchApi(`${host}/dishes/${id}`, 'DELETE', null, true);
+    if (response.status) {
+      setDishes(prevDishes => prevDishes.filter(dish => dish._id !== id));
+    }
+  };
+
   
 
   const filterDishesBySearchTerm = () => {

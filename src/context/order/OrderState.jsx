@@ -9,15 +9,23 @@ const OrderState = (props) => {
   const [orders, setOrders] = useState([]);
 
 
-  const fetchApi = async (url, method, body = null, requireToken = true) => {
-    const headers = {
-      'Content-Type': 'application/json',
-    };
-  
+  const fetchApi = async (url, method, body = null, requireToken = false) => {
+    const headers = {};
+    
     if (requireToken) {
       headers['Authorization'] = `Bearer ${localStorage.getItem('hungry&Potato-token')}`;
     }
-  
+
+    if (body) {
+      if (body instanceof FormData) {
+        // headers['Content-Type'] = 'application/json';
+      } else {
+        headers['Content-Type'] = 'application/json';
+        body = JSON.stringify(body);
+      }
+      
+    }
+    
     try {
       const response = await fetch(url, { method, headers, body: body ? JSON.stringify(body) : null });
       const json = await response.json();
@@ -55,7 +63,8 @@ const OrderState = (props) => {
   const getAllOrders = async () =>{
     const response = await fetchApi(`${host}/orders`, 'GET', null, true);
     if (response.status) {
-      setOrders(response.data.orders);
+      console.log(response.data)
+      setOrders(response.data);
 
     }
   }

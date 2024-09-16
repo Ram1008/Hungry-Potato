@@ -2,20 +2,46 @@
 
 const OrdersTable = ({orders}) => {
 
-    const handleEditClick = () =>{
-    
-    }
-    const handleDeleteClick = () =>{
+  const { setEditData, addATable, deleteData,showAddModal, setShowAddModal, setDeleteData, setShowEditModal, setShowDeleteModal, showDeleteModal, deleteTable, showEditModal, editData, editTable, activeTab, searchTerm } = useContext(adminContext);
+
+  let viewOrders = activeTab === 'All' ? orders : orders.filter(order => order.restroNumber === activeTab)
+
+  if (searchTerm) {
+    const lowercasedSearchTerm = searchTerm.toLowerCase();
   
-
-    }
-
-    const dishes = [];
-    orders.forEach(element => {
-      element.order.forEach(dish =>{
-        dishes.push(dish.name)
+    viewOrders = viewOrders.filter(order => {
+      let dishesNamesArray = [];
+      order.order.map(dish =>{
+        dishesNamesArray.push(dish.name.toLowerCase());
       })
+      dishesNamesArray = dishesNamesArray.join(' ');
+      return (
+        order.tableNumber.toLowerCase().includes(lowercasedSearchTerm) ||
+        (order.price.toLowerCase().includes(lowercasedSearchTerm)) ||
+        (dishesNamesArray.includes(lowercasedSearchTerm)) 
+      );
     });
+  }
+
+  const handleEditClick = (order) => {
+    setEditData(order);
+    setShowEditModal(true);
+  };
+
+  const handleDeleteClick = (orderId) => {
+    setDeleteData(orderId);
+    setShowDeleteModal(true);
+  };
+
+  const handleDeleteOrder = (orderId) => {
+    deleteTable(orderId);
+    setShowDeleteModal(false);
+  };
+
+  const handleEditOrder = (id, seating, tableNumber, status, chairs) => {
+    editTable(id, seating, tableNumber, status, chairs)
+    setShowEditModal(false);
+  };
 
   return (
     <table className="admin_table">
@@ -24,6 +50,7 @@ const OrdersTable = ({orders}) => {
               <th>Date</th>
               <th>Seating</th>
               <th>Table Number</th>
+              {}
               <th>Ordered dishes</th>
               <th>Addons</th>
               <th>Serving</th>
@@ -31,10 +58,10 @@ const OrdersTable = ({orders}) => {
               <th className="action_column">Action</th>
             </tr>
           </thead>
-          <tbody>
+          {/* <tbody>
             {orders.map((order, index) => (
               <tr key={index}>
-                {/* <td>{status.seating}</td> */}
+                { <td>{status.seating}</td> }
                 <td>{order.tableNumber}</td>
                 <td>
                  {dishes.map((dish) => {dish})}
@@ -51,7 +78,11 @@ const OrdersTable = ({orders}) => {
                 </td>
               </tr>
             ))}
-          </tbody>
+          </tbody> 
+          
+          
+          */}
+
         </table>
   )
 }

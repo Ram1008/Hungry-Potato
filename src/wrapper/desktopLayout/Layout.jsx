@@ -11,7 +11,7 @@ import { host } from '../../constants/appConstants';
 const Layout = ({ children, heading }) => {
   const { user, users } = useContext(userContext);
   const { orders } = useContext(orderContext);
-  const { tables, showProfile, setButtonLabel, setTabData, setShowTab, activeTable, setShowAddModal, setShowProfile, showNav, setActiveTable, showButton, buttonLabel, showTab} = useContext(adminContext);
+  const { tables, showSearch, setShowButton, showProfile, setButtonLabel, setTabData, setShowTab, activeTable, setShowAddModal, setShowProfile, showNav, setActiveTable, showButton, buttonLabel, showTab} = useContext(adminContext);
 
 
   const handleProfileClick = () => {
@@ -45,6 +45,7 @@ const Layout = ({ children, heading }) => {
     switch(name){
       case 'users':
         setShowTab(true);
+        setShowButton(false);
         setTabData(uniqueRoles(users));
         setButtonLabel("Add a user");
         break;
@@ -52,20 +53,20 @@ const Layout = ({ children, heading }) => {
         setShowTab(true);
         setTabData(uniqueSeatings(orders));
         setButtonLabel("Add an order");
+        setShowButton(false);
         break;
       case 'dishes':
+        setShowButton(true);
         setShowTab(false);
         setButtonLabel("Add a dish");
         break;
         case 'currentStatus':
+        setShowButton(true);
         setShowTab(true);
         setButtonLabel("Add a table");
         setTabData(uniqueSeatings(tables));
         break;
       default:
-          setShowTab(true);
-          setButtonLabel("Add a table");
-          setTabData(uniqueSeatings(tables));
           break;
     }
   }
@@ -105,7 +106,7 @@ const Layout = ({ children, heading }) => {
         <div className='body-nav'>
           {!showProfile && 
             <>
-              {showButton && <div className='nav-search'><DesktopSearch /></div>}
+              {showSearch && <div className='nav-search'><DesktopSearch /></div>}
               {activeTable === 'dishes' ? null : showTab &&  <div className='body-tab'><DesktopNavTab /></div>}
               {showButton && <button onClick={handleAddClick} className='add-button'>+ {buttonLabel}</button>}
             </>

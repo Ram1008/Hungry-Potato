@@ -9,6 +9,18 @@ const DishesTable = ({dishes}) => {
   const { editDish, deleteDish, addDish } = useContext(dishContext);
   let filteredDishes = dishes;
 
+  const emptyDish = {
+    name:'',
+    description: '',
+    addons: [{ name: '', price: ''}],
+    tags: [],
+    servingSize: [{size: '', price: ''}],
+    availibility: false,
+    image: null, 
+    foodType: ''
+
+  }
+
   if (searchTerm) {
     const lowercasedSearchTerm = searchTerm.toLowerCase();
   
@@ -41,8 +53,8 @@ const DishesTable = ({dishes}) => {
       setShowEditModal(false);
     }
 
-    const handleAddDish = (id, name, description, category, addons, tags, servingSize, availibility, image, foodType) =>{
-      addDish(name, description, category, addons, tags, servingSize, availibility, image, foodType);
+    const handleAddDish = (id, name, description, addons, tags, servingSize, availibility, image, foodType) =>{
+      addDish(name, description, addons, tags, servingSize, availibility, image, foodType);
     }
 
   return (
@@ -96,9 +108,9 @@ const DishesTable = ({dishes}) => {
           </tbody>
         </table>
         {showDeleteModal && <DeleteModal onConfirm={() => handleDeleteDish(deleteData)} label={"dish"} onCancel={() => setShowDeleteModal(false)}/>}
-        {showEditModal && <EditDish onConfirm={handleEditDish} editData={editData} onCancel={() => setShowEditModal(false)} />}
+        {showEditModal && <EditDish onConfirm={handleEditDish} editData={editData} onCancel={() => setShowEditModal(false)} label = "Edit Dish"/>}
         {showAddModal &&(
-          <EditDish onConfirm={handleAddDish} onCancel={() => setShowAddModal(false)} label = "Add Dish"/>
+          <EditDish onConfirm={handleAddDish} editData={emptyDish} onCancel={() => setShowAddModal(false)} label = "Add Dish"/>
         )}
       </>
   )

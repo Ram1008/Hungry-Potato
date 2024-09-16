@@ -8,7 +8,7 @@ const Admin = () => {
   
   const {users, user, editUser, getUser, getUsers} = useContext(userContext);
   const {getDishes, dishes} = useContext(dishContext);
-  const {orders} = useContext(orderContext);
+  const {orders, getAllOrders} = useContext(orderContext);
   const {activeTable, showProfile, setShowSearch, setShowButton, setShowNav, setShowProfile, tables,getAllTables} = useContext(adminContext);
 
   console.log(users)
@@ -17,11 +17,11 @@ const Admin = () => {
       case 'currentStatus':
         return <CurrentStatus tables={tables}/>;
       case 'orders':
+        console.log(orders);
         return <OrdersTable orders={orders} />;
       case 'users':
         return <UsersTable users={users} />;
       case 'dishes':
-        console.log(dishes)
         return <DishesTable dishes={dishes} />;
       default:
         return <CurrentStatus tables={tables}/>;
@@ -32,6 +32,7 @@ const Admin = () => {
     getUsers();
     getDishes();
     getAllTables();
+    getAllOrders();
     setShowNav(true);
     setShowSearch(true);
     setShowButton(true);

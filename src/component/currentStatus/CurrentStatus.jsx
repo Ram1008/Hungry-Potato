@@ -47,6 +47,7 @@ const CurrentStatus = ({tables}) => {
 
   const handleAddTable = (id, seating, tableNumber, status, chairs) =>{
     addATable(seating, tableNumber, status, chairs);
+    setShowAddModal(false);
   }
 
   return (

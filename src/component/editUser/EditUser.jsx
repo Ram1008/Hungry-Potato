@@ -1,111 +1,131 @@
 import { useState } from 'react';
-import './editUser.scss';
-import { host } from '../../constants/appConstants';
+import './EditUser.scss';
 
-const EditUser = ({ editData, onConfirm, onCancel }) => {
+const EditUser = ({ editData, onConfirm, onCancel, label }) => {
 
-    const imageURL = `${host}/uploads/`;
-    const [updatedUser, setUpdatedUser] = useState(editData || {});
-    const [previewImage, setPreviewImage] = useState(editData?.profilePicture || '');
+    const [name, setName] = useState(editData? editData.name : '');
+    const [email, setEmail] = useState(editData? editData.email : '');
+    const [phone, setPhone] = useState(editData? editData.phone : '');
+    const [address, setAddress] = useState(editData? editData.address : '');
+    const [dateOfBirth, setDateOfBirth] = useState(editData? editData.dateOfBirth : '');
+    const [image, setImage] = useState(null);
+    const [previewImage, setPreviewImage] = useState(editData? editData.profilePicture && editData.profilePicture.url:  '');
+
+
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setUpdatedUser({
-            ...updatedUser,
-            [name]: value,
-        });
-    };
-
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setPreviewImage(reader.result);
-                setUpdatedUser({
-                    ...updatedUser,
-                    profilePicture: file,
-                });
-            };
-            reader.readAsDataURL(file);
+        switch (name) {
+            case 'name':
+                setName(value);
+                break;
+            case 'email':
+                setEmail(value);
+                break;
+            case 'phone':
+                setPhone(value);
+                break;
+            case 'address':
+                setAddress(value);
+                break;
+            case 'dateOfBirth':
+                setDateOfBirth(value);
+                break;
+            default:
+                break;
         }
     };
 
+    const handleImageChange = (event) => {
+        const file = event.target.files[0];
+            if (file) {
+                setPreviewImage(URL.createObjectURL(file)); 
+                setImage(file);
+            }
+    };
+
+
     const handleSubmit = () => {
-        onConfirm(updatedUser);
+        onConfirm(editData ? editData._id : null, name, address, dateOfBirth, image, email);
         onCancel();
     };
 
     return (
-        <div className="modal__overlay" onClick={onCancel}>
-            <div className="modal__container" onClick={(e) => e.stopPropagation()}>
-                <div className="modal__header">
-                    <h2>Edit User</h2>
+        <div className="editUser_backdrop" onClick={onCancel}>
+            <div className="editUser_container" onClick={(e) => e.stopPropagation()}>
+                <div className="editUser_header">
+                    <h2>{label}</h2>
                     <button className="close-btn" onClick={onCancel}>&times;</button>
                 </div>
-                <div className="modal__body">
-                    <label>
-                        Name:
+                <div className="editUser_body">
+                    <div>
+                        <label htmlFor= "name">Name:</label>
                         <input
                             type="text"
                             name="name"
-                            value={updatedUser.name || ''}
+                            id="name"
+                            value={name || ''}
                             onChange={handleInputChange}
                         />
-                    </label>
-                    <label>
-                        Email:
+                    </div>
+                    <div>
+                        <label>
+                        Email:</label>
                         <input
                             type="email"
                             name="email"
-                            value={updatedUser.email || ''}
+                            value={email || ''}
                             onChange={handleInputChange}
                         />
-                    </label>
-                    <label>
-                        Phone:
+                    </div>
+                    <div>
+                        <label>Phone:</label>
                         <input
                             type="text"
                             name="phone"
-                            value={updatedUser.phone || ''}
+                            value={phone || ''}
                             onChange={handleInputChange}
                         />
-                    </label>
+                    </div>
+                    <div>
                     <label>
-                        Address:
+                        Address:</label>
                         <input
                             type="text"
                             name="address"
-                            value={updatedUser.address || ''}
+                            value={address || ''}
                             onChange={handleInputChange}
                         />
-                    </label>
+                    </div>
+                    <div>
                     <label>
-                        Date of Birth:
+                        Date of Birth:</label>
                         <input
                             type="date"
                             name="dateOfBirth"
-                            value={updatedUser.dateOfBirth ? new Date(updatedUser.dateOfBirth).toISOString().substring(0, 10) : ''}
+                            value={dateOfBirth ? new Date(dateOfBirth).toISOString().substring(0, 10) : ''}
                             onChange={handleInputChange}
                         />
-                    </label>
+                    </div>
+                    <div>
                     <label>
-                        Upload Profile Picture:
+                        Upload Profile Picture:</label>
                         <input
                             type="file"
                             accept="image/*"
                             onChange={handleImageChange}
                         />
-                    </label>
+                    </div>
                     {previewImage && (
-                        <img
-                            src={previewImage.startsWith('data') ? previewImage : imageURL + previewImage}
-                            alt="Preview"
-                            className="modal__image-preview"
-                        />
+                        <div className="image-preview">
+                            <img
+                                src={previewImage}
+                                alt="Preview"
+                            />
+                        </div>
                     )}
                 </div>
-                <div className="modal__footer">
+                <div className="editUser_footer">
                     <button type="button" onClick={handleSubmit}>Save Changes</button>
                 </div>
             </div>

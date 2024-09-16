@@ -65,7 +65,7 @@ const UserState = (props) => {
   };
 
   const deleteUser = async (id) => {
-    const {status} = await fetchApi(`${host}/users/${id}`, 'DELETE');
+    const {status} = await fetchApi(`${host}/admin/users/${id}`, 'DELETE');
     if (status) {
       setUsers(users.filter(user => user._id !== id));
     //   props.showAlert(data.msg, "success");
@@ -98,7 +98,7 @@ const UserState = (props) => {
     if (email) formData.append('email', email);
     
 
-    const response = await fetchApi(`${host}/users/${id}`, 'PUT', formData, true);
+    const response = await fetchApi(`${host}/admin/users/${id}`, 'PUT', formData, true);
     if (response.status) {
       console.log("Successfully edited", response.data);
     }

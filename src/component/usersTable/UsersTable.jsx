@@ -1,17 +1,32 @@
-  import './UsersTable.scss';
-  import UserProfile from '../../assets/images/UserProfilePhoto.svg';
-  import  DeleteModal  from "../deleteModal/DeleteModal";
-import DesktopProfile from '../desktopProfile/DesktopProfile';
+import './UsersTable.scss';
+import UserProfile from '../../assets/images/UserProfilePhoto.svg';
+import  DeleteModal  from "../deleteModal/DeleteModal";
 import { adminContext, userContext } from '../../context';
 import { useContext } from 'react';
+import EditUser from '../editUser/EditUser';
 
   const UsersTable = ({users}) => {
     const { setEditData, setShowProfile, showProfile, addATable, deleteData,showAddModal, setShowAddModal, setDeleteData, setShowEditModal, setShowDeleteModal, showDeleteModal, deleteTable, showEditModal, editData, editTable, activeTab, searchTerm } = useContext(adminContext);
-    const {deleteUser, editUserAdmin, addUser} = useContext(userContext);
+    const {deleteUser, editUserAdmin} = useContext(userContext);
+
+    let viewUsers = activeTab === 'All' ? users : users.filter(user => user.role === activeTab)
+
+    if (searchTerm) {
+      const lowercasedSearchTerm = searchTerm.toLowerCase();
+    
+      viewUsers = viewUsers.filter(user => {
+    
+        return (
+          user.name.toLowerCase().includes(lowercasedSearchTerm) ||
+          (user.email.toLowerCase().includes(lowercasedSearchTerm) )||
+          (user.phone.toLowerCase().includes(lowercasedSearchTerm))
+        );
+      });
+    }
 
       const handleEditClick = (user) =>{
         setEditData(user);
-        setShowProfile(true);
+        setShowEditModal(true);
       }
 
       const handleDeleteClick = (userId) =>{
@@ -28,13 +43,10 @@ import { useContext } from 'react';
         setShowEditModal(false);
       }
 
-      const handleAddUser = (id, name, address, dateOfBirth, profilePicture, email, phone) =>{
-        addUser(name, address, dateOfBirth, profilePicture, email, phone)
-        setShowEditModal(false);
-      }
+      
     return (
       <>
-      {!showProfile ? <table className='admin_table'>
+      <table className='admin_table'>
             <thead>
               <tr>
                 <th>Email address</th>
@@ -46,13 +58,13 @@ import { useContext } from 'react';
               </tr>
             </thead>
             <tbody>
-              {users.map((user, index) => (
+              {viewUsers.map((user, index) => (
                 <tr key={index}>
                   <td>{user.email}</td>
                   <td>{user.phone}</td>
                   <td>
                     <div className="user_info">
-                      <img src={user.profilePicture || UserProfile} alt="avatar" className="avatar" />
+                      <img src={user.profilePicture.url || UserProfile} alt="avatar" className="avatar" />
                       <span>{user.name}</span>
                     </div>
                   </td>
@@ -70,11 +82,9 @@ import { useContext } from 'react';
                 </tr>
               ))}
             </tbody>
-          </table> : showProfile && <DesktopProfile editUser={handleEditUser} user={editData} setShowProfile={setShowProfile} />}
+          </table> 
+          {showEditModal && <EditUser onConfirm={handleEditUser} editData={editData} onCancel={() => setShowEditModal(false)} label= 'Edit User' />}
           {showDeleteModal && <DeleteModal onConfirm={handleDeleteUser} label={"user"} onCancel={() => setShowDeleteModal(false)}/>}
-          {showAddModal &&(
-            <DesktopProfile editUser={handleEditUser} user={editData} setShowProfile={setShowProfile}/>
-          )}
         </>
     )
   }

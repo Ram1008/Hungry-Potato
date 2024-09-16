@@ -1,15 +1,12 @@
 import { useState } from 'react';
 import './DesktopProfile.scss';
 import { avatars } from '../../constants/profileConstants';
-import ProfilePhoto from '../../assets/images/desktopProfileImage.svg';
-import { IMAGEURL } from '../../constants/appConstants';
 
 
 const DesktopProfile = ({setShowProfile, editUser, user}) => {
 
-  const imageURL = `${IMAGEURL}user/`;
 
-  const [profilePicture, setProfilePicture] = useState(user ? imageURL+user.profilePicture.filename : ProfilePhoto|| avatars[0]);
+  const [profilePicture, setProfilePicture] = useState(user ? user.profilePicture.url  : avatars[0]);
   const [name, setName] = useState(user && user.name || '');
   const [email, setEmail] = useState(user && user.email || '');
   const [dob, setDob] = useState(user && user.dateOfBirth || '');
@@ -32,6 +29,7 @@ const DesktopProfile = ({setShowProfile, editUser, user}) => {
   const handleUpdateChanges = () => {
     
     editUser(name, address, dob, photoFile, email);
+    setShowProfile(false);
   };
   
 
@@ -76,6 +74,7 @@ const DesktopProfile = ({setShowProfile, editUser, user}) => {
                 <label htmlFor="name">Name</label>
                 <input
                     id="name"
+                    name='name'
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
@@ -86,6 +85,7 @@ const DesktopProfile = ({setShowProfile, editUser, user}) => {
                 <label htmlFor="email">Email Address</label>
                 <input
                     id="email"
+                    name='email'
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -95,6 +95,7 @@ const DesktopProfile = ({setShowProfile, editUser, user}) => {
             <div className="input-group">
                 <label htmlFor="phone">Phone Number</label>
                 <input
+                    name='phone'
                     id="phone"
                     type="text"
                     value={user?user.phone:''}
@@ -105,12 +106,12 @@ const DesktopProfile = ({setShowProfile, editUser, user}) => {
             <div className="input-group">
                 <label htmlFor="dob">Date of Birth</label>
                 <input
+                name='dob'
                 type="date"
                 value={dob !== "" ? new Date(dob).toISOString().substring(0, 10) : ""}
                 onChange={(e) => setDob(e.target.value)}
                 id="profileDOBInput"
                 className="profile_dob"
-                name='profileDOB'
                 />
 
             </div>
@@ -119,6 +120,7 @@ const DesktopProfile = ({setShowProfile, editUser, user}) => {
                 <input
                     id="address"
                     type="text"
+                    name= 'address'
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
                 />
