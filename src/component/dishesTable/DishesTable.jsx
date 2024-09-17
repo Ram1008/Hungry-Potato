@@ -7,6 +7,7 @@ import './DishesTable.scss';
 const DishesTable = ({dishes}) => {
   const { setEditData, addATable, deleteData,showAddModal, setShowAddModal, setDeleteData, setShowEditModal, setShowDeleteModal, showDeleteModal, deleteTable, showEditModal, editData, editTable, activeTab, searchTerm } = useContext(adminContext);
   const { editDish, deleteDish, addDish } = useContext(dishContext);
+  
   let filteredDishes = dishes;
 
   const emptyDish = {
