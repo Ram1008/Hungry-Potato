@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { adminContext, orderContext } from "../../context";
 import './OrderTable.scss'
 import  DeleteModal  from "../deleteModal/DeleteModal";
-import EditOrder from "../editOrders/EditOrder";
+import EditOrder from "../editOrder/EditOrder";
 
 const OrdersTable = ({orders}) => {
 

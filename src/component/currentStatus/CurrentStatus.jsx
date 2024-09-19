@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import './CurrentStatus.scss';
 import DeleteModal from "../deleteModal/DeleteModal";
-import EditTable from "../editTables/EditTable";
-import AddTable from "../editTables/EditTable";
+import EditTable from "../editTable/EditTable";
+import AddTable from "../editTable/EditTable";
 import { adminContext } from "../../context";
 
 const CurrentStatus = ({tables}) => {
