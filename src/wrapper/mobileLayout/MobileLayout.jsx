@@ -1,10 +1,8 @@
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useContext, useMemo } from 'react';
 import './MobileLayout.scss';
-import { ChefSpecial, SwitchButton, SearchBar } from '../../component';
+import { ChefSpecial, SwitchButton, MobileSearch } from '../../component';
 import { dishContext, orderContext, userContext } from '../../context';
 import { useNavigate } from 'react-router-dom';
-import UserIcon from '../../assets/icons/UserIcon.png';
-import { host } from '../../constants/appConstants';
 
 const MobileLayout = ({ onCustomize = null, showCart = false, setShowPaymentMethods = null, showPaymentMethods = null, children }) => {
 
@@ -12,24 +10,16 @@ const MobileLayout = ({ onCustomize = null, showCart = false, setShowPaymentMeth
 
   const { user, getUser } = useContext(userContext);
   const { cart, placeOrder, tableId } = useContext(orderContext);
-  const { dishes, vegOnly, setVegMode, vegMode, chefSpecial, setSearchTerm } = useContext(dishContext);
-  console.log(showPaymentMethods);
+  const { dishes, vegOnly, setVegMode, vegMode, chefSpecial } = useContext(dishContext);
 
   // const [payment, setPayment] = useState(showPaymentMethods || false);
- 
- 
-  
+
   
   const handleViewCart = () => {
     navigate('/cart');
   };
   
   const handleBackToOrders = () => navigate('/');
-
-  const handleVegMode = () => {
-    vegOnly(!vegMode, dishes);
-    setVegMode(!vegMode);
-  };
 
   const handleProfileClick = async () => {
     if (user) { 
@@ -62,7 +52,7 @@ const MobileLayout = ({ onCustomize = null, showCart = false, setShowPaymentMeth
     <header className="mobileLayout_head">
       <div className="mobileLayout_header">
        { !showCart ? <div className="head-searchbar">
-          <SearchBar setSearchTerm={setSearchTerm} />
+          <MobileSearch/>
         </div>: 
         <div className='back-btn'>
         <button onClick={handleBackToOrders}>&#x25C0; Back to menu</button>
@@ -81,15 +71,13 @@ const MobileLayout = ({ onCustomize = null, showCart = false, setShowPaymentMeth
           <div className="app__home-menu-line">━━━━━</div>
         </div>
         <div className="chef-list">
-          {chefSpecial.map((dish) => (
-            <ChefSpecial dish={dish} key={dish._id} onCustomize={onCustomize} />
-          ))}
+            <ChefSpecial/>
         </div>
       </div>
       <div className="mobileLayout_mode">
-        <div style={{ color: 'white' }}>NAHHHH!</div>
-        <SwitchButton onToggle={handleVegMode} />
-        <div style={{ color: 'white' }}>Veg Mode</div>
+       
+        <SwitchButton />
+        
       </div>
       </>
       }
@@ -125,17 +113,6 @@ const MobileLayout = ({ onCustomize = null, showCart = false, setShowPaymentMeth
     )
   ), [cart, tableId, showCart]);
 
-  useEffect(()=>{
-
-    getUser();
-
-  }, [])
-  
-  useEffect(()=>{
-
-    // getUser();
-
-  }, [showPaymentMethods])
   return (
     <div className="mobileLayout_container">
       {headerLayout}

@@ -4,7 +4,7 @@ import { host } from '../../constants/appConstants';
 
 const OrderState = (props) => {
   const [cart, setCart] = useState([]);
-  const [tableId, setTableId] = useState("66b627e026fb8f6ef791f95b");
+  const [tableId, setTableId] = useState(null);
   const [tableOrders, setTableOrders] = useState(null);
   const [orders, setOrders] = useState([]);
 
@@ -44,6 +44,14 @@ const OrderState = (props) => {
   const addToCart = (order) => {
     setCart([...cart, order]);
   };
+
+  const bookTable = async (id) =>{
+    const response = await fetchApi(`${host}/tables/occupied/${id}`);
+    if(response.status){
+      console.log('table is booked', id);
+    }
+    setTableId(id);
+  }
 
   const removeFromCart = (id) => {
     const updatedCart = cart.filter(item => item.dishId !== id);
@@ -111,7 +119,8 @@ const OrderState = (props) => {
     orders,
     getAllOrders,
     editOrder,
-    deleteOrder
+    deleteOrder,
+    bookTable
   };
   return (
     <orderContext.Provider value={contextValue}>

@@ -6,9 +6,11 @@ const DishState = ({ children }) => {
   const [menu, setMenu] = useState([]);
   const [dishes, setDishes] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [filterTag, setFilterTag] = useState('');
   const [vegMode, setVegMode] = useState(false);
   const [chefSpecial, setChefSpecial] = useState([]);
-  
+  const [customization, setCustomization] = useState(false);
+  const [customizationData, setCustomizationData] = useState(null);
   
 
   const fetchApi = async (url, method, body = null, requireToken = false) => {
@@ -43,11 +45,11 @@ const DishState = ({ children }) => {
   };
 
   const getDishes = async () => {
-    const data = await fetchApi(`${host}/dishes`, 'GET', null, false);
-    if (data.status) {
-      setMenu(data.data);
-      setDishes(data.data);
-      setChefSpecial(data.data.filter(dish => dish.tags.includes("chef's special")));
+    const response = await fetchApi(`${host}/dishes`, 'GET', null, false);
+    if (response.status) {
+      setMenu(response.data);
+      setDishes(response.data);
+      setChefSpecial(response.data.filter(dish => dish.tags.includes("chef's special")));
     } 
   };
 
@@ -55,9 +57,9 @@ const DishState = ({ children }) => {
     const formData = new FormData();
     if (name) formData.append('name', name);
     if (description) formData.append('description', description);
-    if (addons) formData.append('addons', JSON.stringify(addons));  // Convert addons to JSON
+    if (addons) formData.append('addons', JSON.stringify(addons));  
     if (tags) formData.append('tags', JSON.stringify(tags));
-    if (servingSize) formData.append('servingSize', JSON.stringify(servingSize));  // Convert servingSize to JSON
+    if (servingSize) formData.append('servingSize', JSON.stringify(servingSize));  
     if (available)formData.append('available', available);
     if (dishImage) formData.append('dishImage', dishImage);
     if (foodType) formData.append('foodType', foodType);
@@ -90,23 +92,46 @@ const DishState = ({ children }) => {
     }
   };
 
+  const handleVegMode = (value) =>{
+    if(value){
+      const vegDishes = dishes.filter(dish => dish.foodType === 'Veg');
+      setDishes(vegDishes);
+      setVegMode(value);
+    }
+    else{
+      if(vegMode){
+        setDishes(menu);
+        setVegMode(value);
+      }
+    }
+  }
+
+  // const filteredDishes =
+
+  // const filterDishesBySearchTerm = () => {
+  //   setDishes(menu.filter(dish => 
+  //     dish.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //     dish.description.toLowerCase().includes(searchTerm.toLowerCase())
+  //   ));
+  // };
+
+  // const filterDishesByTags = (tag) => {
+  //   const newDishes = menu.filter(dish => dish.tags.includes(tag));
+  //   setDishes(newDishes);
+  // };
+
   
 
-  const filterDishesBySearchTerm = () => {
-    setDishes(menu.filter(dish => 
-      dish.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      dish.description.toLowerCase().includes(searchTerm.toLowerCase())
-    ));
-  };
+  const handleCustomize = (dish=null, selectedDish=null, tableOrders=null) => {
+    if(dish && selectedDish){
+      setCustomizationData({ dish, selectedDish });
+      setCustomization(true);
 
-  const filterDishesByTags = (tag) => {
-    const newDishes = menu.filter(dish => dish.tags.includes(tag));
-    setDishes(newDishes);
-  };
-
-  const vegOnly = (isVeg, dishes= null) => {
-    if(isVeg)setDishes(dishes.filter(dish => dish.foodType === 'Veg'));
-    else setDishes(menu);
+    }
+    else if(tableOrders){
+      setCustomizationData({ tableOrders });
+      setCustomization(true);
+    }
   };
   
   const contextValue = {
@@ -115,22 +140,22 @@ const DishState = ({ children }) => {
     addDish,
     deleteDish,
     editDish,
+    searchTerm,
     setSearchTerm,
-    filterDishesBySearchTerm,
-    filterDishesByTags,
+    handleVegMode,
     chefSpecial,
-    vegOnly,
     vegMode,
     setVegMode,
+    handleCustomize,
+    customization, 
+    setCustomization,
+    customizationData, 
+    setCustomizationData,
+    filterTag,
+     setFilterTag
+
   };
 
-  useEffect(() => {
-    getDishes();
-  }, []);
-
-  useEffect(() => {
-    filterDishesBySearchTerm();
-  }, [searchTerm]);
 
   return (
     <DishContext.Provider value={contextValue}>

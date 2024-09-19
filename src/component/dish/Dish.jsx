@@ -1,9 +1,11 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useContext } from 'react';
 import React from 'react';
 import './Dish.scss';
+import { dishContext } from '../../context';
 
-const Dish = ({ dish, onCustomize }) => {
+const Dish = ({ dish }) => {
   const [selectedDish, setSelectedDish] = useState({ id: dish._id, quantity: 0 });
+  const {handleCustomize} = useContext(dishContext);
 
   const increaseQuantity = () => {
     setSelectedDish((prev) => ({
@@ -20,14 +22,14 @@ const Dish = ({ dish, onCustomize }) => {
   }
 
   const handleSelectDish = useCallback(() => {
-    onCustomize(dish, selectedDish);
-  }, [dish, selectedDish, onCustomize]);
+    handleCustomize(dish, selectedDish);
+  }, [dish, selectedDish, handleCustomize]);
 
   return (
     <div className='dish-container'>
       <div className='dish-info'>
         <div className='image-container'>
-          <img src={dish.image} alt={dish.name} />
+          <img src={dish.image.url? dish.image.url: dish.image} alt={dish.name} />
         </div>
         <div className='dish-name'>{dish.name}</div>
       </div>

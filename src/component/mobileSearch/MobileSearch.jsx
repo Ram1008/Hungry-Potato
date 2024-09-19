@@ -1,7 +1,11 @@
-import './Search.scss';
+import { useContext } from 'react';
+import { dishContext } from '../../context';
+import './MobileSearch.scss';
 import { CiSearch } from "react-icons/ci";
 
-const SearchBar = ({ setSearchTerm }) => {
+const MobileSearch = () => {
+  const {setSearchTerm, searchTerm} = useContext(dishContext);
+
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
@@ -13,10 +17,12 @@ const SearchBar = ({ setSearchTerm }) => {
         className='search-input' 
         type='text' 
         placeholder='Search'
+        name = 'searchTerm'
+        value={searchTerm}
         onChange={handleSearchChange}
       />
     </div>
   );
 };
 
-export default SearchBar;
+export default MobileSearch;

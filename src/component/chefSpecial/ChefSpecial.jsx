@@ -1,20 +1,29 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './ChefSpecial.scss';
+import { dishContext } from '../../context';
 
-const ChefSpecial = ({ dish, onCustomize }) => {
+const ChefSpecial = () => {
 
-  const handleSelectDish = () => {
-    onCustomize(dish, { id: dish._id, quantity: 0 }); 
+  const {dishes, handleCustomize} = useContext(dishContext);
+
+  let viewChefSpecial = dishes.filter(dish => dish.tags.includes("chef's special"));
+
+  const handleSelectDish = (dish) => {
+    handleCustomize(dish, { id: dish._id, quantity: 0 }); 
   };
 
   return (
     <>
-      <div onClick={handleSelectDish} className='chefSpecial_container'>
-        <div className='image-container'>
-          <img src={dish.image} alt={dish.name} />
-        </div>
-        <p>{dish.name}</p>
-      </div>
+    {
+      viewChefSpecial.map((dish) => (
+        <div key={dish._id} onClick={() => handleSelectDish(dish)} className='chefSpecial_container'>
+          <div className='image-container'>
+            <img src={dish.image.url? dish.image.url: dish.image} alt={dish.name} />
+          </div>
+          <p>{dish.name}</p>
+        </div>  
+      ))
+    }
     </>
   );
 };

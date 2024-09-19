@@ -1,7 +1,7 @@
 export { default as Dish } from './dish/Dish';
 export { default as ChefSpecial } from './chefSpecial/ChefSpecial';
 export { default as SwitchButton } from './switchButton/SwitchButton';
-export { default as SearchBar } from './searchBar/SearchBar';
+export { default as MobileSearch } from './mobileSearch/MobileSearch';
 export { default as ProfileButton } from './profileButton/ProfileButton';
 export { default as NavigationTab } from './navigationTab/NavigationTab';
 export { default as TextInputField } from './textInputField/TextInputField';

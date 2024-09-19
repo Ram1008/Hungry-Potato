@@ -5,6 +5,7 @@ import { adminContext } from '../../context';
 
 const DesktopSearch = () => {
   const {setSearchTerm, searchTerm} = useContext(adminContext);
+  
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };

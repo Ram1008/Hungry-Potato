@@ -1,35 +1,48 @@
 import './Home.scss';
 import { Dish, NavigationTab } from '../../component';
-import { useContext, useState } from 'react';
-import { dishContext, orderContext } from '../../context';
-import { NavigationOptions } from '../../constants/dishConstants';
+import { useContext, useEffect } from 'react';
+import { dishContext, orderContext, userContext } from '../../context';
 import MobileLayout from '../../wrapper/mobileLayout/MobileLayout';
 import Customize from '../customize/Customize';
+import { useParams } from 'react-router-dom';
 
 const Home = () => {
-  const { dishes } = useContext(dishContext);
-  const [customization, setCustomization] = useState(false);
-  const [customizationData, setCustomizationData] = useState(null);
-  const { tableOrders } = useContext(orderContext);
+  const { dishes, filterTag, searchTerm, getDishes, customizationData, setCustomizationData, customization, setCustomization, handleCustomize } = useContext(dishContext);
+  const {getUser} = useContext(userContext);
+  const { tableOrders, bookTable } = useContext(orderContext);
+  const { tableId } = useParams();
 
-  const handleCustomize = (dish=null, selectedDish=null, tableOrders=null) => {
-    if(dish && selectedDish){
-      setCustomizationData({ dish, selectedDish });
-      setCustomization(true);
+  let filteredDishes = dishes;
 
-    }
-    if(tableOrders){
-      setCustomizationData({ tableOrders });
-      setCustomization(true);
-    }
-  };
+  if(filterTag){
+    filteredDishes = filteredDishes.filter(dish => dish.tags.includes(filterTag));
+  }
+
+  if(searchTerm){
+    filteredDishes =  dishes.filter(dish => 
+      dish.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      dish.description.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  }
+  
+  
   const handleCloseCustomization = () => {
     setCustomization(false);
     setCustomizationData(null); 
   }
+
+  useEffect(() => {
+    getUser();
+    getDishes();
+    if(tableId){
+      bookTable(tableId);
+    }
+  }, [])
+
+
   return (
     <>
-      <MobileLayout onCustomize={handleCustomize}>
+      <MobileLayout >
         <div className="home_body">
           <div className="home_menu">
             <div className="menu-line">━━━━━━━━</div>
@@ -37,22 +50,17 @@ const Home = () => {
             <div className="menu-line">━━━━━━━━</div>
             
           </div>
-          <div className="home_tableOrder">
+          {tableOrders && <div className="home_tableOrder">
             <button onClick={() => handleCustomize(null, null, tableOrders)}>&#x25BC; Present orders </button>
-          </div>
+          </div>}
           <div className="home_navigation">
-            {NavigationOptions.map((tab) => (
-              <NavigationTab tab={tab} key={tab.tag} />
-            ))}
-            
-
+            <NavigationTab />
           </div>
           <div className="home_dishes">
-            {dishes.map((dish) => (
+            {filteredDishes.map((dish) => (
               <Dish
                 dish={dish}
                 key={dish._id}
-                onCustomize={handleCustomize}
               />
             ))}
           </div>

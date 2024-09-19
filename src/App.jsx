@@ -9,8 +9,8 @@ const App = () => {
     <AuthState>
       <AdminState>
         <UserState>
-          <DishState>
           <OrderState>
+            <DishState>
               <Routes>
                 <Route path="/" element={ <Home />} />
                 <Route path="login" element={<Login />} />    
@@ -20,9 +20,9 @@ const App = () => {
                 <Route path="cook" element ={<Cook/>}/>
                 <Route path="admin" element ={<Admin/>}/>
               </Routes>
-            <ToastContainer />
-            </OrderState>
-          </DishState>
+              <ToastContainer />
+            </DishState>
+          </OrderState>
         </UserState>
       </AdminState>
     </AuthState>

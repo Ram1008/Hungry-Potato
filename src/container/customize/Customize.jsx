@@ -47,7 +47,7 @@ const Customize = ({ dish = null, selectedDish = null, handleCloseCustomization,
         {dish && selectedDish ? (
           <>
             <div className="header">{dish.name}</div>
-            <img src={dish.image} alt={dish.name} />
+            <img src={dish.image.url? dish.image.url: dish.image} alt={dish.name} />
             <HorizontalLine />
             <ServingSize
               dish={dish}
