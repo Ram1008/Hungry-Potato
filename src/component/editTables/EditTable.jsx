@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import './EditTable.scss';
+import { useState } from 'react';
 
 const EditTable = ({ editData = null, onConfirm, onCancel, label  }) => {
     
