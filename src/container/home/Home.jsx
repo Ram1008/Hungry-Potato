@@ -4,13 +4,15 @@ import { useContext, useEffect } from 'react';
 import { dishContext, orderContext, userContext } from '../../context';
 import MobileLayout from '../../wrapper/mobileLayout/MobileLayout';
 import Customize from '../customize/Customize';
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const Home = () => {
+  const location = useLocation();
   const { dishes, filterTag, searchTerm, getDishes, customizationData, setCustomizationData, customization, setCustomization, handleCustomize } = useContext(dishContext);
   const {getUser} = useContext(userContext);
   const { tableOrders, bookTable } = useContext(orderContext);
-  const { tableId } = useParams();
+  const searchParams = new URLSearchParams(location.search);
+  const tableId  = searchParams.get('tableId');
 
   let filteredDishes = dishes;
 
