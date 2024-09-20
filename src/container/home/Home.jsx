@@ -10,7 +10,7 @@ const Home = () => {
   const location = useLocation();
   const { dishes, filterTag, searchTerm, getDishes, customizationData, setCustomizationData, customization, setCustomization, handleCustomize } = useContext(dishContext);
   const {getUser} = useContext(userContext);
-  const { tableOrders, bookTable } = useContext(orderContext);
+  const { tableOrders, bookTable, getCurrentOrders } = useContext(orderContext);
   const searchParams = new URLSearchParams(location.search);
   const tableId  = searchParams.get('tableId');
 
@@ -38,6 +38,7 @@ const Home = () => {
     getDishes();
     if(tableId){
       bookTable(tableId);
+      getCurrentOrders(tableId);
     }
   }, [])
 

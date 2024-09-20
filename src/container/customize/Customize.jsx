@@ -4,7 +4,7 @@ import React, { useContext, useState, useCallback } from 'react';
 import { orderContext } from '../../context';
 
 const Customize = ({ dish = null, selectedDish = null, handleCloseCustomization, tableOrders = null, payment = null }) => {
-  const { addToCart, cart, tableId, placeOrder } = useContext(orderContext);
+  const { addToCart } = useContext(orderContext);
 
   const initialOrder = useCallback(() => ({
     dishId: dish?._id,

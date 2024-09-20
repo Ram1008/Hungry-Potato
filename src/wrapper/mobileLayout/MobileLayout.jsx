@@ -4,22 +4,20 @@ import { ChefSpecial, SwitchButton, MobileSearch } from '../../component';
 import { dishContext, orderContext, userContext } from '../../context';
 import { useNavigate } from 'react-router-dom';
 
-const MobileLayout = ({ onCustomize = null, showCart = false, setShowPaymentMethods = null, showPaymentMethods = null, children }) => {
+const MobileLayout = ({ showCart = false, children }) => {
 
   const navigate = useNavigate();
 
   const { user, getUser } = useContext(userContext);
-  const { cart, placeOrder, tableId } = useContext(orderContext);
-  const { dishes, vegOnly, setVegMode, vegMode, chefSpecial } = useContext(dishContext);
-
-  // const [payment, setPayment] = useState(showPaymentMethods || false);
+  const { cart, placeOrder, tableId, showPaymentMethods } = useContext(orderContext);
+  const { handleCustomize, chefSpecial } = useContext(dishContext);
 
   
   const handleViewCart = () => {
     navigate('/cart');
   };
   
-  const handleBackToOrders = () => navigate('/');
+  const handleBackToOrders = () => navigate(-1);
 
   const handleProfileClick = async () => {
     if (user) { 
@@ -44,7 +42,7 @@ const MobileLayout = ({ onCustomize = null, showCart = false, setShowPaymentMeth
     
   }
   const handlePayment = () =>{
-    setShowPaymentMethods(true);
+    handleCustomize(null, null, null, {tableId: tableId, cart: cart});
   }
 
   
@@ -55,11 +53,11 @@ const MobileLayout = ({ onCustomize = null, showCart = false, setShowPaymentMeth
           <MobileSearch/>
         </div>: 
         <div className='back-btn'>
-        <button onClick={handleBackToOrders}>&#x25C0; Back to menu</button>
+        <button onClick={handleBackToOrders}>&#x25C0; Back </button>
         </div>}
         <div className="user-profile">
             <button onClick={handleProfileClick}>
-                <img src= {user ? user.user.profilePicture.url: ''} alt='profile'/> 
+              <img src= {user ? user.user.profilePicture.url: ''} alt='profile'/> 
             </button>
         </div>
       </div>
@@ -96,16 +94,16 @@ const MobileLayout = ({ onCustomize = null, showCart = false, setShowPaymentMeth
     ) : (
       <footer className="mobileLayout_footer">
         <div className='cart-actions'>
-            {showPaymentMethods ? null: (<div className='cart-paymentMethod'>
+            <div className='cart-paymentMethod'>
               <button onClick={handlePayment}>
                 <div>Payment methods</div>
                 <div>→</div>
               </button>
-            </div>)}
+            </div>
             <div className='cart-payLater'>
               <button onClick={handlePlaceOrder}>
                 <div >Place Order</div>
-                {showPaymentMethods ? null :( <div >Pay at desk</div>)}
+                <div >Pay at desk</div>
               </button>
             </div>
           </div>

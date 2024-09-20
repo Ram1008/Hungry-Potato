@@ -8,7 +8,6 @@ const OrderState = (props) => {
   const [tableOrders, setTableOrders] = useState(null);
   const [orders, setOrders] = useState([]);
 
-
   const fetchApi = async (url, method, body = null, requireToken = false) => {
     const headers = {};
     
@@ -71,8 +70,7 @@ const OrderState = (props) => {
   const getCurrentOrders = async (tableId)=>{
     const response = await fetchApi(`${host}/orders/${tableId}`, 'GET');
     if (response.status) {
-      setTableOrders(response.data);
-
+      setTableOrders(response.data.orders);
     }
   };
 
@@ -108,15 +106,15 @@ const OrderState = (props) => {
 
 
   const contextValue = {
-    placeOrder,
     cart, 
-    setCart,
-    addToCart,
     tableId,
     tableOrders,
+    orders,
+    placeOrder,
+    setCart,
+    addToCart,
     getCurrentOrders,
     removeFromCart,
-    orders,
     getAllOrders,
     editOrder,
     deleteOrder,

@@ -6,11 +6,13 @@
   padding: 0.4rem;
   height: 100%;
 
-  .cart-body-heading {
+  .cart-heading {
     font-size: 24px;
     font-weight: bold;
     text-align: center;
     color: var(--primary-gray-color);
+    margin: 0;
+    margin-top: 0.3rem;
   }
 
   .cart-summary {
@@ -45,15 +47,19 @@
             font-weight: bold;
             color: var(--primary-gray-color);
   
-            span {
-              color: var(--primary-gray-color);
-              margin-left: 0.5rem;
-            }
+            
+          }
+          span {
+            color: var(--primary-gray-color);
+            margin-left: 0.5rem;
+            font-weight: bold;
+            font-size: 14px;
           }
   
           .serving-size {
             font-size: 14px;
             color: #999;
+            font-weight: 600;
           }
   
         }
@@ -102,7 +108,7 @@
       padding: 0.5rem 1rem;
       background-color: #fff;
       border-radius: 10px;
-      font-size: 22px;
+      font-size: 20px;
       font-weight: bold;
       color: #333;
 

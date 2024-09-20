@@ -3,7 +3,6 @@ import './PaymentMethods.scss';
 const PaymentMethods = () => {
   return (
     <div className="payment-methods">
-      <div className="payment-backdrop" onClick={() => onClose()} />
       <div className="method-upi">
         <h3>UPI</h3>
         <div>
@@ -32,6 +31,9 @@ const PaymentMethods = () => {
             <input type="password" id="cvv" placeholder="CVV" />
           </div>
         </div>
+      </div>
+      <div className='payment_footer'>
+        <button >Place Order</button>
       </div>
 
     </div>

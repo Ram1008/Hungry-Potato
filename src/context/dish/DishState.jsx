@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import DishContext from './dishContext';
 import { host } from '../../constants/appConstants';
 
@@ -11,6 +11,7 @@ const DishState = ({ children }) => {
   const [chefSpecial, setChefSpecial] = useState([]);
   const [customization, setCustomization] = useState(false);
   const [customizationData, setCustomizationData] = useState(null);
+  
   
 
   const fetchApi = async (url, method, body = null, requireToken = false) => {
@@ -106,23 +107,7 @@ const DishState = ({ children }) => {
     }
   }
 
-  // const filteredDishes =
-
-  // const filterDishesBySearchTerm = () => {
-  //   setDishes(menu.filter(dish => 
-  //     dish.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-  //     dish.description.toLowerCase().includes(searchTerm.toLowerCase())
-  //   ));
-  // };
-
-  // const filterDishesByTags = (tag) => {
-  //   const newDishes = menu.filter(dish => dish.tags.includes(tag));
-  //   setDishes(newDishes);
-  // };
-
-  
-
-  const handleCustomize = (dish=null, selectedDish=null, tableOrders=null) => {
+  const handleCustomize = (dish=null, selectedDish=null, tableOrders=null, orders= null ) => {
     if(dish && selectedDish){
       setCustomizationData({ dish, selectedDish });
       setCustomization(true);
@@ -130,6 +115,10 @@ const DishState = ({ children }) => {
     }
     else if(tableOrders){
       setCustomizationData({ tableOrders });
+      setCustomization(true);
+    }
+    else if(orders){
+      setCustomizationData({ orders });
       setCustomization(true);
     }
   };
@@ -152,7 +141,7 @@ const DishState = ({ children }) => {
     customizationData, 
     setCustomizationData,
     filterTag,
-     setFilterTag
+    setFilterTag
 
   };
 
