@@ -1,6 +1,7 @@
 import adminContext from './adminContext';
 import { host } from '../../constants/appConstants'; 
 import { useState } from 'react';
+import io from 'socket.io-client';
 
 const AdminState = (props) => {
     const [activeTable, setActiveTable] = useState('dishes');
@@ -45,6 +46,26 @@ const AdminState = (props) => {
       }
     };
 
+    const connectToSocket = () =>{
+
+      const socket = io('https://restaurentmanagement-backend.onrender.com/');
+
+      socket.emit('join-room', 'admin');
+
+      socket.on('newOrder', (notification) => {
+        console.log('Admin received new order notification:', notification.order,notification.order.dishes, notification.table, notification);
+      });
+
+      socket.on('tableStatusUpdate', (notification)=>{
+        console.log('Table update detected : ', notification);
+      });
+
+      socket.on('connect', () => {
+        console.log('Admin connected to server');
+      });
+
+    }
+
     const getAllTables = async () =>{
       const response = await fetchApi(`${host}/tables`, 'GET', null, true);
       if (response.status) {
@@ -86,7 +107,7 @@ const AdminState = (props) => {
     showButton, setShowButton,buttonLabel, setButtonLabel, showNav, setShowNav,
     showTab, setShowTab, tabData, setTabData, activeTab, setActiveTab,showEditModal, setShowEditModal,
     editData, setEditData, showDeleteModal, setShowDeleteModal, getAllTables, tables, editTable, deleteTable,
-    setDeleteData, deleteData, searchTerm, setSearchTerm, addATable, showAddModal, setShowAddModal
+    setDeleteData, deleteData, searchTerm, setSearchTerm, addATable, showAddModal, setShowAddModal, connectToSocket
   };
 
   return (

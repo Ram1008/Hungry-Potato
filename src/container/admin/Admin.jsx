@@ -9,7 +9,7 @@ const Admin = () => {
   const {users, user, editUser, getUser, getUsers} = useContext(userContext);
   const {getDishes, dishes} = useContext(dishContext);
   const {orders, getAllOrders} = useContext(orderContext);
-  const {activeTable, showProfile, setShowSearch, setShowButton, setShowNav, setShowProfile, tables,getAllTables} = useContext(adminContext);
+  const {activeTable, showProfile, setShowSearch, setShowButton, setShowNav, setShowProfile, tables, getAllTables, connectToSocket} = useContext(adminContext);
 
   console.log(users)
   const renderTable = () => {
@@ -36,6 +36,8 @@ const Admin = () => {
     setShowNav(true);
     setShowSearch(true);
     setShowButton(true);
+    // connectToSocket();
+
   }, [])
   return (
     <Layout heading='Welcome Admin'>

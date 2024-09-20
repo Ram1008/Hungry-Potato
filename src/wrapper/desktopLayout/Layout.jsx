@@ -6,7 +6,6 @@ import DishesIcon from '../../assets/icons/dishes.svg';
 import UserProfile from '../../assets/images/UserProfilePhoto.svg';
 import { DesktopSearch, DesktopNavTab } from '../../component';
 import { adminContext, orderContext, userContext } from '../../context';
-import { host } from '../../constants/appConstants';
 
 const Layout = ({ children, heading }) => {
   const { user, users } = useContext(userContext);

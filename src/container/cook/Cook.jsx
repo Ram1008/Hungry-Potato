@@ -12,21 +12,32 @@ const Cook = () => {
   const { showProfile, setShowProfile } = useContext(adminContext);
   const { getUser, editUser, user } = useContext(userContext);
 
+
   const todaysDate = new Date();
   const yesterdaysDate = new Date();
-  const pendingOrders =  orders ? orders.filter(item => ['pending', 'preparing'].includes(item.status)):null;
+
+  const pendingOrders =  orders ?  orders.filter(item => {
+    if(item.status == 'preparing' || item.status == 'pending') return true;
+
+  }):[];
+
+
   const todayOrders = orders ? orders.filter(order => {
     const orderDate = new Date(order.updatedAt).getDate();
     return order.status !== 'pending' && order.status !== 'preparing' && todaysDate === orderDate ;
-  }  ): null;
+  }  ): [];
+
+
   const yesterdayOrders = orders ?orders.filter(order => {
     const orderDate = new Date(order.updatedAt).getDate();
     return order.status !== 'pending' && order.status !== 'preparing' && yesterdaysDate === orderDate; 
-  }  ):null;
+  }  ):[];
+
+
   const pastOrders = orders ?orders.filter(order => {
     const orderDate = new Date(order.updatedAt).getDate();
     return order.status !== 'pending' && order.status !== 'preparing' && todaysDate !== orderDate &&  yesterdaysDate !== orderDate; 
-  }  ):null;
+  }  ):[];
 
 
 

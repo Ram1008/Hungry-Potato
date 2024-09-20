@@ -138,14 +138,14 @@
               color: var(--primary-gray-color);
               margin: 0;
               border: none;
-              text-align: center;
               outline: none; 
+              font-weight: 500;
   
               &:focus {
                   border: 1px solid var(--secondary-color);
                   border-radius: 0.25rem;
                   outline: none;
-                  
+                  color: var(--secondary-color);
                 }
           }
       

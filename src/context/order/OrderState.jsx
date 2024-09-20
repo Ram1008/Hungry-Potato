@@ -61,9 +61,7 @@ const OrderState = (props) => {
     const newURL = host + '/orders';
     const response = await fetchApi(newURL, 'GET', null, true);
     if (response.status) {
-      console.log(response.data)
       setOrders(response.data.orders);
-
     }
   };  
 

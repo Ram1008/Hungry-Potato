@@ -85,6 +85,7 @@ const UserState = (props) => {
     const response = await fetchApi(`${host}/users/profile`, 'PUT',formData, true);
     if (response.status) {
       console.log("Successfully edited", response.data);
+      getUser();
     }
   };
 
