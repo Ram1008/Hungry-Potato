@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import './OrdersOnTable.scss';
 
 const OrdersOnTable = ({ tableOrders }) => {
-  const Dishes = tableOrders.flatMap(item => item.order);
+  const Dishes = tableOrders.flatMap(item => item.dishes);
 
   return (
     <div className="orders-content-wrapper">
