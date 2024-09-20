@@ -36,7 +36,7 @@ const Admin = () => {
     setShowNav(true);
     setShowSearch(true);
     setShowButton(true);
-    // connectToSocket();
+    connectToSocket();
 
   }, [])
   return (

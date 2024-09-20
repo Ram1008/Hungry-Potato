@@ -48,7 +48,10 @@ const AdminState = (props) => {
 
     const connectToSocket = () =>{
 
-      const socket = io('https://restaurentmanagement-backend.onrender.com/');
+      const socket = io('https://restaurentmanagement-backend.onrender.com/', {transports: ['websocket'],
+        withCredentials:true
+      });
+      
 
       socket.emit('join-room', 'admin');
 

@@ -66,7 +66,7 @@ const OrderState = (props) => {
   };  
 
   const getCurrentOrders = async (tableId)=>{
-    const response = await fetchApi(`${host}/orders/${tableId}`, 'GET');
+    const response = await fetchApi(`${host}/tables/${tableId}`, 'GET');
     if (response.status) {
       setTableOrders(response.data.orders);
     }
