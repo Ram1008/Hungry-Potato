@@ -121,6 +121,7 @@ const DishState = ({ children }) => {
       setCustomizationData({ orders });
       setCustomization(true);
     }
+    window.history.pushState(null, "", window.location.pathname);
   };
   
   const contextValue = {

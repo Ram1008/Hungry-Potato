@@ -38,8 +38,7 @@ const Cook = () => {
     const orderDate = new Date(order.updatedAt).getDate();
     return order.status !== 'pending' && order.status !== 'preparing' && todaysDate !== orderDate &&  yesterdaysDate !== orderDate; 
   }  ):[];
-
-
+  
 
   useEffect( () =>{
     getUser();
@@ -49,7 +48,8 @@ const Cook = () => {
   return (
     <Layout heading="Bonjour Cuisinier">
       {!showProfile ? <div className='cook_container'>
-        <div className='active-orders'>
+        {pendingOrders.length > 0 &&<>
+          <div className='active-orders'>
           <p className='status'>Pending</p>
           <div className='orders-list'>
             {pendingOrders.map((order, index) => (
@@ -59,6 +59,8 @@ const Cook = () => {
           </div>
         </div>
         <hr />
+        </>}
+        {todayOrders.length > 0 && <>
         <div className='past-orders'>
           <p className='status'>Today</p>
           <div className='orders-list'>
@@ -68,6 +70,9 @@ const Cook = () => {
           </div>
         </div>
         <hr />
+        </>}
+        {yesterdayOrders.length > 0 &&
+        <> 
         <div className='past-orders'>
           <p className='status'>Yesterday</p>
           <div className='orders-list'>
@@ -76,14 +81,16 @@ const Cook = () => {
             ))}
           </div>
         </div>
-        <div className='past-orders'>
+        </>}
+
+        {pastOrders.length > 0 && <div className='past-orders'>
           <p className='status'>Past orders</p>
           <div className='orders-list'>
             {pastOrders.map((order, index) => (
               <OrderCard key={index} order={order} />
             ))}
           </div>
-        </div>
+        </div>}
       </div>:
       <DesktopProfile editUser = {editUser} user = {user? user.user: null} setShowProfile={setShowProfile}/>}
     </Layout>

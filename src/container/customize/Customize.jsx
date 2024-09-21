@@ -1,10 +1,16 @@
 import './Customize.scss';
 import { HorizontalLine, OrdersOnTable, PaymentMethods, ServingSize } from '../../component';
-import React, { useContext, useState, useCallback } from 'react';
-import { orderContext } from '../../context';
+import React, { useContext, useState, useCallback, useEffect } from 'react';
+import { dishContext, orderContext } from '../../context';
 
 const Customize = ({ dish = null, selectedDish = null, handleCloseCustomization, tableOrders = null, payment = null }) => {
   const { addToCart } = useContext(orderContext);
+  const { setCustomization } = useContext(dishContext);
+
+  const closeCustomize = () =>{
+    window.history.back();
+    handleCloseCustomization();
+  }
 
   const initialOrder = useCallback(() => ({
     dishId: dish?._id,
@@ -40,9 +46,23 @@ const Customize = ({ dish = null, selectedDish = null, handleCloseCustomization,
     }));
   };
 
+  useEffect(() => {
+    const handlePopState = () => {
+      if (setCustomization) {
+        handleCloseCustomization();
+      }
+    };
+
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }); 
+
   return (
     <div className="customize_container">
-      <div className="customize_backdrop" onClick={handleCloseCustomization} />
+      <div className="customize_backdrop" onClick={closeCustomize} />
       <div className="customize_page">
         {dish && selectedDish ? (
           <>
