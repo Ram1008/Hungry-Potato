@@ -76,11 +76,11 @@ const Layout = ({ children, heading }) => {
         <div className="logo"></div>
         {showNav && (
           <nav>
-            <button onClick={() => handleActiveTable('currentStatus')} className={`nav-button ${activeTable === 'currentStatus'? 'active': ''}`}>
-              <img src={CurrentStatusIcon} alt="Current Status" /> Current Status
+            <button onClick={() => handleActiveTable('tables')} className={`nav-button ${activeTable === 'currentStatus'? 'active': ''}`}>
+              <img src={CurrentStatusIcon} alt="Tables" /> Tables
             </button>
             <button onClick={() => handleActiveTable('orders')} className={`nav-button ${activeTable === 'orders'? 'active': ''}`}>
-              <img src={CurrentStatusIcon} alt="Current Status" /> Orders
+              <img src={CurrentStatusIcon} alt="Orders" /> Orders
             </button>
             <button onClick={() => handleActiveTable('users')} className={`nav-button ${activeTable === 'users'? 'active': ''}`}>
               <img src={UserIcon} alt="Users" /> Users   

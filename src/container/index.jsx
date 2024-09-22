@@ -6,3 +6,4 @@ export { default as Cart } from './cart/Cart';
 export { default as Profile } from './profile/Profile';
 export { default as Cook } from './cook/Cook';
 export { default as Admin } from './admin/Admin';
+export { default as Manager } from './manager/Manager';

@@ -1,0 +1,83 @@
+@import '../../mixins';
+
+.currentStatus_container {
+    width: 100%;
+    border-collapse: collapse;
+
+    th, td {
+      padding: 0.8rem 0;
+      box-sizing: content-box;
+      text-align: center;
+      
+    }
+
+    th {
+      font-size: 12px;
+      color: var(--primary-gray-color);
+      background-color: var(--light-gray-color);
+      
+    }
+
+    td {
+      font-size: 10px;
+      color: var(--primary-gray-color);
+      font-weight: 500;
+    }
+
+    tbody tr {
+      
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+
+      &:nth-child(odd) {
+        background-color: white;
+      }
+
+      &:nth-child(even) {
+        background-color: var(--light-gray-color);
+      }
+
+      &:hover {
+        @include shadow();
+        @include rounded-border(var(--primary-gray-color));
+        
+      }
+    }
+
+    .action_column {
+      text-align: right;
+      padding-right: 1.5rem;
+    }
+
+    .action_btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      margin-left: 0.5rem;
+      transition: color 0.3s ease, transform 0.2s ease;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+
+      &.edit_btn {
+        color: var(--primary-blue-color);
+
+        &:hover {
+          color: #3498db;
+        }
+      }
+
+      &.delete_btn {
+        color: #e74c3c;
+
+        &:hover {
+          color: #c0392b;
+        }
+      }
+
+      i {
+        font-size: 1rem;
+      }
+    }
+  }

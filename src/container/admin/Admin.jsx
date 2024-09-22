@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
 import './Admin.scss';
 import Layout from '../../wrapper/desktopLayout/Layout';
-import { UsersTable, DishesTable, CurrentStatus, DesktopProfile, OrdersTable } from '../../component';
+import { UsersTable, DishesTable, TablesTable, DesktopProfile, OrdersTable } from '../../component';
 import { adminContext, dishContext, orderContext, userContext } from '../../context';
 
 const Admin = () => {
@@ -14,8 +14,8 @@ const Admin = () => {
   console.log(users)
   const renderTable = () => {
     switch (activeTable) {
-      case 'currentStatus':
-        return <CurrentStatus tables={tables}/>;
+      case 'tables':
+        return <TablesTable tables={tables}/>;
       case 'orders':
         console.log(orders);
         return <OrdersTable orders={orders} />;
@@ -24,7 +24,7 @@ const Admin = () => {
       case 'dishes':
         return <DishesTable dishes={dishes} />;
       default:
-        return <CurrentStatus tables={tables}/>;
+        return <TablesTable tables={tables}/>;
     }
   };
   useEffect(() =>{
