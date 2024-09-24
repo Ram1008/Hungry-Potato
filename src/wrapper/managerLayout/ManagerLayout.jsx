@@ -7,7 +7,7 @@ import {managerContext} from '../../container';
 
 const ManagerLayout = ({ props, children}) => {
 
-    const {heading, showProfile, setShowProfile, dineInOrders, onlineOrders, setActiveRestro, searchTerm, setSearchTerm, user, activeRestro } = props;
+    const {heading, showProfile, setShowProfile, dineInOrders, onlineOrders, setActiveRestro, searchTerm, setSearchTerm, user, activeRestro, showLogin = true, showBody = true } = props;
     
     const handleProfileClick = () => {
         setShowProfile(true);
@@ -29,26 +29,26 @@ const ManagerLayout = ({ props, children}) => {
       <header>
         <div className="logo"></div>
         
-        <div className='btn-container'>
+        {showLogin && <div className='btn-container'>
 
           {user == null ? <><button className='button-primary'>Login</button>
           <button className='button-primary'>Register</button></> :
           <button className='button-danger'>Logout</button>}
-        </div>
+        </div>}
       </header>
       <div className="managerLayout_body">
         <div className="body-header">
           <h1>{heading}</h1>
-          <img src={user?user.user.profilePicture.url:UserProfile} onClick={handleProfileClick} alt="Profile" />
+          {showLogin &&<img src={user?user.user.profilePicture.url:UserProfile} onClick={handleProfileClick} alt="Profile" />}
         </div>
-        <div className='body-nav'>
+        {showBody && <div className='body-nav'>
           {!showProfile && 
             <>
               <div className='nav-search'><DesktopSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm}/></div>
               <div className='body-tab'><DesktopNavTab activeTab={activeRestro} setActiveTab={setActiveRestro} tabData={tabOptions} /></div>
             </>
           }
-        </div>
+        </div>}
         <hr />
         {children}
       </div>

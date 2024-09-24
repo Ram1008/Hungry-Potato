@@ -11,3 +11,6 @@ export { default as Admin } from './admin/Admin';
 export { default as Manager } from './manager/Manager';
 export { default as ManagerState } from './manager/ManagerState';
 export { default as managerContext } from './manager/managerContext';
+export { default as StatusDisplayState } from './statusDisplay/StatusDisplayState';
+export { default as StatusDisplay } from './statusDisplay/StatusDisplay';
+export { default as statusDisplayContext } from './statusDisplay/statusDisplayContext';

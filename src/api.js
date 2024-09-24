@@ -1,4 +1,4 @@
-import { host } from './constants/appConstants';
+  import { host } from './constants/appConstants';
 
 const fetchApi = async (url, method, body = null, requireToken = false) => {
     const headers = {};
@@ -205,8 +205,8 @@ export const getOrders = async () =>{
 };  
 
 export const getCurrentOrders = async () =>{
-    const response = await fetchApi(`${host}/orders/current`, 'GET', null, true);
-    if (response.status) return response.data;
+    const response = await fetchApi(`${host}/orders/current`, 'GET');
+    if (response.status) return response.data.orders;
     else return null;
 };
 

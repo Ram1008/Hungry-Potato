@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import {AuthState, DishState, OrderState, UserState, AdminState} from './context';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Home, Login, Register, Cart, Profile, Cook, Admin, Manager, ManagerState, CookState } from './container';
+import { Home, Login, Register, Cart, Profile, Cook, Admin, Manager, ManagerState, CookState, StatusDisplay, StatusDisplayState } from './container';
 
 const App = () => {
   return (
@@ -20,6 +20,7 @@ const App = () => {
                   <Route path="cook" element ={<CookState><Cook/></CookState>}/>
                   <Route path="admin" element ={<Admin/>}/>
                   <Route path="manager" element ={<ManagerState><Manager/></ManagerState>}/>
+                  <Route path="status" element ={<StatusDisplayState><StatusDisplay/></StatusDisplayState>}/>
                 </Routes>
                 <ToastContainer />
               </DishState>
