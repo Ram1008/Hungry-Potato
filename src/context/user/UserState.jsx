@@ -103,17 +103,12 @@ const UserState = (props) => {
       console.log("Successfully edited", response.data);
     }
   };
-  
-  const getUsersByRole = async (role) => {
-    const data = await fetchApi(`your-api-url/users/role`, 'POST', { role });
-    if (data) setUsers(data);
-  };
 
 
 
 
   return (
-    <userContext.Provider value={{ user, getUser, getUsers, getUsersByRole, addUser, deleteUser, editUser, editUserAdmin, users }}>
+    <userContext.Provider value={{ user, getUser, getUsers, addUser, deleteUser, editUser, editUserAdmin, users }}>
       {props.children}
     </userContext.Provider>
   );

@@ -1,10 +1,8 @@
 import { useContext } from 'react';
 import './DesktopSearch.scss';
 import { CiSearch } from "react-icons/ci";
-import { adminContext } from '../../context';
 
-const DesktopSearch = () => {
-  const {setSearchTerm, searchTerm} = useContext(adminContext);
+const DesktopSearch = ({setSearchTerm, searchTerm}) => {
   
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);

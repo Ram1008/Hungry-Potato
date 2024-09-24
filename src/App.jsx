@@ -1,8 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
-import {AuthState, DishState, OrderState, UserState, AdminState, ManagerState} from './context';
+import {AuthState, DishState, OrderState, UserState, AdminState} from './context';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Home, Login, Register, Cart, Profile, Cook, Admin, Manager } from './container';
+import { Home, Login, Register, Cart, Profile, Cook, Admin, Manager, ManagerState, CookState } from './container';
 
 const App = () => {
   return (
@@ -11,20 +11,18 @@ const App = () => {
         <UserState>
           <OrderState>
             <DishState>
-              <ManagerState>
                 <Routes>
                   <Route path="/" element={ <Home />} />
                   <Route path="login" element={<Login />} />    
                   <Route path="register" element={<Register />} />
                   <Route path="cart" element={<Cart />} />
                   <Route path="profile" element={<Profile />} />
-                  <Route path="cook" element ={<Cook/>}/>
+                  <Route path="cook" element ={<CookState><Cook/></CookState>}/>
                   <Route path="admin" element ={<Admin/>}/>
-                  <Route path="manager" element ={<Manager/>}/>
+                  <Route path="manager" element ={<ManagerState><Manager/></ManagerState>}/>
                 </Routes>
                 <ToastContainer />
-              </ManagerState>
-            </DishState>
+              </DishState>
           </OrderState>
         </UserState>
       </AdminState>

@@ -11,15 +11,13 @@ const OrderCard = ({ order, markComplete = null }) => {
 
   return (
     <div className="order-card">
-      <div className="order-header">
-        <span className="table-no">Table: {order.tableNumber}</span>
-        {(order.status === 'pending' || order.status === 'preparing') && (
-          <button onClick={handleMarkComplete} className="complete-btn">
-            Mark complete
-          </button>
-        )}
-      </div>
-      <div className="order-details">
+      <div className='order-body'>
+
+        <button onClick={handleMarkComplete} className="complete-btn">
+          Mark complete
+        </button>
+
+        <div className="order-details">
         {order.dishes.map((dish, idx) => (
           <div key={idx} className="order-dish">
             
@@ -40,6 +38,8 @@ const OrderCard = ({ order, markComplete = null }) => {
         value={order.message || 'Message for cook'}
         readOnly
       />
+
+      </div>
     </div>
   );
 };

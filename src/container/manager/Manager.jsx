@@ -1,72 +1,81 @@
-import Layout from '../../wrapper/desktopLayout/Layout';
+import ManagerLayout from '../../wrapper/managerLayout/ManagerLayout';
 import './Manager.scss';
-import { DesktopProfile } from '../../component';
+import { DesktopProfile, OrderSummary } from '../../component';
 import { useContext, useEffect} from 'react';
-import { adminContext, managerContext, userContext } from '../../context';
-import { activeOrders} from '../../constants/managerConstants';
+import { adminContext, userContext } from '../../context';
+import managerContext from './managerContext';
+
 
 const Manager = () => {
-  
-  const { getActiveOrders, completeOrder, showSummary, setShowSummary, summaryDetail, setSummaryDetail } = useContext(managerContext);
-  const { setEditData, setShowTab, setTabData, showProfile, setShowProfile,  setShowEditModal, showEditModal, editData, activeTab, searchTerm, setShowSearch } = useContext(adminContext);
+  const {showProfile, setShowProfile, dineInOrders, onlineOrders, fetchOnlineOrders, activeRestro, setActiveRestro, searchTerm, setSearchTerm, fetchDineInOrders, showSummary, setShowSummary, summaryDetail, setSummaryDetail} = useContext(managerContext);
   const {user, editUser, getUser} = useContext(userContext);
+
+  let viewDineIn = activeRestro === 'All' ? dineInOrders : dineInOrders.filter(table => table.restronumber === activeRestro)
+  let viewOnline = activeRestro === 'All' ? onlineOrders : onlineOrders.filter(table => table.restronumber === activeRestro)
   
-
-  let viewOrders = activeTab === 'All' ? activeOrders : activeOrders.filter(order => order.seating === activeTab)
-
   if (searchTerm) {
-    const lowercasedSearchTerm = searchTerm.toLowerCase();
-  
-    viewTables = viewOrders.filter(order => {
-
+      const lowercasedSearchTerm = searchTerm.toLowerCase();
+      
+      viewDineIn = viewDineIn.filter(order => {
       return (
         order.tableNumber.toLowerCase().includes(lowercasedSearchTerm)
-      );
-    });
+      )});
+      viewOnline = viewOnline.filter(order => {
+      return (
+        order.tableNumber.toLowerCase().includes(lowercasedSearchTerm)
+      )});
+
   }
+  
+
+  // const onlineOrders = viewOrders.filter(order => order.tableNumber === null)
 
   const handleShowSummary = (order) => {
       setSummaryDetail(order);
       setShowSummary(true);
   };
+  
+  // console.log(dineinOrders);
 
-  const uniqueSeatings = (activeOrders) => {
-    console.log(activeOrders)
-    const uniqueSeatings = new Set();
-    uniqueSeatings.add('All');
-    activeOrders.forEach((table) => {
-      uniqueSeatings.add(table.seating);
-    });
-    return Array.from(uniqueSeatings);
-  };
+  useEffect(() => {
+    getUser();
+    fetchDineInOrders();
+    fetchOnlineOrders();
+  }, []);  
   
 
-
-  useEffect( () =>{
-    getUser();
-    getActiveOrders();
-    setShowSearch(true);
-    setShowTab({show: true, data: uniqueSeatings(activeOrders)});
-  }, [])
-
   return (
-    <Layout heading="Welcome Manager">
-      {!showProfile ? showSummary ? <div> </div> :
+    <ManagerLayout 
+    props = {{heading: "Welcome Manager" , showProfile , setShowProfile, dineInOrders, onlineOrders, setActiveRestro, searchTerm, setSearchTerm, user, activeRestro}}
+    >
+      {!showProfile ? showSummary ? 
+      <OrderSummary summaryDetail={summaryDetail} setSummaryDetail={setSummaryDetail} setShowSummary={setShowSummary} /> :
        <div className='manager_container'>
-           {viewOrders.map((order, index) => 
-            <div key={index}>
-              {order.tables.map((table, idx) =>(
-
-              <div key={idx} className={`table_status ${table.status.toLowerCase()}`}>
-                {table.status.toUpperCase()}
+          <div className='manager_dineIn'>
+            {viewDineIn.map((order, idx) =>
+              <div key={idx} className='order_wrapper'>
+                <p>Table - {order.tableNumber}</p>
+                <div className='order-status' onClick={() => handleShowSummary(order)}>
+                  <span className='status-text'>Booked</span>
+                  <i className="eye-icon fa fa-eye"></i> 
+                </div>
               </div>
-              )
             )}
-            </div>
-           )}
+          </div>
+          <div className='manager_online'>
+          {viewOnline.map(() =>
+              <div className='order_wrapper'>
+                <p>Table - T27</p>
+                <div className='order-status'>
+                  <span className='status-text'>Booked</span>
+                  <i className="eye-icon fa fa-eye"></i> 
+                </div>
+              </div>
+            )}
+          </div>
         </div>:
       <DesktopProfile editUser = {editUser} user = {user? user.user: null} setShowProfile={setShowProfile}/>}
-    </Layout>
+    </ManagerLayout>
   );
 };
 

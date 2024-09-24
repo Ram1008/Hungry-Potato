@@ -1,0 +1,155 @@
+@import '../../mixins';
+
+.ordersummary_container {
+    @include flex-container(row);
+    gap: 2rem;
+    box-sizing: border-box;
+  
+    
+  
+      .customer-info {
+        @include flex-container(column);
+        width: 30%;
+        height: 90vh;
+        position: relative;
+
+        input {
+          width: 100%;
+          padding: 0.8rem;
+          margin: 5px 0;
+          box-sizing: border-box;
+          border: 1px solid #ccc;
+          border-radius: 0.5rem;
+          transition: border-color 0.3s;
+
+          &:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+          }
+        }
+        .total{
+          font-size: 14px;
+          font-weight: 500;
+          padding: 0.5rem 0.8rem;
+        }
+
+        .payment_methods {
+          @include flex-container(row, space-evenly);
+          padding: 0 5px;
+          margin: 0.5rem 0;
+
+          label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--primary-gray-color);
+
+            input[type="radio"] {
+              width: 16px;
+              height: 16px;
+
+              &:focus {
+                border-color: var(--secondary-color);
+                outline: none;
+              }
+            }
+          }
+        }
+
+        .btn-container {
+          @include flex-container(row, space-between, center);
+        }
+
+        .action-buttons{
+            @include flex-container(row, space-between, center);
+        }
+
+        .btn {
+          padding: 0.6rem;
+          margin: 5px 0;
+          cursor: pointer;
+          background-color: lightgray;
+          border: none;
+          border-radius: 0.5rem;
+          transition: background-color 0.3s ease;
+          font-size: 12px;
+          font-weight: 500;
+
+          &:hover {
+            background-color: #ddd;
+          }
+          &:disabled {
+            background-color: #ccc;
+            color: #999;
+            cursor: not-allowed;
+            opacity: 0.6;
+          }
+
+          &.paid {
+            background-color: green;
+            color: white;
+            margin-bottom: 1rem;
+          }
+
+          &.send-receipt, &.print-receipt {
+            background-color: darkblue;
+            color: white;
+            margin-bottom: 1rem;
+
+            &:hover {
+              background-color: navy;
+            }
+          }
+
+          &.mark-complete {
+            background-color: darkblue;
+            color: white;
+          }
+
+          &.back {
+            color: black;
+            border-color: var(--primary-gray-color);
+          }
+        }
+      }
+
+      .orders {
+        @include flex-container(column);
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        
+
+        h2{
+          font-size: 16px;
+          font-weight: 600;
+          flood-color: var(--primary-gray-color);
+
+        }
+
+        .order-item {
+          @include flex-container(column);
+          @include rounded-border(var(--light-gray-color), 0.5rem);
+          // @include shadow();
+          padding: 0.5rem;
+      
+            div{
+              font-size: 14px;
+              font-weight: 500;
+              color: var(--primary-gray-color);
+            }
+          }
+          .total{
+            font-size: 16px;
+            font-weight: 600;
+            flood-color: var(--primary-gray-color);
+            margin-top: 1rem;
+          }
+      
+          
+      }
+    
+
+    
+}

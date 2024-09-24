@@ -1,0 +1,98 @@
+@import '../../mixins';
+
+.managerLayout_container{
+    @include flex-container(row, flex-start, center);
+    padding: 0.5rem;
+    box-sizing: border-box;
+    gap: 1rem;
+    height: 100vh;
+
+    header {
+        @include flex-container(column, space-between, center);
+        width: 15%;
+        height: 100%;
+        background-color: var(--tertiary-color);
+        @include shadow();
+        padding: 2rem 0;
+        box-sizing: border-box;
+    
+        .logo {
+          height: 70px;
+          width: 70px;
+          @include rounded-border(white, 50%);
+          @include background-cover('../../assets/images/LogoHungryPotato.png');
+        }
+
+        .btn-container{
+          @include flex-container(column, flex-start, center);
+          gap: 0.5rem;
+    
+          .button-primary{
+            width: 100%;
+            padding: 0.5rem 2rem;
+            @include rounded-border(var(--primary-blue-color), 0.5rem);
+            color: var(--primary-blue-color);
+    
+          }
+    
+          .button-danger{
+            width: 100%;
+            padding: 0.5rem 2rem;
+            @include rounded-border(var(--red-color), 0.5rem);
+            color: var(--red-color);
+          }
+        }
+    }
+
+    .managerLayout_body{
+        @include flex-container(column, flex-start);
+        height: 100%;
+        width: 85%;
+        padding: 0.5rem 1rem;
+        box-sizing: border-box;
+
+        .body-header {
+            @include flex-container(row, space-between, center);
+            width: 100%;
+      
+            h1 {
+              margin: 0;
+              font-size: 24px;
+              color: var(--secondary-color);
+            }
+      
+            img {
+              height: 40px;
+              width: 40px;
+              cursor: pointer;
+              @include rounded-border(transparent , 50%);
+            }
+          }
+          .body-nav {
+            @include flex-container(row);
+            width: 100%;
+            margin: 1rem 0 0 ;
+            position: relative;
+            gap: 4.5rem;
+      
+            .nav-search {
+              width: 25%;
+            }
+            .body-tab {
+              width: 45%;
+            }
+      
+            
+          }
+      
+          hr {
+            background-color: var(--tertiary-color);
+            height: 1px;
+            width: 100%;
+          }
+
+          
+
+    }
+  
+}

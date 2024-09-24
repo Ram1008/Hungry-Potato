@@ -6,7 +6,7 @@ import { useContext } from 'react';
 import EditUser from '../editUser/EditUser';
 
   const UsersTable = ({users}) => {
-    const { setEditData, setShowProfile, showProfile, addATable, deleteData,showAddModal, setShowAddModal, setDeleteData, setShowEditModal, setShowDeleteModal, showDeleteModal, deleteTable, showEditModal, editData, editTable, activeTab, searchTerm } = useContext(adminContext);
+    const { setEditData,  setDeleteData, setShowEditModal, setShowDeleteModal, showDeleteModal, showEditModal, editData, activeTab, searchTerm } = useContext(adminContext);
     const {deleteUser, editUserAdmin} = useContext(userContext);
 
     let viewUsers = activeTab === 'All' ? users : users.filter(user => user.role === activeTab)

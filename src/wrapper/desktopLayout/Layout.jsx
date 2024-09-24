@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import './Layout.scss';
 import UserIcon from '../../assets/icons/users.svg';
 import CurrentStatusIcon from '../../assets/icons/currentStatus.svg';
@@ -7,10 +7,10 @@ import UserProfile from '../../assets/images/UserProfilePhoto.svg';
 import { DesktopSearch, DesktopNavTab } from '../../component';
 import { adminContext, orderContext, userContext } from '../../context';
 
-const Layout = ({ children, heading }) => {
+const Layout = ({ children, heading}) => {
   const { user, users } = useContext(userContext);
   const { orders } = useContext(orderContext);
-  const { tables, showSearch, setShowButton, showProfile, setButtonLabel, setTabData, setShowTab, activeTable, setShowAddModal, setShowProfile, showNav, setActiveTable, showButton, buttonLabel, showTab} = useContext(adminContext);
+  const { tabData, activeTab, setActiveTab, tables, showSearch, setShowButton, showProfile, setButtonLabel, setTabData, setShowTab, activeTable, setShowAddModal, setShowProfile, showNav, setActiveTable, showButton, buttonLabel, showTab, searchTerm, setSearchTerm} = useContext(adminContext);
 
 
   const handleProfileClick = () => {
@@ -43,14 +43,14 @@ const Layout = ({ children, heading }) => {
     setActiveTable(name);
     switch(name){
       case 'users':
+        setTabData(uniqueRoles(users));
         setShowTab(true);
         setShowButton(false);
-        setTabData(uniqueRoles(users));
         setButtonLabel("Add a user");
         break;
       case 'orders':
-        setShowTab(true);
         setTabData(uniqueSeatings(orders));
+        setShowTab(true);
         setButtonLabel("Add an order");
         setShowButton(false);
         break;
@@ -59,17 +59,17 @@ const Layout = ({ children, heading }) => {
         setShowTab(false);
         setButtonLabel("Add a dish");
         break;
-        case 'currentStatus':
+      case 'tables':
+        setTabData(uniqueSeatings(tables));
         setShowButton(true);
         setShowTab(true);
         setButtonLabel("Add a table");
-        setTabData(uniqueSeatings(tables));
         break;
       default:
           break;
     }
   }
-
+  
   return (
     <div className="layout_container">
       <header>
@@ -105,8 +105,8 @@ const Layout = ({ children, heading }) => {
         <div className='body-nav'>
           {!showProfile && 
             <>
-              {showSearch && <div className='nav-search'><DesktopSearch /></div>}
-              {activeTable === 'dishes' ? null : showTab &&  <div className='body-tab'><DesktopNavTab /></div>}
+              {showSearch && <div className='nav-search'><DesktopSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} /></div>}
+              {activeTable === 'dishes' ? null : showTab &&  <div className='body-tab'><DesktopNavTab activeTab={activeTab} setActiveTab={setActiveTab} tabData={tabData} /></div>}
               {showButton && <button onClick={handleAddClick} className='add-button'>+ {buttonLabel}</button>}
             </>
           }

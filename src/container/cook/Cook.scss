@@ -1,54 +1,14 @@
   @import '../../mixins';
 
   .cook_container {
-      @include flex-container(column, flex-start, flex-start);
-      
-      .active-orders, .past-orders {
-        width: 100%;
-        
-        .status {
-          font-size: 10px;
-          font-weight: bold;
-          color: var(--primary-gray-color);
-          margin: 0 0 0.3rem;
-        }
-    
-        .orders-list {
+      @include flex-container(row);
+      gap: 1.3rem;
+      padding: 0.5rem;
+
+      .orders-list {
           display: flex;
-          gap: 1rem;
+          gap: 2.6rem;
           flex-wrap: wrap;
-        }
-      }
-      hr {
-        background-color: var(--light-gray-color);
-        height: 1px;
-        width: 100%;
-      }
-    
-      .active-orders {
-        .orders-list {
-          display: flex;
-          overflow-x: auto;
-          flex-wrap: nowrap;
-          padding-bottom: 1rem;
-          gap: 3.2rem;
-          
-          /* Hide scrollbar */
-          scrollbar-width: none; /* For Firefox */
-          -ms-overflow-style: none;  /* For Internet Explorer and Edge */
-      
-          &::-webkit-scrollbar {
-            display: none;  /* For Chrome, Safari, and Opera */
-          }
-        }
-      }
-      
-    
-      .past-orders {
-        .orders-list {
-          flex-wrap: wrap;
-          justify-content: flex-start;
-        }
       }
     }
     
