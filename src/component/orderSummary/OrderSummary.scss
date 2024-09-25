@@ -93,7 +93,7 @@
             margin-bottom: 1rem;
           }
 
-          &.send-receipt, &.print-receipt {
+          &.send-receipt {
             background-color: darkblue;
             color: white;
             margin-bottom: 1rem;
@@ -133,7 +133,7 @@
           @include rounded-border(var(--light-gray-color), 0.5rem);
           // @include shadow();
           padding: 0.5rem;
-      
+          gap: 1rem;
             div{
               font-size: 14px;
               font-weight: 500;

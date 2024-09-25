@@ -166,11 +166,23 @@ export const addTable = async (restroNumber, tableNumber, status, seats) => {
     else return null;
 };
 
-export const editTable = async (tableId, restroNumber, tableNumber, status, seats) =>{
-    const response = await fetchApi(`${host}/tables/${tableId}`, 'PUT', {restroNumber, tableNumber, status, seats}, true);
-    if (response.status) return response.data;
-    else return null;
+export const editTable = async (tableId, restroNumber = null, tableNumber = null, status = null, seats = null) => {
+
+  const updateData = {};
+  if (restroNumber !== null) updateData.restroNumber = restroNumber;
+  if (tableNumber !== null) updateData.tableNumber = tableNumber;
+  if (status !== null) updateData.status = status;
+  if (seats !== null) updateData.seats = seats;
+
+  try {
+      const response = await fetchApi(`${host}/tables/${tableId}`, 'PUT', updateData, true);
+      return response.status ? response.data : null;
+  } catch (error) {
+      console.error('Error updating table:', error);
+      return null;
+  }
 };
+
 
 export const deleteTable = async (tableId) =>{
     const response = await fetchApi(`${host}/tables/${tableId}`, 'DELETE', null, true);
@@ -205,7 +217,7 @@ export const getOrders = async () =>{
 };  
 
 export const getCurrentOrders = async () =>{
-    const response = await fetchApi(`${host}/orders/current`, 'GET');
+    const response = await fetchApi(`${host}/orders/current`, 'GET' );
     if (response.status) return response.data.orders;
     else return null;
 };
@@ -247,9 +259,9 @@ export const getOnlineOrders = async () => {
 
 // payment apis
 
-export const payOnCounter = async () => {
-  const response = await fetchApi(`${host}/payment/confirm-table-payment`, 'GET', null, true);
-    if (response.status) return response.data.tables;
+export const payOnCounter = async (counterPaymentDetails) => {
+  const response = await fetchApi(`${host}/payment/confirm-table-payment`, 'POST', counterPaymentDetails, true);
+    if (response.status) return response.data;
     else return null;
 }
 

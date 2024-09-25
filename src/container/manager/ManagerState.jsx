@@ -30,7 +30,7 @@ const ManagerState = ({ children }) => {
   const deskPayment = async (counterPaymentDetails) =>{
     const response = await payOnCounter(counterPaymentDetails);
     if (response) {
-      console.log('payment successful');
+      return response;
     } 
   }
   

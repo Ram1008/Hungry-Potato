@@ -3,6 +3,8 @@ import {AuthState, DishState, OrderState, UserState, AdminState} from './context
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Home, Login, Register, Cart, Profile, Cook, Admin, Manager, ManagerState, CookState, StatusDisplay, StatusDisplayState } from './container';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const App = () => {
   return (

@@ -7,7 +7,7 @@ import managerContext from './managerContext';
 
 
 const Manager = () => {
-  const {showProfile, setShowProfile, dineInOrders, onlineOrders, fetchOnlineOrders, activeRestro, setActiveRestro, searchTerm, setSearchTerm, fetchDineInOrders, showSummary, setShowSummary, summaryDetail, setSummaryDetail} = useContext(managerContext);
+  const {showProfile, setShowProfile, dineInOrders, onlineOrders, fetchOnlineOrders, activeRestro, setActiveRestro, searchTerm, setSearchTerm, fetchDineInOrders, showSummary, setShowSummary, summaryDetail, setSummaryDetail, deskPayment} = useContext(managerContext);
   const {user, editUser, getUser} = useContext(userContext);
 
   let viewDineIn = activeRestro === 'All' ? dineInOrders : dineInOrders.filter(table => table.restronumber === activeRestro)
@@ -46,10 +46,10 @@ const Manager = () => {
 
   return (
     <ManagerLayout 
-    props = {{heading: "Welcome Manager" , showProfile , setShowProfile, dineInOrders, onlineOrders, setActiveRestro, searchTerm, setSearchTerm, user, activeRestro}}
+    props = {{heading: "Welcome Manager" , showProfile , setShowProfile, dineInOrders, onlineOrders, setActiveRestro, searchTerm, setSearchTerm, user, activeRestro, showSummary}}
     >
       {!showProfile ? showSummary ? 
-      <OrderSummary summaryDetail={summaryDetail} setSummaryDetail={setSummaryDetail} setShowSummary={setShowSummary} /> :
+      <OrderSummary summaryDetail={summaryDetail} setSummaryDetail={setSummaryDetail} setShowSummary={setShowSummary} deskPayment={deskPayment} /> :
        <div className='manager_container'>
           <div className='manager_dineIn'>
             {viewDineIn.map((order, idx) =>
@@ -63,13 +63,13 @@ const Manager = () => {
             )}
           </div>
           <div className='manager_online'>
-          {viewOnline.map(() =>
-              <div className='order_wrapper'>
-                <p>Table - T27</p>
-                <div className='order-status'>
+          {viewOnline.map((order, idx) =>
+              <div key = {idx} className='order_wrapper'>
+                <p></p>
+                {/* <div className='order-status'>
                   <span className='status-text'>Booked</span>
                   <i className="eye-icon fa fa-eye"></i> 
-                </div>
+                </div> */}
               </div>
             )}
           </div>

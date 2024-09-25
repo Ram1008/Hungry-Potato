@@ -7,7 +7,7 @@ import {managerContext} from '../../container';
 
 const ManagerLayout = ({ props, children}) => {
 
-    const {heading, showProfile, setShowProfile, dineInOrders, onlineOrders, setActiveRestro, searchTerm, setSearchTerm, user, activeRestro, showLogin = true, showBody = true } = props;
+    const {heading, showProfile, setShowProfile, dineInOrders, onlineOrders, setActiveRestro, searchTerm, setSearchTerm, user, activeRestro, showLogin = true, showBody = true, showSummary = false } = props;
     
     const handleProfileClick = () => {
         setShowProfile(true);
@@ -42,7 +42,7 @@ const ManagerLayout = ({ props, children}) => {
           {showLogin &&<img src={user?user.user.profilePicture.url:UserProfile} onClick={handleProfileClick} alt="Profile" />}
         </div>
         {showBody && <div className='body-nav'>
-          {!showProfile && 
+          {!(showProfile || showSummary) && 
             <>
               <div className='nav-search'><DesktopSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm}/></div>
               <div className='body-tab'><DesktopNavTab activeTab={activeRestro} setActiveTab={setActiveRestro} tabData={tabOptions} /></div>

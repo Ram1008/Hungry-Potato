@@ -1,0 +1,154 @@
+
+        @import '../../mixins';
+
+        .invoice-card-body {
+          margin: 0;
+          width: 100%;
+          .invoice-title {
+            @include flex-container(column) ;
+  
+            .invoice-company{
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+  
+              h1, h2{
+                margin: 0;
+                font-size: 16px;
+              }
+            }
+  
+            
+  
+            .company-details {
+              color: #6c757d;
+              p {
+                margin: 0;
+              }
+            }
+            .invoice-number {
+              font-size: 1.2rem;
+              float: right;
+            }
+          
+            .invoice-badge {
+              background-color: #28a745;
+              color: #fff;
+              padding: 0.2rem 0.5rem;
+              border-radius: 0.25rem;
+              font-size: 0.75rem;
+              margin-left: 0.5rem;
+            }
+          
+            .company-name {
+              font-size: 2rem;
+              margin-bottom: 1rem;
+              color: #6c757d;
+            }
+          
+            
+          }
+          
+          .invoice-divider {
+            margin: 1rem 0;
+          }
+          
+          .invoice-billing-row {
+            display: flex;
+            justify-content: space-between;
+  
+            .billing-details {
+              @include flex-container(column);
+  
+              h2, p {
+                font-size: 15px;
+                margin: 0;
+  
+                span{
+                  font-weight: 500;
+                  color: #6c757d;
+                }
+              }
+              
+            }
+            
+          }
+          .order-summary-section {
+            @include flex-container(column);
+            margin-top: 1rem;
+  
+            h3{
+              font-size: 14px;
+              margin: 0;
+              margin-bottom: 10px;
+            }
+          
+            .invoice-table {
+              width: 100%;
+              margin: auto;
+              padding: 0;
+  
+              th, td {
+                text-align: center;
+                padding: 0.35rem;
+              }
+          
+              th {
+                
+                font-size: 14px;
+              }
+          
+              td {
+                margin-left: 10px;
+                font-size: 12px;
+
+                h5, p {
+                  font-size: 12px;
+                  margin: 0;
+                }
+
+              }
+            }
+  
+            .invoice-total{
+              @include flex-container(column);
+              width: 100%;
+              
+              div{
+                margin: 0.5rem 2rem;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+  
+                h4, p {
+                  font-size: 15px;
+                  margin: 0;
+                }
+              
+              }
+            }
+          
+          }
+          .invoice-actions {
+            @include flex-container(row, space-between, center);
+            margin: 1rem 2rem;
+            
+            .btn {
+              color: white;
+              font-weight: 500;
+              padding: 1rem;
+            }
+
+            .success-btn{
+              @include rounded-border(var(--primary-blue-color), 0.5rem);
+              background-color: var(--primary-blue-color);
+            }
+            
+            .back-btn{
+              @include rounded-border(var(--primary-gray-color), 0.5rem);
+              background-color: var(--primary-gray-color);
+            }
+          }
+        }
+        
+        
