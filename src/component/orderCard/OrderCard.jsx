@@ -1,4 +1,4 @@
-import React, { memo} from 'react';
+import { memo} from 'react';
 import './OrderCard.scss';
 
 const OrderCard = ({ order, markComplete = null }) => {

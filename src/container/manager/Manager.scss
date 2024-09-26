@@ -2,7 +2,7 @@
 
 .manager_container {
   @include flex-container(row);
-  flex-basis: 0.5;
+  flex-basis: 50%; // Specify units for flex-basis
 
   .manager_dineIn {
     @include flex-container(row);
@@ -11,7 +11,7 @@
 
     .order_wrapper {
       p {
-        font-size: 10px;
+        font-size: 10px; // Consider adjusting font size for readability
         font-weight: 600;
       }
 
@@ -21,14 +21,14 @@
         height: 55px;
         width: 150px;
         color: var(--green-color);
-        font-size: 20px;
+        font-size: 20px; // Ensure consistent font sizes across elements
         font-weight: 500;
         position: relative;
         background-color: var(--background-color);
         transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
-        
+
         .eye-icon {
-          display: none;
+          display: none; // Initially hidden
           position: absolute;
           align-items: center;
           font-size: 18px;
@@ -41,11 +41,11 @@
           background-color: rgba(0, 0, 0, 0.5);
 
           .eye-icon {
-            display: block;
+            display: block; // Show icon on hover
           }
 
           .status-text {
-            opacity: 0.6;
+            opacity: 0.6; // Fade status text on hover
           }
         }
       }
@@ -57,5 +57,19 @@
   }
 
   .manager_online {
+    // Additional styles for online orders can be added here
+  }
+}
+
+// Media Queries for Responsive Design
+@media (max-width: 600px) {
+  .manager_container {
+    flex-basis: 100%; // Stack orders vertically on smaller screens
+
+    .order_wrapper {
+      .order-status {
+        width: 100%; // Full width for order status on mobile
+      }
+    }
   }
 }

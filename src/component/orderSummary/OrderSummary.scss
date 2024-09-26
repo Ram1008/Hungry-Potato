@@ -1,155 +1,147 @@
 @import '../../mixins';
 
+$primary-gray: var(--primary-gray-color);
+$light-gray: var(--light-gray-color);
+$secondary: var(--secondary-color);
+$dark-blue: darkblue;
+$green: green;
+
 .ordersummary_container {
     @include flex-container(row);
     gap: 2rem;
     box-sizing: border-box;
-  
-    
-  
-      .customer-info {
+
+    .customer-info {
         @include flex-container(column);
         width: 30%;
         height: 90vh;
         position: relative;
 
         input {
-          width: 100%;
-          padding: 0.8rem;
-          margin: 5px 0;
-          box-sizing: border-box;
-          border: 1px solid #ccc;
-          border-radius: 0.5rem;
-          transition: border-color 0.3s;
+            width: 100%;
+            padding: 0.8rem;
+            margin: 5px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 0.5rem;
+            transition: border-color 0.3s;
 
-          &:focus {
-            border-color: var(--secondary-color);
-            outline: none;
-          }
+            &:focus {
+                border-color: $secondary;
+                outline: none;
+            }
         }
-        .total{
-          font-size: 14px;
-          font-weight: 500;
-          padding: 0.5rem 0.8rem;
+
+        .total {
+            font-size: 14px;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
         }
 
         .payment_methods {
-          @include flex-container(row, space-evenly);
-          padding: 0 5px;
-          margin: 0.5rem 0;
+            @include flex-container(row, space-evenly);
+            padding: 0 5px;
+            margin: 0.5rem 0;
 
-          label {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--primary-gray-color);
+            label {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                font-size: 14px;
+                font-weight: 500;
+                color: $primary-gray;
 
-            input[type="radio"] {
-              width: 16px;
-              height: 16px;
+                input[type="radio"] {
+                    width: 16px;
+                    height: 16px;
 
-              &:focus {
-                border-color: var(--secondary-color);
-                outline: none;
-              }
+                    &:focus {
+                        border-color: $secondary;
+                        outline: none;
+                    }
+                }
             }
-          }
         }
 
-        .btn-container {
-          @include flex-container(row, space-between, center);
-        }
-
-        .action-buttons{
+        .btn-container,
+        .action-buttons {
             @include flex-container(row, space-between, center);
         }
 
         .btn {
-          padding: 0.6rem;
-          margin: 5px 0;
-          cursor: pointer;
-          background-color: lightgray;
-          border: none;
-          border-radius: 0.5rem;
-          transition: background-color 0.3s ease;
-          font-size: 12px;
-          font-weight: 500;
-
-          &:hover {
-            background-color: #ddd;
-          }
-          &:disabled {
-            background-color: #ccc;
-            color: #999;
-            cursor: not-allowed;
-            opacity: 0.6;
-          }
-
-          &.paid {
-            background-color: green;
-            color: white;
-            margin-bottom: 1rem;
-          }
-
-          &.send-receipt {
-            background-color: darkblue;
-            color: white;
-            margin-bottom: 1rem;
+            padding: 0.6rem;
+            margin: 5px 0;
+            cursor: pointer;
+            background-color: lightgray;
+            border: none;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s ease;
+            font-size: 12px;
+            font-weight: 500;
 
             &:hover {
-              background-color: navy;
+                background-color: #ddd;
             }
-          }
 
-          &.mark-complete {
-            background-color: darkblue;
-            color: white;
-          }
+            &:disabled {
+                background-color: #ccc;
+                color: #999;
+                cursor: not-allowed;
+                opacity: 0.6;
+            }
 
-          &.back {
-            color: black;
-            border-color: var(--primary-gray-color);
-          }
+            &.paid {
+                background-color: $green;
+                color: white;
+                margin-bottom: 1rem;
+            }
+
+            &.send-receipt,
+            &.mark-complete {
+                background-color: $dark-blue;
+                color: white;
+
+                &:hover {
+                    background-color: navy;
+                }
+            }
+
+            &.back {
+                color: black;
+                border-color: $primary-gray;
+            }
         }
-      }
+    }
 
-      .orders {
+    .orders {
         @include flex-container(column);
         padding: 0.5rem;
         border-radius: 0.5rem;
-        
 
-        h2{
-          font-size: 16px;
-          font-weight: 600;
-          flood-color: var(--primary-gray-color);
-
+        h2 {
+            font-size: 16px;
+            font-weight: 600;
+            color: $primary-gray;
         }
 
         .order-item {
-          @include flex-container(column);
-          @include rounded-border(var(--light-gray-color), 0.5rem);
-          // @include shadow();
-          padding: 0.5rem;
-          gap: 1rem;
-            div{
-              font-size: 14px;
-              font-weight: 500;
-              color: var(--primary-gray-color);
+            @include flex-container(column);
+            @include rounded-border($light-gray, 0.5rem);
+            padding: 0.5rem;
+            gap: 1rem;
+
+            div {
+                font-size: 14px;
+                font-weight: 500;
+                color: $primary-gray;
             }
-          }
-          .total{
+        }
+
+        .total {
             font-size: 16px;
             font-weight: 600;
-            flood-color: var(--primary-gray-color);
+            color: $primary-gray;
             margin-top: 1rem;
-          }
-      
-          
-      }
-    
-
-    
+        }
+    }
 }

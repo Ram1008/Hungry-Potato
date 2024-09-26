@@ -1,138 +1,167 @@
 @import '../../mixins';
 
-@media screen and (max-width: 450px) {
+.login_container {
+  @include flex-container(column, space-between);
+  background-color: white;
 
-  .login_container{
-    @include flex-container(column, space-between);
-    background-color: white;
-    header {
-      position: relative;
-      height: 45vh;
+  header {
+    position: relative;
+    height: 45vh;
 
-      .head-background {
-        @include background-cover('../../assets/images/Rectangle11.svg');
-        @include rounded-border(black, 10px);
-        z-index: 0;
-        height: 30vh;
-      }
+    .head-background {
+      @include background-cover('../../assets/images/Rectangle11.svg');
+      @include rounded-border(black, 10px);
+      z-index: 0;
+      height: 23vh;
 
-      .head-logo {
-        position: absolute;
-        bottom: 5vh; 
-        left: 50%;
-        transform: translateX(-50%);
-        @include background-cover('../../assets/images/LogoHungryPotato.png');
-        @include rounded-border(transparent, 10px);
-        z-index: 100;
-        height: 18vh;
-        width: 40%;
-
-        background-color: white;
-      }
-      h1 {
-        position: absolute;
-        bottom: 0; 
-        margin: 0 1rem;
-        font-size: 30px;
-        font-weight: bold;
-        color: var(--primary-gray-color);
-        text-shadow: 0px 2px 2px var(--light-gray-color);
-      }
-      button{
-        position: absolute;
-        bottom: 0; 
-        right: 0;
-        background-color: white;
-        color: var(--primary-gray-color);
-        @include hollowButton(var(--primary-gray-color), 6rem );
-        margin: 0 1rem;
-        padding: 0.5rem 0;
+      @media screen and (min-width: 600px) {
+        height: 25vh; // Adjusted height for larger screens
+        opacity: 0.9; // Slightly transparent for a modern look
       }
     }
-  
-    .login_body {
+
+    .head-logo {
+      position: absolute;
+      bottom: 10vh; 
+      left: 50%;
+      transform: translateX(-50%);
+      @include background-cover('../../assets/images/LogoHungryPotato.png');
+      @include rounded-border(transparent, 10px);
+      z-index: 100;
+      height: 150px; 
+      width: 150px; 
+      background-color: white;
+
+      @media screen and (min-width: 600px) {
+        height: 170px; 
+        width: 170px; 
+        bottom: 5vh; 
+      }
+    }
+
+    h1 {
+      position: absolute;
+      bottom: 1vh; // Adjusted positioning
+      margin: 0 1rem;
+      font-size: 36px; // Increased font size for better visibility
+      font-weight: bold;
+      color: var(--primary-gray-color);
+      text-shadow: 0px 2px 2px var(--light-gray-color);
+
+      @media screen and (min-width: 600px) {
+        bottom: 5vh; // Adjusted positioning for larger screens
+        font-size: 42px; // Increased font size for larger screens
+      }
+    }
+
+    button {
+      position: absolute;
+      bottom: 1vh; // Adjusted positioning
+      right: 1rem; // Adjusted for better spacing
+      background-color: white;
+      color: var(--primary-gray-color);
+      @include hollowButton(var(--primary-gray-color), 7rem); // Increased button size
+      margin: 0 1rem;
+      padding: 0.5rem 0;
+      font-size: 16px; // Increased font size for better visibility
+      cursor: pointer;
+
+      &:hover {
+        opacity: 0.9; // Slightly reduce opacity on hover
+      }
+
+      @media screen and (min-width: 600px) {
+        bottom: 5vh; // Adjusted positioning for larger screens
+        padding: 0.75rem 1rem; // Increased padding for larger screens
+      }
+    }
+  }
+
+  .login_body {
+    @include flex-container(column);
+    background-color: var(--primary-color);
+    padding: 1rem;
+
+    .login_form {
       @include flex-container(column);
-      background-color: var(--primary-color);
+      gap: 1rem;
 
-      .login_form {
-        @include flex-container(column);
-        padding: 1rem 1rem;
-        height: 100%;
-        gap: 1rem;
+      .form-field {
+        margin-bottom: 0.5rem;
 
-        .form-field{
-
-          margin-bottom: 0.5rem;
-
-          label {
-            font-size: 12px;
-            font-weight: bold;
-            color: var(--primary-gray-color);
-            margin-bottom: 0.3rem;
-          }
-
-          .login_otp {
-            @include flex-container(row, space-between, center);
-          }
-          .otp-field{
-            width: 60%;
-          }
-        
-          .otp-button{
-            @include rounded-border(var(--secondary-color), 0.5rem);
-            padding: 0.65rem 1rem;
-            box-sizing: border-box;
-            button{
-             
-              border: none;
-              margin: 0;
-              background-color: white;
-              font-size: 16px;
-            }
-          }
-
-          p{
-            margin: 0;
-            font-size: 12px;
-            font-weight: bold;
-            color: red;
-          }
-
+        label {
+          font-size: 12px;
+          font-weight: bold;
+          color: var(--primary-gray-color);
+          margin-bottom: 0.3rem;
         }
 
-        .login_submit {
-          @include flex-container(row, center, center);
+        .login_otp {
+          @include flex-container(row, space-between, center);
+        }
+
+        .otp-field {
+          width: 60%;
+        }
+
+        .otp-button {
           @include rounded-border(var(--secondary-color), 0.5rem);
-          width: auto;
-          padding: 1rem;
-          margin: 0 5rem;
+          padding: 0.65rem 1rem;
           box-sizing: border-box;
-          text-align: center; 
-          background-color: var(--secondary-color);
-          @include shadow();
+          cursor: pointer;
 
-
-          button{
+          button {
             border: none;
             margin: 0;
-            background-color: transparent;
-            font-size: 20px;
-            font-weight: 500;
-            color: white;
+            background-color: white;
+            font-size: 16px;
+            cursor: pointer;
+          }
+        }
+
+        p {
+          margin: 0;
+          font-size: 12px;
+          font-weight: bold;
+          color: red;
+        }
+      }
+
+      .login_submit {
+        @include flex-container(row, center, center);
+        @include rounded-border(var(--secondary-color), 0.5rem);
+        margin: 0 5rem;
+        background-color: var(--secondary-color);
+        @include shadow();
+        cursor: pointer;
+
+        button {
+          text-align: center; 
+          border: none;
+          padding: 1rem;
+          box-sizing: border-box;
+          margin: 0;
+          background-color: transparent;
+          font-size: 20px;
+          font-weight: 500;
+          color: white;
+
+          @media screen and (min-width: 600px) {
+            width: 300px;
           }
         }
       }
     }
+  }
 
-    .login_footer{
-      font-size: 12px;
-      color: var(--primary-gray-color);
-      vertical-align: baseline;
-      text-align: center;
-      span{
-        font-weight: bold;
+  .login_footer {
+    font-size: 12px;
+    color: var(--primary-gray-color);
+    vertical-align: baseline;
+    text-align: center;
 
-      }
+    span {
+      font-weight: bold;
     }
   }
 }

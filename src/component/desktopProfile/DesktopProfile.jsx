@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import './DesktopProfile.scss';
 import { avatars } from '../../constants/profileConstants';
 
@@ -135,4 +135,4 @@ const DesktopProfile = ({setShowProfile, editUser, user}) => {
   );
 };
 
-export default DesktopProfile;
+export default memo(DesktopProfile);

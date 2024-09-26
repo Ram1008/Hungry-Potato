@@ -1,80 +1,118 @@
+import { useContext, useEffect } from 'react';
 import ManagerLayout from '../../wrapper/managerLayout/ManagerLayout';
 import './Manager.scss';
 import { DesktopProfile, OrderSummary } from '../../component';
-import { useContext, useEffect} from 'react';
-import { adminContext, userContext } from '../../context';
+import { userContext } from '../../context';
 import managerContext from './managerContext';
-
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Manager = () => {
-  const {showProfile, setShowProfile, dineInOrders, onlineOrders, fetchOnlineOrders, activeRestro, setActiveRestro, searchTerm, setSearchTerm, fetchDineInOrders, showSummary, setShowSummary, summaryDetail, setSummaryDetail, deskPayment} = useContext(managerContext);
-  const {user, editUser, getUser} = useContext(userContext);
-
-  let viewDineIn = activeRestro === 'All' ? dineInOrders : dineInOrders.filter(table => table.restronumber === activeRestro)
-  let viewOnline = activeRestro === 'All' ? onlineOrders : onlineOrders.filter(table => table.restronumber === activeRestro)
+  const {
+    showProfile,
+    setShowProfile,
+    dineInOrders,
+    onlineOrders,
+    fetchOnlineOrders,
+    activeRestro,
+    setActiveRestro,
+    searchTerm,
+    setSearchTerm,
+    fetchDineInOrders,
+    showSummary,
+    setShowSummary,
+    summaryDetail,
+    setSummaryDetail,
+    deskPayment
+  } = useContext(managerContext);
   
-  if (searchTerm) {
-      const lowercasedSearchTerm = searchTerm.toLowerCase();
-      
-      viewDineIn = viewDineIn.filter(order => {
-      return (
-        order.tableNumber.toLowerCase().includes(lowercasedSearchTerm)
-      )});
-      viewOnline = viewOnline.filter(order => {
-      return (
-        order.tableNumber.toLowerCase().includes(lowercasedSearchTerm)
-      )});
+  const { user, editUser, getUser } = useContext(userContext);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  }
-  
+  // Filtering dine-in and online orders based on the active restaurant and search term
+  const filterOrders = (orders) => {
+    return orders.filter(order => {
+      const matchesRestro = activeRestro === 'All' || order.restronumber === activeRestro;
+      const matchesSearch = searchTerm ? order.tableNumber.toLowerCase().includes(searchTerm.toLowerCase()) : true;
+      return matchesRestro && matchesSearch;
+    });
+  };
 
-  // const onlineOrders = viewOrders.filter(order => order.tableNumber === null)
+  const viewDineIn = filterOrders(dineInOrders);
+  const viewOnline = filterOrders(onlineOrders);
 
   const handleShowSummary = (order) => {
-      setSummaryDetail(order);
-      setShowSummary(true);
+    setSummaryDetail(order);
+    setShowSummary(true);
   };
-  
-  // console.log(dineinOrders);
 
-  useEffect(() => {
-    getUser();
+  const onLoad = async () => {
     fetchDineInOrders();
     fetchOnlineOrders();
-  }, []);  
-  
+    const response = await getUser();
+    if (!response) {
+      navigate('/login', { state: { from: location.pathname } });
+    }
+  };
+
+  useEffect(() => {
+    onLoad();
+  }, []);
 
   return (
     <ManagerLayout 
-    props = {{heading: "Welcome Manager" , showProfile , setShowProfile, dineInOrders, onlineOrders, setActiveRestro, searchTerm, setSearchTerm, user, activeRestro, showSummary}}
+      props={{
+        heading: "Welcome Manager",
+        showProfile,
+        setShowProfile,
+        dineInOrders,
+        onlineOrders,
+        setActiveRestro,
+        searchTerm,
+        setSearchTerm,
+        user,
+        activeRestro,
+        showSummary
+      }}
     >
-      {!showProfile ? showSummary ? 
-      <OrderSummary summaryDetail={summaryDetail} setSummaryDetail={setSummaryDetail} setShowSummary={setShowSummary} deskPayment={deskPayment} /> :
-       <div className='manager_container'>
-          <div className='manager_dineIn'>
-            {viewDineIn.map((order, idx) =>
-              <div key={idx} className='order_wrapper'>
-                <p>Table - {order.tableNumber}</p>
-                <div className='order-status' onClick={() => handleShowSummary(order)}>
-                  <span className='status-text'>Booked</span>
-                  <i className="eye-icon fa fa-eye"></i> 
+      {!showProfile ? (
+        showSummary ? (
+          <OrderSummary 
+            summaryDetail={summaryDetail} 
+            setSummaryDetail={setSummaryDetail} 
+            setShowSummary={setShowSummary} 
+            deskPayment={deskPayment} 
+          />
+        ) : (
+          <div className='manager_container'>
+            <div className='manager_dineIn'>
+              {viewDineIn.map((order, idx) => (
+                <div key={idx} className='order_wrapper'>
+                  <p>Table - {order.tableNumber}</p>
+                  <div className='order-status' onClick={() => handleShowSummary(order)}>
+                    <span className='status-text'>Booked</span>
+                    <i className="eye-icon fa fa-eye"></i> 
+                  </div>
                 </div>
-              </div>
-            )}
+              ))}
+            </div>
+            <div className='manager_online'>
+              {viewOnline.map((order, idx) => (
+                <div key={idx} className='order_wrapper'>
+                  <p></p>
+                  {/* Placeholder for online orders status */}
+                </div>
+              ))}
+            </div>
           </div>
-          <div className='manager_online'>
-          {viewOnline.map((order, idx) =>
-              <div key = {idx} className='order_wrapper'>
-                <p></p>
-                {/* <div className='order-status'>
-                  <span className='status-text'>Booked</span>
-                  <i className="eye-icon fa fa-eye"></i> 
-                </div> */}
-              </div>
-            )}
-          </div>
-        </div>:
-      <DesktopProfile editUser = {editUser} user = {user? user.user: null} setShowProfile={setShowProfile}/>}
+        )
+      ) : (
+        <DesktopProfile 
+          editUser={editUser} 
+          user={user ? user.user : null} 
+          setShowProfile={setShowProfile} 
+        />
+      )}
     </ManagerLayout>
   );
 };
