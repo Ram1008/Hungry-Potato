@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import './DeleteModal.scss'; 
 
-const DeleteConfirmationModal = ({ onConfirm, onCancel, label }) => {
+const DeleteModal = ({ onConfirm, onCancel, label }) => {
     return (
         <div className='delete_modal'>
             <div className='modal_content'>
@@ -13,4 +13,4 @@ const DeleteConfirmationModal = ({ onConfirm, onCancel, label }) => {
     );
 };
 
-export default memo(DeleteConfirmationModal);
+export default memo(DeleteModal);

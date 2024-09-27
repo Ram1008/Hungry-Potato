@@ -8,11 +8,10 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 const Admin = () => {
 
-  // const handleAddClick = () =>{
-  //   setShowAddModal(true);
-  // }
   const {user, editUser, getUser} = useContext(userContext);
-  const {users, tables, orders, showEditModal, buttonLabel, handleAddClick, showButton, activeTab, setActiveTab, tabData, showTab, searchTerm, setSearchTerm, fetchTables, fetchDishes, fetchOrders, fetchUsers, activeTable, showProfile,  setShowButton,  setShowProfile, adminSocket} = useContext(adminContext);
+  const {users, tables, orders, showEditModal, activeTab, setActiveTab, 
+     searchTerm, setSearchTerm, fetchTables, fetchDishes, fetchOrders, fetchUsers, activeTable,
+     showProfile,  setShowButton,  setShowProfile, setShowAddModal, adminSocket} = useContext(adminContext);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -74,7 +73,7 @@ const Admin = () => {
           <div className='body-nav'>
             <div className='nav-search'><DesktopSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} /></div>
             <div className='body-tab'><DesktopNavTab activeTab={activeTab} setActiveTab={setActiveTab} tabData={uniqueSeatings(tables)} /></div>
-            <button  className='add-button'>+ Add a table</button>
+            <button onClick = {() => setShowAddModal(true)}  className='add-button'>+ Add a table</button>
           </div>
         )
       }else if(activeTable === 'orders' || activeTable === 'users'){
@@ -85,7 +84,7 @@ const Admin = () => {
       }else{
         return(<div className='body-nav'>
             <div className='nav-search'><DesktopSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} /></div>
-            <button  className='add-button'>+ Add a dish</button>
+            <button onClick = {() => setShowAddModal(true)} className='add-button'>+ Add a dish</button>
           </div>)
       }
     }
