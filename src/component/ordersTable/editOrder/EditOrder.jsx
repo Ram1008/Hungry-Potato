@@ -7,7 +7,7 @@ const EditOrder = ({ editData = null, onConfirm, onCancel, label  }) => {
     
 
     const handleInputChange = (e) => {
-        setStatus = (e.target.value);
+        setStatus(e.target.value);
     };
 
     const handleSubmit = () => {
