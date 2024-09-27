@@ -74,7 +74,6 @@ const AdminState = (props) => {
       if (response.status) {
         setTables(response.data);
         setShowTab(true);
-        
       }
     };
 

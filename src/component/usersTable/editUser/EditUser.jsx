@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import './EditUser.scss';
 
 const EditUser = ({ editData, onConfirm, onCancel, label }) => {
@@ -133,4 +133,4 @@ const EditUser = ({ editData, onConfirm, onCancel, label }) => {
     );
 };
 
-export default EditUser;
+export default memo(EditUser);

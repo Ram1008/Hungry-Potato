@@ -1,12 +1,15 @@
 import { useContext } from "react";
 import './TablesTable.scss';
 import DeleteModal from "../deleteModal/DeleteModal";
-import EditTable from "../editTable/EditTable";
-import AddTable from "../editTable/EditTable";
-import { adminContext } from "../../context";
+import EditTable from "./editTable/EditTable";
+import AddTable from "./editTable/EditTable";
+import { adminContext } from "../../container";
 
-const TablesTable = ({tables}) => {
-  const { setEditData, addATable, deleteData, showAddModal, setShowAddModal, setDeleteData, setShowEditModal, setShowDeleteModal, showDeleteModal, deleteTable, showEditModal, editData, editTable, activeTab, searchTerm } = useContext(adminContext);
+const TablesTable = () => {
+  const {updateTable, deleteTable, activeTab, tables,
+    searchTerm, setEditData, setShowEditModal, setShowAddModal,
+    setShowDeleteModal, setDeleteData, createTable, showDeleteModal,
+    showEditModal, showAddModal, deleteData, editData  } = useContext(adminContext);
 
   let viewTables = activeTab === 'All' ? tables : tables.filter(table => table.restroNumber === activeTab)
 
@@ -18,7 +21,7 @@ const TablesTable = ({tables}) => {
   
       return (
         table.tableNumber.toLowerCase().includes(lowercasedSearchTerm) ||
-        (isSearchTermNumber && table.seats === Number(searchTerm)) || // Compare seats only if searchTerm is a number
+        (isSearchTermNumber && table.seats === Number(searchTerm)) || 
         table.status.toLowerCase().includes(lowercasedSearchTerm)
       );
     });
@@ -41,12 +44,12 @@ const TablesTable = ({tables}) => {
   };
 
   const handleEditTable = (id, seating, tableNumber, status, chairs) => {
-    editTable(id, seating, tableNumber, status, chairs)
+    updateTable(id, seating, tableNumber, status, chairs)
     setShowEditModal(false);
   };
 
   const handleAddTable = (id, seating, tableNumber, status, chairs) =>{
-    addATable(seating, tableNumber, status, chairs);
+    createTable(seating, tableNumber, status, chairs);
     setShowAddModal(false);
   }
 

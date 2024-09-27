@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import managerContext from './managerContext';
-import { getDineinOrders, getOnlineOrders, payOnCounter } from '../../api';
+import { addBill, getDineinOrders, getOnlineOrders, payOnCounter } from '../../api';
+import { toast } from 'react-toastify';
 
 const ManagerState = ({ children }) => {
     
@@ -33,6 +34,15 @@ const ManagerState = ({ children }) => {
       return response;
     } 
   }
+
+  const sendBill = async (number, bill) =>{
+    const response = await addBill(number, bill);
+    if (response) {
+      toast.success('Bill is sent successfully!', { autoClose: 2500 });
+    }else{
+      toast.error('Could not send the bill!', { autoClose: 2500 });
+    }
+  }
   
   const contextValue = {
     dineInOrders, 
@@ -49,7 +59,8 @@ const ManagerState = ({ children }) => {
     setSearchTerm,
     showProfile, 
     setShowProfile,
-    deskPayment
+    deskPayment,
+    sendBill
   };
 
 

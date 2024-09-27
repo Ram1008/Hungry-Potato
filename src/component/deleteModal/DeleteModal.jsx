@@ -1,4 +1,5 @@
-import './deleteModal.scss'; 
+import { memo } from 'react';
+import './DeleteModal.scss'; 
 
 const DeleteConfirmationModal = ({ onConfirm, onCancel, label }) => {
     return (
@@ -12,4 +13,4 @@ const DeleteConfirmationModal = ({ onConfirm, onCancel, label }) => {
     );
 };
 
-export default DeleteConfirmationModal;
+export default memo(DeleteConfirmationModal);

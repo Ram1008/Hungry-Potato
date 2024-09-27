@@ -1,50 +1,114 @@
 import { useContext, useEffect } from 'react';
 import './Admin.scss';
 import Layout from '../../wrapper/desktopLayout/Layout';
-import { UsersTable, DishesTable, TablesTable, DesktopProfile, OrdersTable } from '../../component';
-import { adminContext, dishContext, orderContext, userContext } from '../../context';
+import { UsersTable, DishesTable, TablesTable, DesktopProfile, OrdersTable, DesktopSearch, DesktopNavTab } from '../../component';
+import { userContext } from '../../context';
+import { adminContext } from '../../container';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Admin = () => {
-  
-  const {users, user, editUser, getUser, getUsers} = useContext(userContext);
-  const {getDishes, dishes} = useContext(dishContext);
-  const {orders, getAllOrders} = useContext(orderContext);
-  const {activeTable, showProfile, setShowSearch, setShowButton, setShowNav, setShowProfile, tables, getAllTables, connectToSocket} = useContext(adminContext);
 
-  console.log(users)
+  // const handleAddClick = () =>{
+  //   setShowAddModal(true);
+  // }
+  const {user, editUser, getUser} = useContext(userContext);
+  const {users, tables, orders, showEditModal, buttonLabel, handleAddClick, showButton, activeTab, setActiveTab, tabData, showTab, searchTerm, setSearchTerm, fetchTables, fetchDishes, fetchOrders, fetchUsers, activeTable, showProfile,  setShowButton,  setShowProfile, adminSocket} = useContext(adminContext);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const uniqueRoles = (users) => {
+    const uniqueRoles = new Set();
+    uniqueRoles.add('All');
+    users.forEach((user) => {
+      uniqueRoles.add(user.role);
+    });
+    return Array.from(uniqueRoles);
+  };
+
+  const uniqueSeatings = (tables) => {
+    const uniqueSeatings = new Set();
+    uniqueSeatings.add('All');
+    tables.forEach((table) => {
+      uniqueSeatings.add(table.restroNumber);
+    });
+    return Array.from(uniqueSeatings);
+  };
+  
   const renderTable = () => {
-    switch (activeTable) {
-      case 'tables':
-        return <TablesTable tables={tables}/>;
-      case 'orders':
-        console.log(orders);
-        return <OrdersTable orders={orders} />;
-      case 'users':
-        return <UsersTable users={users} />;
-      case 'dishes':
-        return <DishesTable dishes={dishes} />;
-      default:
-        return <TablesTable tables={tables}/>;
+    if(showProfile){
+      return <DesktopProfile editUser = {editUser} user = {user? user.user: null} setShowProfile={setShowProfile}/>
+    }
+    else{
+      switch (activeTable) {
+        case 'tables':
+          return <TablesTable/>;
+        case 'orders':
+          return <OrdersTable />;
+        case 'users':
+          return <UsersTable />;
+        case 'dishes':
+          return <DishesTable/>;
+        default:
+          return <TablesTable/>;
+      }}
+  };
+  const onLoad = async () => {
+    fetchDishes();
+    fetchUsers();
+    fetchOrders();
+    fetchTables();
+    setShowButton(true);
+    adminSocket();
+    const response = await getUser();
+    if (!response) {
+      navigate('/login', { state: { from: location.pathname } });
     }
   };
-  useEffect(() =>{
-    getUser();
-    getUsers();
-    getDishes();
-    getAllTables();
-    getAllOrders();
-    setShowNav(true);
-    setShowSearch(true);
-    setShowButton(true);
-    connectToSocket();
 
+  const renderNav = () =>{
+    if(!(showProfile || showEditModal)){
+      
+      if(activeTable === 'tables'){
+        return(
+          <div className='body-nav'>
+            <div className='nav-search'><DesktopSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} /></div>
+            <div className='body-tab'><DesktopNavTab activeTab={activeTab} setActiveTab={setActiveTab} tabData={uniqueSeatings(tables)} /></div>
+            <button  className='add-button'>+ Add a table</button>
+          </div>
+        )
+      }else if(activeTable === 'orders' || activeTable === 'users'){
+        return(<div className='body-nav'>
+            <div className='nav-search'><DesktopSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} /></div>
+            <div className='body-tab'><DesktopNavTab activeTab={activeTab} setActiveTab={setActiveTab} tabData={activeTable === 'orders' ? uniqueSeatings(orders): uniqueRoles(users)} /></div>
+          </div>)
+      }else{
+        return(<div className='body-nav'>
+            <div className='nav-search'><DesktopSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} /></div>
+            <button  className='add-button'>+ Add a dish</button>
+          </div>)
+      }
+    }
+  }
+
+  useEffect(() =>{
+    onLoad();
   }, [])
+
   return (
-    <Layout heading='Welcome Admin'>
-      {!showProfile ? <div className='admin_container'>
+    <Layout 
+      props={{
+        heading:'Welcome Admin',
+        showNav: true,
+        user,
+      }}
+    
+    >
+      <div className='admin_container'>
+        {renderNav()}
+        <hr />
         {renderTable()} 
-      </div>:
-      <DesktopProfile editUser = {editUser} user = {user? user.user: null} setShowProfile={setShowProfile}/>}
+      </div>
     </Layout>
   );
 };

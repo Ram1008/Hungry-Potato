@@ -1,7 +1,10 @@
-import React, { useRef } from 'react';
+import { useContext, useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
+import { managerContext } from '../../container';
 
 const BillTemplate = ({ setShowBillPreview, bill }) => {
+
+  console.log(bill);
   const date = bill.date.split(',');
   const invoiceDate = date[0];
   const invoiceTime = date[1];
@@ -11,9 +14,19 @@ const BillTemplate = ({ setShowBillPreview, bill }) => {
   const tax = 8;
   const total = subTotal + discount + shippingCharge + tax;
   const reference = useRef();
+
+  const {sendBill} = useContext(managerContext);
+
   const handlePrintReceipt = useReactToPrint({
     content: () => reference.current,
+  }, (content) =>{
+    console.log(content);
   });
+
+  const handleSendBill = () => {
+    const billContent = reference.current.innerHTML;
+    sendBill(bill.phone, billContent); 
+  };
 
   return (
     <div style={{ margin: 0, width: '100%' }}>
@@ -39,8 +52,8 @@ const BillTemplate = ({ setShowBillPreview, bill }) => {
           </div>
           <div style={{ color: '#6c757d' }}>
             <p style={{ margin: 0 }}>3184 Spruce Drive Pittsburgh, PA 15201</p>
-            <p style={{ margin: 0 }}><i className="uil uil-envelope-alt"></i> xyz@987.com</p>
-            <p style={{ margin: 0 }}><i className="uil uil-phone"></i> 012-345-6789</p>
+            <p style={{ margin: 0 }}><i className='uil uil-envelope-alt'></i> xyz@987.com</p>
+            <p style={{ margin: 0 }}><i className='uil uil-phone'></i> 012-345-6789</p>
           </div>
         </div>
         <hr style={{ margin: '1rem 0' }} />
@@ -134,6 +147,7 @@ const BillTemplate = ({ setShowBillPreview, bill }) => {
             borderRadius: '0.25rem',
             cursor: 'pointer',
           }}
+          onClick={handleSendBill}
         >
           Send on number
         </button>

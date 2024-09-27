@@ -1,74 +1,52 @@
-import { useContext, useEffect } from 'react';
-import './Layout.scss';
+import { memo, useContext } from 'react';
+import './DesktopLayout.scss';
 import UserIcon from '../../assets/icons/users.svg';
 import CurrentStatusIcon from '../../assets/icons/currentStatus.svg';
 import DishesIcon from '../../assets/icons/dishes.svg';
 import UserProfile from '../../assets/images/UserProfilePhoto.svg';
-import { DesktopSearch, DesktopNavTab } from '../../component';
-import { adminContext, orderContext, userContext } from '../../context';
+import { adminContext } from '../../container';
+import { useNavigate, useLocation } from 'react-router-dom';
 
-const Layout = ({ children, heading}) => {
-  const { user, users } = useContext(userContext);
-  const { orders } = useContext(orderContext);
-  const { tabData, activeTab, setActiveTab, tables, showSearch, setShowButton, showProfile, setButtonLabel, setTabData, setShowTab, activeTable, setShowAddModal, setShowProfile, showNav, setActiveTable, showButton, buttonLabel, showTab, searchTerm, setSearchTerm} = useContext(adminContext);
+const Layout = ({ props, children}) => {
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const {
+    heading,
+    showNav,
+    user,
+  } = props;
+  const {
+
+    setShowProfile,
+    setActiveTable,
+    activeTable,
+  } = useContext(adminContext);
+
 
 
   const handleProfileClick = () => {
     setShowProfile(true);
   };
 
-  const handleAddClick = () =>{
-    setShowAddModal(true);
-  }
-
-  const uniqueRoles = (users) => {
-    const uniqueRoles = new Set();
-    uniqueRoles.add('All');
-    users.forEach((user) => {
-      uniqueRoles.add(user.role);
-    });
-    return Array.from(uniqueRoles);
-  };
-
-  const uniqueSeatings = (tables) => {
-    const uniqueSeatings = new Set();
-    uniqueSeatings.add('All');
-    tables.forEach((table) => {
-      uniqueSeatings.add(table.restroNumber);
-    });
-    return Array.from(uniqueSeatings);
-  };
   
   const handleActiveTable = (name) =>{
-    setActiveTable(name);
-    switch(name){
-      case 'users':
-        setTabData(uniqueRoles(users));
-        setShowTab(true);
-        setShowButton(false);
-        setButtonLabel("Add a user");
-        break;
-      case 'orders':
-        setTabData(uniqueSeatings(orders));
-        setShowTab(true);
-        setButtonLabel("Add an order");
-        setShowButton(false);
-        break;
-      case 'dishes':
-        setShowButton(true);
-        setShowTab(false);
-        setButtonLabel("Add a dish");
-        break;
-      case 'tables':
-        setTabData(uniqueSeatings(tables));
-        setShowButton(true);
-        setShowTab(true);
-        setButtonLabel("Add a table");
-        break;
-      default:
-          break;
-    }
+    if(activeTable !== name) setActiveTable(name);
   }
+
+  const handleLogout = () => {
+    localStorage.removeItem('hungry&Potato-token');
+    navigate('/login', { state: { from: location.pathname } });
+  };
+  const handleLogin = () => {
+    localStorage.removeItem('hungry&Potato-token');
+    navigate('/login', { state: { from: location.pathname } });
+  };
+  const handleRegister = () => {
+    localStorage.removeItem('hungry&Potato-token');
+    navigate('/register', { state: { from: location.pathname } });
+  };
   
   return (
     <div className="layout_container">
@@ -76,7 +54,7 @@ const Layout = ({ children, heading}) => {
         <div className="logo"></div>
         {showNav && (
           <nav>
-            <button onClick={() => handleActiveTable('tables')} className={`nav-button ${activeTable === 'currentStatus'? 'active': ''}`}>
+            <button onClick={() => handleActiveTable('tables')} className={`nav-button ${activeTable === 'tables'? 'active': ''}`}>
               <img src={CurrentStatusIcon} alt="Tables" /> Tables
             </button>
             <button onClick={() => handleActiveTable('orders')} className={`nav-button ${activeTable === 'orders'? 'active': ''}`}>
@@ -92,9 +70,14 @@ const Layout = ({ children, heading}) => {
         )}
         <div className='btn-container'>
 
-          {user == null ? <><button className='button-primary'>Login</button>
-          <button className='button-primary'>Register</button></> :
-          <button className='button-danger'>Logout</button>}
+        {user ? (
+              <button className='button-danger' onClick={handleLogout}>Logout</button>
+            ) : (
+              <>
+                <button className='button-primary' onClick={handleLogin}>Login</button>
+                <button className='button-primary' onClick={handleRegister}>Register</button>
+              </>
+            )}
         </div>
       </header>
       <div className="layout_body">
@@ -102,20 +85,11 @@ const Layout = ({ children, heading}) => {
           <h1>{heading}</h1>
           <img src={user?user.user.profilePicture.url:UserProfile} onClick={handleProfileClick} alt="Profile" />
         </div>
-        <div className='body-nav'>
-          {!showProfile && 
-            <>
-              {showSearch && <div className='nav-search'><DesktopSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} /></div>}
-              {activeTable === 'dishes' ? null : showTab &&  <div className='body-tab'><DesktopNavTab activeTab={activeTab} setActiveTab={setActiveTab} tabData={tabData} /></div>}
-              {showButton && <button onClick={handleAddClick} className='add-button'>+ {buttonLabel}</button>}
-            </>
-          }
-        </div>
-        <hr />
+        
         {children}
       </div>
     </div>
   );
 };
 
-export default Layout;
+export default memo(Layout);

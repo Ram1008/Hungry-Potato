@@ -21,6 +21,5 @@ export { default as TablesTable } from './tablesTable/TablesTable';
 export { default as PaymentMethods } from './paymentMethods/PaymentMethods';
 export { default as OrdersTable } from './ordersTable/OrdersTable';
 export { default as DeleteModal } from './deleteModal/DeleteModal';
-export { default as EditModal } from './editDish/EditDish';
 export { default as OrderSummary } from './orderSummary/OrderSummary';
 export { default as BillTemplate } from './billTemplate/BillTemplate';

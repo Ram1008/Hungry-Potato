@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import './EditOrder.scss';
 
 const EditOrder = ({ editData = null, onConfirm, onCancel, label  }) => {
@@ -43,4 +43,4 @@ const EditOrder = ({ editData = null, onConfirm, onCancel, label  }) => {
     );
 };
 
-export default EditOrder;
+export default memo(EditOrder);

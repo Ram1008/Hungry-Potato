@@ -2,7 +2,7 @@ import { memo } from 'react';
 import './ManagerLayout.scss';
 import UserProfile from '../../assets/images/UserProfilePhoto.svg';
 import { DesktopSearch, DesktopNavTab } from '../../component';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const ManagerLayout = ({ props, children }) => {
   const {
@@ -21,7 +21,7 @@ const ManagerLayout = ({ props, children }) => {
   } = props;
 
   const navigate = useNavigate();
-
+  const location = useLocation();
   const handleProfileClick = () => setShowProfile(true);
 
   const uniqueSeatings = new Set(['All', ...(dineInOrders?.map(order => order.restroNumber) || [])]);
@@ -29,7 +29,7 @@ const ManagerLayout = ({ props, children }) => {
 
   const handleLogout = () => {
     localStorage.removeItem('hungry&Potato-token');
-    navigate('/login');
+    navigate('/login', { state: { from: location.pathname } });
   };
 
   return (

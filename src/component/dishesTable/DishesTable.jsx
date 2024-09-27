@@ -1,12 +1,11 @@
-import React, { useContext, useState } from 'react';
+import { useContext } from 'react';
 import  DeleteModal  from "../deleteModal/DeleteModal";
-import EditDish from '../editDish/EditDish';
-import { adminContext, dishContext } from '../../context';
+import EditDish from './editDish/EditDish';
+import { adminContext } from '../../container';
 import './DishesTable.scss';
 
-const DishesTable = ({dishes}) => {
-  const { setEditData, addATable, deleteData,showAddModal, setShowAddModal, setDeleteData, setShowEditModal, setShowDeleteModal, showDeleteModal, deleteTable, showEditModal, editData, editTable, activeTab, searchTerm } = useContext(adminContext);
-  const { editDish, deleteDish, addDish } = useContext(dishContext);
+const DishesTable = () => {
+  const { dishes, updateDish, removeDish, createDish, setEditData, deleteData,showAddModal, setShowAddModal, setDeleteData, setShowEditModal, setShowDeleteModal, showDeleteModal, showEditModal, editData, searchTerm } = useContext(adminContext);
   
   let filteredDishes = dishes;
 
@@ -45,17 +44,17 @@ const DishesTable = ({dishes}) => {
     }
 
     const handleDeleteDish = (dishId) =>{
-      deleteDish(dishId);
+      removeDish(dishId);
       setShowDeleteModal(false);
     }
     const handleEditDish = (id, name, description, addons, tags, servingSize, availibility, image, foodType) =>{
       console.log(id, name, description, addons, tags, servingSize, availibility, image, foodType)
-      editDish(id, name, description, addons, tags, servingSize, availibility, image, foodType)
+      updateDish(id, name, description, addons, tags, servingSize, availibility, image, foodType)
       setShowEditModal(false);
     }
 
     const handleAddDish = (id, name, description, addons, tags, servingSize, availibility, image, foodType) =>{
-      addDish(name, description, addons, tags, servingSize, availibility, image, foodType);
+      createDish(name, description, addons, tags, servingSize, availibility, image, foodType);
     }
 
   return (
@@ -74,7 +73,7 @@ const DishesTable = ({dishes}) => {
           </thead>
           <tbody>
             {filteredDishes.map((dish, index) => {
-              const tags = dish.tags.join(',')
+              // const tags = dish.tags.join(',')
               return(
               
               <tr key={index}>

@@ -1,6 +1,6 @@
-@import '../../mixins';
+@import '../../../mixins';
 
-.editOrder_backdrop{
+.editUser_backdrop {
     position: fixed;
     top: 0;
     left: 0;
@@ -10,10 +10,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    backdrop-filter: blur(10px); 
-    z-index: 100; 
-
-    .editOrder_container {
+    backdrop-filter: blur(10px);
+    z-index: 100;
+  
+    .editUser_container {
       background: #fff;
       width: 50%;
       height: 75%;
@@ -22,84 +22,80 @@
       border-radius: 8px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       position: relative;
-
-      .editOrder_header {
+      overflow: hidden;
+  
+      .editUser_header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-
-        h2{
-            margin: 0;
-            font-size: 18px;
+  
+        h2 {
+          margin: 0;
+          font-size: 18px;
         }
-
+  
         .close-btn {
           background: none;
           border: none;
           font-size: 35px;
           cursor: pointer;
           color: var(--red-color);
-      
         }
       }
-      .editOrder_body {
+  
+      .editUser_body {
         @include flex-container(column);
         gap: 1.5rem;
         margin: 1rem 0;
+        overflow-y: auto; /* Enable scrolling when content overflows */
+        max-height: calc(100% - 4rem); /* Ensure it does not exceed the container height */
 
-        div{
+        div {
           @include flex-container(row, flex-start, center);
           gap: 1rem;
+
           label {
             font-size: 14px;
             font-weight: 500;
             width: 25%;
           }
-          input, textarea{
+          input, textarea {
             padding: 0.5rem;
             border: 1px solid #ccc;
             border-radius: 0.5rem;
           }
-          button{
-            @include rounded-border(var(--primary-blue-color), 0.5rem);
-            padding: 3px 0.5rem ;
-            color: var(--primary-blue-color) ;
-            background-color: white;
-            font-size: 10px;
-          }
         }
-
-        
+        .image-preview {
+          height: 10rem;
+          width: 10rem;
+          @include rounded-border(transparent, 0.5rem);
+      
+          img {
+              height: 100%;  // Ensure the image takes up full height
+              width: 100%;   // Ensure the image takes up full width
+              object-fit: cover;  // Crop the image to cover the preview area
+              border-radius: inherit;  // Apply the same border radius to the image
+          }
       }
-
-      .editOrder_footer {
+      
+      }
+  
+      .editUser_footer {
         display: flex;
         justify-content: flex-end;
         position: absolute;
         bottom: 1rem;
         right: 1rem;
-
+  
         button {
-            padding: 0.75rem 1rem;
-            background-color: var(--primary-blue-color);
-            color: #fff;
-            border: none;
-            border-radius: 0.5rem;
-            cursor: pointer;
-          }
+          padding: 0.75rem 1rem;
+          background-color: var(--primary-blue-color);
+          color: #fff;
+          border: none;
+          border-radius: 0.5rem;
+          cursor: pointer;
+        }
       }
-
     }
   }
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-
   

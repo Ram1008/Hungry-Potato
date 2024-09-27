@@ -1,13 +1,15 @@
 import { useContext } from "react";
-import { adminContext, orderContext } from "../../context";
+import { adminContext} from "../../container";
 import './OrderTable.scss'
 import  DeleteModal  from "../deleteModal/DeleteModal";
-import EditOrder from "../editOrder/EditOrder";
+import EditOrder from "./editOrder/EditOrder";
 
-const OrdersTable = ({orders}) => {
+const OrdersTable = () => {
 
-  const { setEditData, addATable, deleteData,showAddModal, setShowAddModal, setDeleteData, setShowEditModal, setShowDeleteModal, showDeleteModal, deleteTable, showEditModal, editData, editTable, activeTab, searchTerm } = useContext(adminContext);
-  const{ deleteOrder, editOrder } = useContext(orderContext);
+  const { orders, removeOrder, updateOrder, setEditData,
+     deleteData, setDeleteData, setShowEditModal,
+      setShowDeleteModal, showDeleteModal, showEditModal,
+     editData,  activeTab, searchTerm } = useContext(adminContext);
 
   let viewOrders = activeTab === 'All' ? orders : orders.filter(order => order.restroNumber === activeTab)
 
@@ -38,12 +40,12 @@ const OrdersTable = ({orders}) => {
   };
 
   const handleDeleteOrder = (orderId) => {
-    deleteOrder(orderId);
+    removeOrder(orderId);
     setShowDeleteModal(false);
   };
 
   const handleEditOrder = (id, status) => {
-    editOrder(id, status)
+    updateOrder(id, status)
     setShowEditModal(false);
   };
 

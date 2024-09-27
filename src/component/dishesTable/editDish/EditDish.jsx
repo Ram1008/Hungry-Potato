@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import './EditDish.scss';
-import { host } from '../../constants/appConstants';
 
 const EditDish = ({ editData, onConfirm, onCancel, label }) => {
 
@@ -235,4 +234,4 @@ const EditDish = ({ editData, onConfirm, onCancel, label }) => {
     );
 };
 
-export default EditDish;
+export default memo(EditDish);

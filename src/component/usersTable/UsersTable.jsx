@@ -1,13 +1,12 @@
 import './UsersTable.scss';
 import UserProfile from '../../assets/images/UserProfilePhoto.svg';
 import  DeleteModal  from "../deleteModal/DeleteModal";
-import { adminContext, userContext } from '../../context';
+import { adminContext } from '../../container';
 import { useContext } from 'react';
-import EditUser from '../editUser/EditUser';
+import EditUser from './editUser/EditUser';
 
-  const UsersTable = ({users}) => {
-    const { setEditData,  setDeleteData, setShowEditModal, setShowDeleteModal, showDeleteModal, showEditModal, editData, activeTab, searchTerm } = useContext(adminContext);
-    const {deleteUser, editUserAdmin} = useContext(userContext);
+  const UsersTable = () => {
+    const { users, removeUser, updateUser, setEditData,  setDeleteData, setShowEditModal, setShowDeleteModal, showDeleteModal, showEditModal, editData, activeTab, searchTerm } = useContext(adminContext);
 
     let viewUsers = activeTab === 'All' ? users : users.filter(user => user.role === activeTab)
 
@@ -35,11 +34,11 @@ import EditUser from '../editUser/EditUser';
       }
 
       const handleDeleteUser = (userId) =>{
-        deleteUser(userId);
+        removeUser(userId);
         setShowDeleteModal(false);
       }
       const handleEditUser = (id, name, address, dateOfBirth, profilePicture, email) =>{
-        editUserAdmin(id, name, address, dateOfBirth, profilePicture, email)
+        updateUser(id, name, address, dateOfBirth, profilePicture, email)
         setShowEditModal(false);
       }
 
@@ -64,7 +63,7 @@ import EditUser from '../editUser/EditUser';
                   <td>{user.phone}</td>
                   <td>
                     <div className="user_info">
-                      <img src={user.profilePicture.url || UserProfile} alt="avatar" className="avatar" />
+                      <img src={user.profilePicture? user.profilePicture.url :    UserProfile} alt="avatar" className="avatar" />
                       <span>{user.name}</span>
                     </div>
                   </td>

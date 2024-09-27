@@ -1,5 +1,5 @@
 import './EditTable.scss';
-import { useState } from 'react';
+import { memo, useState } from 'react';
 
 const EditTable = ({ editData = null, onConfirm, onCancel, label  }) => {
     
@@ -87,4 +87,4 @@ const EditTable = ({ editData = null, onConfirm, onCancel, label  }) => {
     );
 };
 
-export default EditTable;
+export default memo(EditTable);

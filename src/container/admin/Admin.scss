@@ -1,7 +1,41 @@
 @import '../../mixins';
 
 .admin_container{
-    @include flex-container(column, flex-start, center);
+    @include flex-container(column, flex-start);
+
+    .body-nav {
+      @include flex-container(row);
+      width: 100%;
+      margin: 1rem 0 0 ;
+      position: relative;
+      gap: 4.5rem;
+
+      .nav-search {
+        width: 25%;
+      }
+      .body-tab {
+        width: 45%;
+      }
+
+      .add-button {
+        position: absolute;
+        right: 0;
+        padding: 0.8rem 2rem;
+        box-sizing: border-box;
+        @include rounded-border(var(--primary-blue-color), 0.5rem);
+        background-color: white;
+        color: var(--primary-blue-color);
+        font-size: 10px;
+        font-weight: bold;
+        @include shadow();
+      }
+    }
+
+    hr {
+      background-color: var(--tertiary-color);
+      height: 1px;
+      width: 100%;
+    }
 
     .admin_tab {
         margin: 0.5rem 0;

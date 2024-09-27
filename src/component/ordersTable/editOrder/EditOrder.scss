@@ -1,6 +1,6 @@
-@import '../../mixins';
+@import '../../../mixins';
 
-.editTable_backdrop{
+.editOrder_backdrop{
     position: fixed;
     top: 0;
     left: 0;
@@ -13,7 +13,7 @@
     backdrop-filter: blur(10px); 
     z-index: 100; 
 
-    .editTable_container {
+    .editOrder_container {
       background: #fff;
       width: 50%;
       height: 75%;
@@ -23,7 +23,7 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       position: relative;
 
-      .editTable_header {
+      .editOrder_header {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -42,7 +42,7 @@
       
         }
       }
-      .editTable_body {
+      .editOrder_body {
         @include flex-container(column);
         gap: 1.5rem;
         margin: 1rem 0;
@@ -60,12 +60,19 @@
             border: 1px solid #ccc;
             border-radius: 0.5rem;
           }
+          button{
+            @include rounded-border(var(--primary-blue-color), 0.5rem);
+            padding: 3px 0.5rem ;
+            color: var(--primary-blue-color) ;
+            background-color: white;
+            font-size: 10px;
+          }
         }
 
         
       }
 
-      .editTable_footer {
+      .editOrder_footer {
         display: flex;
         justify-content: flex-end;
         position: absolute;

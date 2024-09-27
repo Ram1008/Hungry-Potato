@@ -8,6 +8,8 @@ export { default as Cook } from './cook/Cook';
 export { default as CookState } from './cook/CookState';
 export { default as cookContext } from './cook/cookContext';
 export { default as Admin } from './admin/Admin';
+export { default as AS } from './admin/AdminState';
+export { default as adminContext } from './admin/adminContext';
 export { default as Manager } from './manager/Manager';
 export { default as ManagerState } from './manager/ManagerState';
 export { default as managerContext } from './manager/managerContext';
