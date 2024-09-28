@@ -1,8 +1,9 @@
-import { memo, useState } from 'react';
+import { memo, useContext, useState } from 'react';
 import './OrderSummary.scss';
 import BillTemplate from '../billTemplate/BillTemplate';
 import { toast } from 'react-toastify';
-import { editTable } from '../../api';
+import { editTable} from '../../api';
+import { managerContext } from '../../container';
 
 const PaymentMethods = ({ selectedMethod, handlePaymentMethod }) => (
   <div className="payment_methods">
@@ -31,7 +32,7 @@ const OrderSummary = ({ summaryDetail, setShowSummary, deskPayment }) => {
   const handlePaymentMethod = (method) => setPaymentMethod(method);
   const tableTotal = summaryDetail.orders.reduce((sum, item) => sum + item.totalAmount, 0);
   
-
+  const {fetchOrders} = useContext(managerContext)
   const handlePayed = async () => {
     if (!name || !number || !paymentMethod || !amountPaid) {
       toast.error('Please fill out all fields', {
@@ -69,6 +70,8 @@ const OrderSummary = ({ summaryDetail, setShowSummary, deskPayment }) => {
         toast.success('Order complete!', {
           autoClose: 2500,
         });
+        fetchOrders();
+        setShowSummary(false);
       }
     } catch (err) {
       toast.error('Failed to complete order.', {

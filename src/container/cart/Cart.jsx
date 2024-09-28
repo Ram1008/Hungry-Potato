@@ -4,9 +4,12 @@ import { orderContext, dishContext } from '../../context';
 import MobileLayout from '../../wrapper/mobileLayout/MobileLayout';
 // import { PaymentMethods } from '../../component';
 import Customize from '../customize/Customize';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+// import PaymentForm from './PaymentForm'; 
 
 const Cart = () => {
-
+  const stripePromise = loadStripe('pk_test_51Ps296JIj9i0thHmvhddhBMMtH6x78Trh73HYZmE2TGZ6oe6jvvLlywi2wxo6c6MBuTb6XjxodmssJi5MKONxRgU00WfPKQMxf');
   const { cart, removeFromCart} = useContext(orderContext);
   const { dishes, customizationData, customization, setCustomization, setCustomizationData } = useContext(dishContext);
   const [showPaymentMethods, setShowPaymentMethods] = useState(false);
@@ -81,10 +84,13 @@ const Cart = () => {
       )}
     </MobileLayout>
     {customization && (
+      <Elements stripe={stripePromise}>
       <Customize
         payment={customizationData.orders}
         handleCloseCustomization = {handleCloseCustomization}
       />
+    </Elements>
+      
     )}
     </>
   );

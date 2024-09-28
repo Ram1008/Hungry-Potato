@@ -265,10 +265,21 @@ export const payOnCounter = async (counterPaymentDetails) => {
     else return null;
 }
 
-export const addBill = async (number, bill) => {
-        const response = await fetchApi(`${host}/payment/send-bill`, 'POST', {phone: number, htmlBill: bill}, true);
-        if (response.status) return response.data;
-        else return null;
+export const getPaymentIntent = async (tableId, order) => {
+  const response = await fetchApi(`${host}/payment/payment-intent`, 'POST', tableId, order, true);
+    if (response.status) return response.data;
+    else return null;
 }
+
+export const addBill = async (number, bill) => {
+  const formData = new FormData();
+  if(number) formData.append('phone', number);
+  if (bill) formData.append('htmlBill', bill, 'bill.pdf');
+  const response = await fetchApi(`${host}/payment/send-bill`, 'POST', formData, true);
+  if (response.status) return response.data;
+  else return null;
+}
+
+
 
 

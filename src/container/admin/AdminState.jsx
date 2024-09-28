@@ -132,28 +132,6 @@ const AdminState = ({ children }) => {
     }
   }
 
-  const adminSocket = () =>{
-
-    const socket = io('https://restaurentmanagement-backend.onrender.com/', {transports: ['websocket'],
-      withCredentials:true
-    });
-    
-
-    socket.emit('join-room', 'admin');
-
-    socket.on('newOrder', (notification) => {
-      console.log('Admin received new order notification:', notification.order,notification.order.dishes, notification.table, notification);
-    });
-
-    socket.on('tableStatusUpdate', (notification)=>{
-      console.log('Table update detected : ', notification);
-    });
-
-    socket.on('connect', () => {
-      console.log('Admin connected to server');
-    });
-
-  }
 
   const contextValue = {
     activeTable,
@@ -199,8 +177,7 @@ const AdminState = ({ children }) => {
     fetchDishes,
     createDish,
     removeDish,
-    updateDish,
-    adminSocket
+    updateDish
   };
 
   return (

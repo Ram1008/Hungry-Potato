@@ -22,7 +22,8 @@ const Manager = () => {
     setShowSummary,
     summaryDetail,
     setSummaryDetail,
-    deskPayment
+    deskPayment,
+    managerSocket
   } = useContext(managerContext);
   
   const { user, editUser, getUser } = useContext(userContext);
@@ -53,6 +54,7 @@ const Manager = () => {
     if (!response) {
       navigate('/login', { state: { from: location.pathname } });
     }
+    managerSocket();
   };
 
   useEffect(() => {

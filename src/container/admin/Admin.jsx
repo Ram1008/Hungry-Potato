@@ -58,7 +58,6 @@ const Admin = () => {
     fetchOrders();
     fetchTables();
     setShowButton(true);
-    adminSocket();
     const response = await getUser();
     if (!response) {
       navigate('/login', { state: { from: location.pathname } });

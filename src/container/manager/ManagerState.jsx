@@ -2,6 +2,7 @@ import { useState } from 'react';
 import managerContext from './managerContext';
 import { addBill, getDineinOrders, getOnlineOrders, payOnCounter } from '../../api';
 import { toast } from 'react-toastify';
+import { io } from 'socket.io-client';
 
 const ManagerState = ({ children }) => {
     
@@ -43,6 +44,26 @@ const ManagerState = ({ children }) => {
       toast.error('Could not send the bill!', { autoClose: 2500 });
     }
   }
+
+  const managerSocket = () =>{
+
+    const socket = io('https://restaurentmanagement-backend.onrender.com/', {transports: ['websocket'],
+      withCredentials:true
+    });
+    
+
+    socket.emit('join-room', 'manager');
+
+    socket.on('newOrder', () => {
+      toast.success('New order recieved!', { autoClose: 2500 });
+      fetchDineInOrders();
+    });
+
+    socket.on('connect', () => {
+      console.log('Manager connected to server');
+    });
+
+  }
   
   const contextValue = {
     dineInOrders, 
@@ -60,7 +81,8 @@ const ManagerState = ({ children }) => {
     showProfile, 
     setShowProfile,
     deskPayment,
-    sendBill
+    sendBill,
+    managerSocket
   };
 
 

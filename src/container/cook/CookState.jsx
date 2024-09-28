@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import cookContext from './cookContext';
 import { getUncookedOrders, editOrder } from '../../api';
 import { toast } from 'react-toastify'; 
+import { io } from 'socket.io-client';
 
 const CookState = (props) => {
   const [orders, setOrders] = useState([]);
@@ -35,6 +36,26 @@ const CookState = (props) => {
     }
   };
 
+  const cookSocket = () =>{
+
+    const socket = io('https://restaurentmanagement-backend.onrender.com/', {transports: ['websocket'],
+      withCredentials:true
+    });
+    
+
+    socket.emit('join-room', 'cook');
+
+    socket.on('newOrder', () => {
+      toast.success('New order recieved!', { autoClose: 2500 });
+      fetchOrders();
+    });
+
+    socket.on('connect', () => {
+      console.log('Cook connected to server');
+    });
+
+  }
+
   const contextValue = {
     orders,
     showProfile,
@@ -45,6 +66,7 @@ const CookState = (props) => {
     setSearchTerm,
     fetchOrders,
     updateOrder,
+    cookSocket
   };
 
   return (

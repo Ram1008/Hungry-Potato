@@ -27,6 +27,7 @@ const Customize = ({ dish = null, selectedDish = null, handleCloseCustomization,
 
   const handleAddItem = () => {
     addToCart(orderDish);
+    window.history.back();
     handleCloseCustomization();
   };
 
@@ -106,7 +107,7 @@ const Customize = ({ dish = null, selectedDish = null, handleCloseCustomization,
           </>
         ) : tableOrders ? (
           <OrdersOnTable tableOrders = {tableOrders}/>
-        ) : payment && <PaymentMethods />}
+        ) : payment && <PaymentMethods orders={payment} />}
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import ManagerLayout from '../../wrapper/managerLayout/ManagerLayout';
 
 const Cook = () => {
-  const { updateOrder, orders, showProfile, setShowProfile, activeRestro, setActiveRestro, searchTerm, setSearchTerm, fetchOrders } = useContext(cookContext);
+  const { updateOrder, orders, showProfile, setShowProfile, activeRestro, setActiveRestro, searchTerm, setSearchTerm, fetchOrders, cookSocket } = useContext(cookContext);
   const { getUser, editUser, user } = useContext(userContext);
   const navigate = useNavigate();
   const location = useLocation();
@@ -28,6 +28,7 @@ const Cook = () => {
     if (!response) {
       navigate('/login', { state: { from: location.pathname } });
     }
+    cookSocket();
   };
 
   useEffect(() => {

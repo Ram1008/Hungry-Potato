@@ -4,10 +4,11 @@ import statusDisplayContext from './statusDisplayContext';
 import ManagerLayout from "../../wrapper/managerLayout/ManagerLayout";
 
 const StatusDisplay = () => {
-    const {orders, fetchOrders} = useContext(statusDisplayContext);
+    const {orders, fetchOrders, commanSocket} = useContext(statusDisplayContext);
 
     useEffect(() => {
         fetchOrders();
+        commanSocket();
       }, []); 
 
   return (

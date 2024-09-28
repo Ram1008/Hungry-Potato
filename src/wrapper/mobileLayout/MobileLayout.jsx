@@ -31,12 +31,12 @@ const MobileLayout = ({ showCart = false, children }) => {
     if(!showPaymentMethods){
       const response = await placeOrder(tableId, cart);
       if (response.status) {
-        navigate('/')
+        navigate(-1);
       }
     }else{
       const response = await placeOrder(tableId, cart);
       if (response.status) {
-        navigate('/')
+        navigate(-1);
       }
     }
     

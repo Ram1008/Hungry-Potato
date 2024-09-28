@@ -1,6 +1,8 @@
 import { useContext, useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import { managerContext } from '../../container';
+import html2pdf from 'html2pdf.js';
+import { toast } from 'react-toastify';
 
 const BillTemplate = ({ setShowBillPreview, bill }) => {
 
@@ -23,9 +25,22 @@ const BillTemplate = ({ setShowBillPreview, bill }) => {
     console.log(content);
   });
 
-  const handleSendBill = () => {
-    const billContent = reference.current.innerHTML;
-    sendBill(bill.phone, billContent); 
+  const handleSendBill = async () => {
+    const billContent = reference.current;
+    const opt = {
+      margin: 1,
+      filename: 'bill.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+  
+    try {
+      const billPDF = await html2pdf().from(billContent).set(opt).outputPdf('blob');
+      sendBill(bill.phone, billPDF);
+    } catch (error) {
+      toast.error('Failed to generate the PDF.', { autoClose: 2500 });
+    }
   };
 
   return (
