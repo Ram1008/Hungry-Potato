@@ -1,63 +1,83 @@
 @import '../../mixins';
 
 
-  .orders-content-wrapper {
-    
+  .tableOrders_container{
+    @include flex-container(column);
+
+    h1 {
+      margin: 0;
+      font-size: 18px;
+
+    }
 
     .orders-content {
       padding: 1rem;
-    }
 
-    .cart-item {
-      margin-bottom: 0.5rem;
-      @include rounded-border(var(--green-color), 10px);
-      padding: 0.5rem 1rem;
-      @include shadow();
 
-      .item-detail {
-        display: flex;
-        flex-direction: column;
-
-        .item-header {
+      .cart-item {
+        
+        .item-detail {
+          margin-bottom: 0.5rem;
+          @include shadow();
+          padding: 0.5rem 1rem;
+          @include rounded-border(var(--green-color), 10px);
           display: flex;
-          align-items: center;
-          font-size: 16px;
-          font-weight: bold;
-
-          .item-name {
-            margin-right: 1rem;
+          flex-direction: column;
+          
+          .item-header {
+            @include flex-container(row, space-between, center);
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 0.3rem;
+  
+            .item-name {
+              margin-right: 1rem;
+            }
+            .item-status {
+              color: var(--secondary-color);
+            }
           }
-
-          .item-quantity {
-            color: #3A3A3A;
+          .item-body {
+            @include flex-container(row, flex-start, center);
+            font-size: 16px;
+            font-weight: bold;
+            gap:  1rem;
+            margin-bottom: 0.1rem;
+            .item-serving-size {
+              font-size: 12px;
+              color: var(--green-color);
+              font-weight: bold;
+            }
+  
+            .item-quantity {
+              color: var(--secondary-color);
+              font-size: 14px;
+              font-weight: bold;
+            }
           }
-        }
-
-        .item-serving-size {
-          font-size: 12px;
-          color: var(--green-color);
-          font-weight: bold;
-        }
-
-        .item-addons {
-          display: flex;
-          gap: 0.5rem;
-          margin-top: 0.3rem;
-
-          .addon-name {
-            background-color: var(--light-gray-color);
-            padding: 0.2rem 0.5rem;
-            border-radius: 5px;
-            font-size: 12px;
-            color: var(--primary-gray-color);
+  
+          
+  
+          .item-addons {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.3rem;
+  
+            .addon-name {
+              background-color: var(--light-gray-color);
+              padding: 0.2rem 0.5rem;
+              border-radius: 5px;
+              font-size: 12px;
+              color: var(--primary-gray-color);
+            }
           }
         }
       }
+
     }
 
-    .table-id {
-      margin-top: 1rem;
-      font-weight: bold;
-    }
+    
+
+    
   }
 

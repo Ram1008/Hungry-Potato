@@ -6,7 +6,7 @@ const DishState = ({ children }) => {
   const [menu, setMenu] = useState([]);
   const [dishes, setDishes] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [filterTag, setFilterTag] = useState('');
+  const [filterTag, setFilterTag] = useState('all');
   const [vegMode, setVegMode] = useState(false);
   const [chefSpecial, setChefSpecial] = useState([]);
   const [customization, setCustomization] = useState(false);

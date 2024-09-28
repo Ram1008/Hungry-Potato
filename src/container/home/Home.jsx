@@ -17,7 +17,7 @@ const Home = () => {
   let filteredDishes = dishes;
 
   if(filterTag){
-    filteredDishes = filteredDishes.filter(dish => dish.tags.includes(filterTag));
+    filteredDishes = filterTag=== 'all' ? filteredDishes : filteredDishes.filter(dish => dish.tags.includes(filterTag));
   }
 
   if(searchTerm){

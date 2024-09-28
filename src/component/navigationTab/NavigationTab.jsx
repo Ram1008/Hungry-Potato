@@ -1,8 +1,31 @@
 import { useContext } from 'react';
 import { dishContext } from '../../context';
-import { NavigationOptions } from '../../constants/dishConstants';
 
 const NavigationTab = () => {
+
+  const NavigationOptions = [
+    {
+      labal: 'All',
+        tag: 'all'
+    },
+    {
+        labal: 'Burgers',
+        tag: 'burger'
+    },
+    {
+        labal: 'Pizzas',
+        tag: 'pizza'
+    },
+    {
+        labal: 'Cakes',
+        tag: 'cake'
+    },
+    {
+        labal: 'Thalis',
+        tag: 'thali'
+    },
+
+]
 
   const {setFilterTag} = useContext(dishContext);
 
