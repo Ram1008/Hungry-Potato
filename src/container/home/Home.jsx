@@ -54,7 +54,7 @@ const Home = () => {
             
           </div>
           {tableOrders && <div className="home_tableOrder">
-            <button onClick={() => handleCustomize(null, null, tableOrders)}>&#x25BC; Present orders </button>
+            <button onClick={() => handleCustomize(null, null, tableOrders)}>&#x25BC; Orders on table </button>
           </div>}
           <div className="home_navigation">
             <NavigationTab />

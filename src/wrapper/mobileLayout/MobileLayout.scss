@@ -12,26 +12,26 @@
 
         .mobileLayout_header {
             @include flex-container(row, space-between, center);
-            height: 80px;
-            // gap: 0.5rem;
+            padding: 0.6rem 0;
+            box-sizing: border-box;
             width: 100%;
         
             .head-searchbar {
             width: 80%;
             margin: 0 0.5rem;
             }
+
             .back-btn {
               @include flex-container(row, center, center);
               background: rgba(255, 255, 255);
               @include rounded-border(transparent, 10px);
-              z-index: 1;
               margin: 0 1rem;
-              padding: 0.4rem 0.7rem;
-              box-sizing: border-box;
-              text-align: center;
               
               
               button {
+                text-align: center;
+                box-sizing: border-box;
+                padding: 0.7rem 0.9rem;
                 background-color: transparent;
                 border: none;
                 font-size: 14px;

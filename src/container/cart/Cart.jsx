@@ -34,8 +34,8 @@ const Cart = () => {
   const roundedTotal = Math.round(total);
   
 
-  const handleDeleteItem = (id) =>{
-    removeFromCart(id);
+  const handleDeleteItem = (idx) =>{
+    removeFromCart(idx);
   };
 
   return (
@@ -43,7 +43,7 @@ const Cart = () => {
     <MobileLayout showCart={true} setShowPaymentMethods={setShowPaymentMethods}>
       {cart && !showPaymentMethods && (
         <div className='cart-container'>
-          <h1 className='cart-heading'>Your Orders</h1>
+          <h1 className='cart-heading'>Your Dishes</h1>
           <div className='cart-summary'>
             {cart.map((item, idx) => {
               const dish = dishes.find((dish) => dish._id === item.dishId);
@@ -59,19 +59,19 @@ const Cart = () => {
                     <img src={dish.image.url?dish.image.url:dish.image} alt={dish.name} className='dish-image'/>
                     <div className='personal-details'>
                       <div className='item-name'>{dish.name} </div>
-                      <span>X {quantity}</span>
-                      <div className='serving-size'>{servingSize.size}</div>
+                      <div className='serving-size'>{servingSize.size} <span>X {quantity}</span></div>
+                      <div className='addons'>
+                        {addons.map(addon => (
+                          <span key={addon._id} className='addon-name'>{addon.name}</span>
+                        ))}
+                      </div>
                     </div>
                     <div className='action-details'>
                       <div className='item-price'>₹&nbsp;{itemTotal}</div>
-                      <button onClick={() => handleDeleteItem(item.dishId)}><i className="fas fa-trash"></i></button>
+                      <button onClick={() => handleDeleteItem(idx)}><i className="fas fa-trash"></i></button>
                     </div>
                   </div>
-                  <div className='addons'>
-                    {addons.map(addon => (
-                      <span key={addon._id} className='addon-name'>{addon.name}</span>
-                    ))}
-                  </div>
+                  
                 </div>
               );
             })}

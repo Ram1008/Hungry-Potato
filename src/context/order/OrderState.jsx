@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import orderContext from './orderContext';
 import { host } from '../../constants/appConstants';
+import { toast } from 'react-toastify';
 
 const OrderState = (props) => {
   const [cart, setCart] = useState([]);
@@ -42,6 +43,7 @@ const OrderState = (props) => {
 
   const addToCart = (order) => {
     setCart([...cart, order]);
+    toast.success('Item added to cart!', { autoClose: 1000 })
   };
 
   const bookTable = async (id) =>{
@@ -52,9 +54,8 @@ const OrderState = (props) => {
     setTableId(id);
   }
 
-  const removeFromCart = (id) => {
-    const updatedCart = cart.filter(item => item.dishId !== id);
-    setCart(updatedCart);
+  const removeFromCart = (indexToRemove) => {
+    setCart((prevItems) => prevItems.filter((_, index) => index !== indexToRemove));
   };
 
   const getAllOrders = async () =>{
