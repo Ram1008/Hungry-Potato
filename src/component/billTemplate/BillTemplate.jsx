@@ -6,7 +6,6 @@ import { toast } from 'react-toastify';
 
 const BillTemplate = ({ setShowBillPreview, bill }) => {
 
-  console.log(bill);
   const date = bill.date.split(',');
   const invoiceDate = date[0];
   const invoiceTime = date[1];
@@ -15,7 +14,8 @@ const BillTemplate = ({ setShowBillPreview, bill }) => {
   const shippingCharge = 0;
   const tax = 8;
   const total = subTotal + discount + shippingCharge + tax;
-  const reference = useRef();
+
+  const reference = useRef(null);
 
   const {sendBill} = useContext(managerContext);
 

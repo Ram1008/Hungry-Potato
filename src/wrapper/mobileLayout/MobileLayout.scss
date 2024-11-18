@@ -156,9 +156,10 @@
         
         .cart-paymentMethod {
           box-sizing: border-box; 
-          width: 42%;
+          max-width: 39%;
           @include rounded-border(var(--light-gray-color), 10px);
           @include shadow();
+          
           button{
             @include flex-container(row, space-between, center);
             padding: 0.6rem 1rem;

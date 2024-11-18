@@ -30,6 +30,12 @@ const Manager = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  function capitalizeFirstChar(str) {
+    if (!str) return str; // Handle empty or null strings
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+  
+
   // Filtering dine-in and online orders based on the active restaurant and search term
   const filterOrders = (orders) => {
     return orders.filter(order => {
@@ -41,7 +47,7 @@ const Manager = () => {
 
   const viewDineIn = filterOrders(dineInOrders);
   const viewOnline = filterOrders(onlineOrders);
-
+  console.log(viewDineIn);
   const handleShowSummary = (order) => {
     setSummaryDetail(order);
     setShowSummary(true);
@@ -56,6 +62,8 @@ const Manager = () => {
     }
     managerSocket();
   };
+
+
 
   useEffect(() => {
     onLoad();
@@ -92,7 +100,7 @@ const Manager = () => {
                 <div key={idx} className='order_wrapper'>
                   <p>Table - {order.tableNumber}</p>
                   <div className='order-status' onClick={() => handleShowSummary(order)}>
-                    <span className='status-text'>Booked</span>
+                    <span className='status-text'>{order.orders.length > 0 ? capitalizeFirstChar(order.orders[order.orders.length -1].status): 'Booked'}</span>
                     <i className="eye-icon fa fa-eye"></i> 
                   </div>
                 </div>

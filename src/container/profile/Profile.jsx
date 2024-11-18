@@ -1,13 +1,11 @@
 import './Profile.scss';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { userContext } from '../../context';
 import { useNavigate } from 'react-router-dom';
-import { IMAGEURL } from '../../constants/appConstants';
 import UserProfilePhoto from '../../assets/images/UserProfilePhoto.svg';
 
 const Profile = () => {
-  const imageURL = `${IMAGEURL}user/`;
-  const { editUser, user } = useContext(userContext);
+  const { editUser, user, getUser } = useContext(userContext);
   const [profilePicture, setProfilePicture] = useState(user? user.user.profilePicture.url : UserProfilePhoto);
   const [profileName, setProfileName] = useState(user.user.name);
   const [profileDOB, setProfileDOB] = useState(user.user.dateOfBirth || "");
@@ -15,7 +13,7 @@ const Profile = () => {
   const [profileEmail, setProfileEmail] = useState(user.user.email || "");
  const [photoFile, setPhototFile] = useState(null);
 
- 
+
 const handleImageChange = (event) => {
   const file = event.target.files[0];
   if (file) {
@@ -23,7 +21,7 @@ const handleImageChange = (event) => {
     setPhototFile(file);
   }
 };
-  
+  console.log(user);
 
   const handleUpdateChanges = () => {
     
@@ -34,8 +32,14 @@ const handleImageChange = (event) => {
 
   const handleLogout = () => {
     localStorage.removeItem('hungry&Potato-token');
-    navigate('/');
+    navigate(-1);
   };
+
+  useEffect(() =>{
+    if(!user){
+      getUser();
+    }
+  },[])
 
   return (
     <div className="profile_container">
@@ -72,7 +76,7 @@ const handleImageChange = (event) => {
         <button className="edit_button" onClick={handleUpdateChanges}>
           Update Changes
         </button>
-        <button className="back-button" onClick={() => navigate('/')}>
+        <button className="back-button" onClick={() => navigate(-1)}>
           &larr;
         </button>
       </div>
@@ -107,26 +111,33 @@ const handleImageChange = (event) => {
           </div>
         </div>
         <div className="profile_orders">
-          <h2>Orders</h2>
-          <div className="orders-list">
-            {user.orders.map((order) => (
-              <div key={order._id} className="order-item">
-                <img src={order.order[0].image} alt={order.order[0].name} />
-                <div className="order-details">
-                  <p className="order-name">
-                    {order.order[0].name} - <span>{order.order[0].servingSize}</span>
-                  </p>
-                  <div className="order-addons">
-                    {order.order[0].addons.map((addon, index) => (
-                      <span key={index}>{addon.name}</span>
-                    ))}
-                  </div>
-                  <div className="order-price">${order.totalAmount}</div>
-                </div>
-              </div>
-            ))}
+  <h2>Orders</h2>
+  {user.orders.map((item) => (
+    <div key={item._id} className="orders-list">
+      {item.order.map((dish, idx) => (
+        <div key={item._id + " " + idx} className="order-item">
+          <img src={dish.image} alt={dish.name} />
+          <div className="order-details">
+            <div className='detail_grp'>
+              <p className="order-name">{dish.name} </p>
+              <span className="order-price">$&nbsp;{dish.price} </span>
+            </div>
+            <div className='detail_grp'>
+              <p className="order-name">{dish.servingSize}&nbsp;&nbsp;&nbsp;&nbsp; <span className="order-quantity">X {dish.quantity} </span></p>
+            </div>
+            <div className='detail_grp'>
+              {dish.addons.map((addon, index) => (
+                <div key={index}>{addon.name}</div>
+              ))}
+            </div>
+            
           </div>
         </div>
+      ))}
+    </div>
+  ))}
+</div>
+
       </div>
       <div className="profile_footer">
         <button className="logout_button" onClick={handleLogout}>

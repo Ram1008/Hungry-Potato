@@ -1,10 +1,10 @@
 import { useState} from 'react';
 import adminContext from './adminContext';
 import { getTables, editTable, deleteTable, addTable, editOrder, getOrders, deleteOrder, getUsers, deleteUser, editUser, getDishes, deleteDish, editDish, addDish } from '../../api';
-import { toast } from 'react-toastify'; 
-import io from 'socket.io-client';
+import { toast } from 'react-toastify';
 
 const AdminState = ({ children }) => {
+  
   const [activeTable, setActiveTable] = useState('tables');
   const [showProfile, setShowProfile] = useState(false);
   const [showTab, setShowTab] = useState(false);
@@ -69,6 +69,7 @@ const AdminState = ({ children }) => {
     const response = await deleteOrder(orderId);
     if (response) {
         toast.success('Order deleted successfully!', { autoClose: 2500 });
+        fetchOrders();
     }
   }
 

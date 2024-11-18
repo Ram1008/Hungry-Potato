@@ -13,6 +13,8 @@ const Admin = () => {
      searchTerm, setSearchTerm, fetchTables, fetchDishes, fetchOrders, fetchUsers, activeTable,
      showProfile,  setShowButton,  setShowProfile, setShowAddModal, adminSocket} = useContext(adminContext);
 
+     console.log(tables);
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -63,7 +65,11 @@ const Admin = () => {
       navigate('/login', { state: { from: location.pathname } });
     }
   };
-
+  
+  useEffect(() =>{
+    onLoad();
+  }, [])
+  
   const renderNav = () =>{
     if(!(showProfile || showEditModal)){
       
@@ -89,9 +95,6 @@ const Admin = () => {
     }
   }
 
-  useEffect(() =>{
-    onLoad();
-  }, [])
 
   return (
     <Layout 
